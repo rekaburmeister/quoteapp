@@ -183,6 +183,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -275,6 +276,11 @@
     <Content Include="Views\Work\Index.cshtml" />
     <Content Include="Views\Work\WorkDescriptions.cshtml" />
     <Content Include="Views\Work\CreateWork.cshtml" />
+    <Content Include="Views\Quote\Create.cshtml" />
+    <Content Include="Views\Quote\Delete.cshtml" />
+    <Content Include="Views\Quote\Details.cshtml" />
+    <Content Include="Views\Quote\Edit.cshtml" />
+    <Content Include="Views\Quote\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

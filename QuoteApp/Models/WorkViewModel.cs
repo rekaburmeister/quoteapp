@@ -8,6 +8,8 @@ namespace QuoteApp.Models
 {
     public class WorkViewModel
     {
+        
+
         [Required]
         public int WorkId { get; set; }
 
@@ -22,5 +24,22 @@ namespace QuoteApp.Models
 
         [Required]
         public int WorkAreaId { get; set; }
+
+        public string WorkAreaName { get; set; }
+
+        public WorkViewModel()
+        {
+
+        }
+
+        public WorkViewModel(Work work)
+        {
+            WorkId = work.WorkId;
+            WorkName = work.WorkName;
+            WorkDescription = work.WorkDescription;
+            WorkPrice = work.WorkPrice;
+            WorkAreaId = work.WorkArea.WorkAreaId;
+            WorkAreaName = work.WorkArea.WorkAreaName;
+        }
     }
 }
