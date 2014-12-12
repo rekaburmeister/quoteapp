@@ -20,7 +20,13 @@ namespace QuoteApp.Models
         {
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<WorkLocation> WorkLocations { get; set; }
+        public DbSet<Work> Works { get; set; }
+        public DbSet<WorkArea> WorkAreas { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -11,138 +11,138 @@ using RazorPDF;
 
 namespace QuoteApp.Controllers
 {
-    public class CustomerController : Controller
+    public class ContactController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: /Customer/
+        // GET: /Contact/
         public ActionResult Index()
         {
-            //return View(db.Customers.ToList());
-            List<Customer> customers = new List<Customer>();
+            //return View(db.Contacts.ToList());
+            List<Contact> Contacts = new List<Contact>();
 
             for (int i = 1; i <= 10; i++)
             {
-                Customer customer = new Customer
+                Contact Contact = new Contact
                 {
-                    CustomerID = i,
+                    ContactId = i,
                     FirstName = string.Format("FirstName{0}", i.ToString()),
                     LastName = string.Format("LastName{0}", i.ToString())
                 };
-                customers.Add(customer);
+                Contacts.Add(Contact);
             }
-            return View(customers);
+            return View(Contacts);
         }
 
         public PdfResult PDF()
         {
-            List<Customer> customers = new List<Customer>();
+            List<Contact> Contacts = new List<Contact>();
 
             for (int i = 1; i <= 10; i++)
             {
-                Customer customer = new Customer
+                Contact Contact = new Contact
                 {
-                    CustomerID = i,
+                    ContactId = i,
                     FirstName = string.Format("FirstName{0}", i.ToString()),
                     LastName = string.Format("LastName{0}", i.ToString())
                 };
-                customers.Add(customer);
+                Contacts.Add(Contact);
             }
 
-            return new RazorPDF.PdfResult(customers, "PDF");
+            return new RazorPDF.PdfResult(Contacts, "PDF");
         }
 
-        // GET: /Customer/Details/5
+        // GET: /Contact/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
+            Contact Contact = db.Contacts.Find(id);
+            if (Contact == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(Contact);
         }
 
-        // GET: /Customer/Create
+        // GET: /Contact/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /Customer/Create
+        // POST: /Contact/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CustomerID,FirstName,LastName")] Customer customer)
+        public ActionResult Create([Bind(Include="ContactId,FirstName,LastName")] Contact Contact)
         {
             if (ModelState.IsValid)
             {
-                db.Customers.Add(customer);
+                db.Contacts.Add(Contact);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(customer);
+            return View(Contact);
         }
 
-        // GET: /Customer/Edit/5
+        // GET: /Contact/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
+            Contact Contact = db.Contacts.Find(id);
+            if (Contact == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(Contact);
         }
 
-        // POST: /Customer/Edit/5
+        // POST: /Contact/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CustomerID,FirstName,LastName")] Customer customer)
+        public ActionResult Edit([Bind(Include="ContactId,FirstName,LastName")] Contact Contact)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
+                db.Entry(Contact).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(customer);
+            return View(Contact);
         }
 
-        // GET: /Customer/Delete/5
+        // GET: /Contact/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
+            Contact Contact = db.Contacts.Find(id);
+            if (Contact == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(Contact);
         }
 
-        // POST: /Customer/Delete/5
+        // POST: /Contact/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Customer customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
+            Contact Contact = db.Contacts.Find(id);
+            db.Contacts.Remove(Contact);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -187,8 +187,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\Quote.cs" />
+    <Compile Include="Models\Work.cs" />
+    <Compile Include="Models\WorkArea.cs" />
+    <Compile Include="Models\WorkLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
