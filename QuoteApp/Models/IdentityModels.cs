@@ -27,6 +27,8 @@ namespace QuoteApp.Models
         public DbSet<WorkArea> WorkAreas { get; set; }
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<QuotedWork> QuotedWorks { get; set; }
+        public DbSet<InvoicedWork> InvoicedWorks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

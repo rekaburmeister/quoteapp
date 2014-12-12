@@ -13,10 +13,10 @@ namespace QuoteApp.Models
         public int WorkId { get; set; }
 
         [Required]
-        public int WorkName { get; set; }
+        public string WorkName { get; set; }
 
         [Required]
-        public int WorkDescription { get; set; }
+        public string WorkDescription { get; set; }
 
         [Required]
         public int WorkPrice { get; set; }

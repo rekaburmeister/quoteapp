@@ -191,7 +191,9 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\InvoicedWork.cs" />
     <Compile Include="Models\Quote.cs" />
+    <Compile Include="Models\QuotedWork.cs" />
     <Compile Include="Models\Work.cs" />
     <Compile Include="Models\WorkArea.cs" />
     <Compile Include="Models\WorkLocation.cs" />
