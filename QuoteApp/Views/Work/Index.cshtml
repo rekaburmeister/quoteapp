@@ -1,0 +1,81 @@
+﻿@model IEnumerable<QuoteApp.Models.WorkArea>
+
+@{
+    ViewBag.Title = "Setup";
+}
+<table class="table">
+    <tr>
+        <th>
+            Available work types
+        </th>
+        <th></th>
+    </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkAreaName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.WorkAreaId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.WorkAreaId })
+            </td>
+        </tr>
+    }
+    
+</table>
+
+<div class="form-horizontal" role="form">
+    <div class="form-group">
+            <label for="workType" class="col-lg-2 control-label">Add new work type</label>
+        <div class="col-lg-2">
+            <input class="form-control" id="workType" placeholder="E.g. Flooring">
+            
+        </div>
+        <div class="col-lg-1">
+            <button class="btn btn-success" onclick="createNewWork();">Add</button>
+        </div>
+        
+    </div>
+</div>
+@{
+    Html.RenderAction("WorkDescriptions");
+}
+@section scripts
+{
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script>
+        $('#workMainType').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetWorkAreasBySearchTerm")',
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.Text,
+                                value: item.Text,
+                                id: item.Value
+                            };
+                        }));
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#WorkAreaId').val(ui.item.id);
+                $('#submitButton').removeAttr("disabled");
+
+
+            },
+        });
+        function createNewWork() {
+            var url = '@Url.Action("Create", new { workAreaName = "PLACEHOLDER" })'.replace('PLACEHOLDER', $('#workType').val());
+            window.location.href = url;
+        }
+    </script>
+}
