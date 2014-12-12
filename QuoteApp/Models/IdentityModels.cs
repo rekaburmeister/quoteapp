@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace QuoteApp.Models
 {
@@ -10,10 +11,26 @@ namespace QuoteApp.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection")
+            : base("DatabaseContext")
         {
         }
 
-        public System.Data.Entity.DbSet<QuoteApp.Models.Customer> Customers { get; set; }
+        public ApplicationDbContext(string connectionString)
+            : base(connectionString)
+        {
+        }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Change the name of the table to be Users instead of AspNetUsers
+            modelBuilder.Entity<IdentityUser>()
+                .ToTable("Users");
+            modelBuilder.Entity<ApplicationUser>()
+                .ToTable("Users");
+        }
     }
 }
