@@ -17,15 +17,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("SCPS", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("DemoThing", "Index", "Customer")</li>
-                    <li>@Html.ActionLink("Pdf", "PDF", "Customer")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Create new", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Pending", "Index", "Customer")</li>
+                    <li>@Html.ActionLink("Customers", "PDF", "Customer")</li>
+                    <li>@Html.ActionLink("Records", "About", "Home")</li>
+                    <li>@Html.ActionLink("Stats", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -34,9 +34,15 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        @*<footer>
+            <hr/>
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4">
+                    Powered by TonySquash
+                </div>
+            </div>
+            
+        </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
