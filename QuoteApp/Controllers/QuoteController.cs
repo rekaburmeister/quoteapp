@@ -12,12 +12,12 @@ namespace QuoteApp.Controllers
 {
     public class QuoteController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext m_DbContext = new ApplicationDbContext();
 
         // GET: /Quote/
         public ActionResult Index()
         {
-            return View(db.Quotes.ToList());
+            return View(m_DbContext.Quotes.ToList());
         }
 
         // GET: /Quote/Details/5
@@ -27,7 +27,7 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = db.Quotes.Find(id);
+            Quote quote = m_DbContext.Quotes.Find(id);
             if (quote == null)
             {
                 return HttpNotFound();
@@ -40,10 +40,10 @@ namespace QuoteApp.Controllers
         {
             QuoteViewModel model = new QuoteViewModel()
             {
-                WorkTypes = db.WorkAreas.Select(area => area.WorkAreaName).ToList(),
-                Works = db.Works.ToList().Select(work=>new WorkViewModel(work)).ToList()
+                WorkTypes = m_DbContext.WorkAreas.Select(area => area.WorkAreaName).ToList(),
+                Works = m_DbContext.Works.ToList().Select(work=>new WorkViewModel(work)).ToList()
             };
-            return View();
+            return View(model);
         }
 
         // POST: /Quote/Create
@@ -55,8 +55,8 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Quotes.Add(quote);
-                db.SaveChanges();
+                m_DbContext.Quotes.Add(quote);
+                m_DbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -70,7 +70,7 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = db.Quotes.Find(id);
+            Quote quote = m_DbContext.Quotes.Find(id);
             if (quote == null)
             {
                 return HttpNotFound();
@@ -87,8 +87,8 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(quote).State = EntityState.Modified;
-                db.SaveChanges();
+                m_DbContext.Entry(quote).State = EntityState.Modified;
+                m_DbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(quote);
@@ -101,7 +101,7 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = db.Quotes.Find(id);
+            Quote quote = m_DbContext.Quotes.Find(id);
             if (quote == null)
             {
                 return HttpNotFound();
@@ -114,9 +114,9 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Quote quote = db.Quotes.Find(id);
-            db.Quotes.Remove(quote);
-            db.SaveChanges();
+            Quote quote = m_DbContext.Quotes.Find(id);
+            m_DbContext.Quotes.Remove(quote);
+            m_DbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -124,7 +124,7 @@ namespace QuoteApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                m_DbContext.Dispose();
             }
             base.Dispose(disposing);
         }
