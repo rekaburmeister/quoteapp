@@ -50,7 +50,9 @@
 <div class="col-md-4 col-md-offset-4" id="addNewCourtButtonDiv">
     <button class="btn btn-success btn-lg" onclick="addQuoteTable();"><i class="glyphicon glyphicon-plus-sign"></i> Add area</button>
 </div>
-
+<div class="col-md-8 col-md-offset-2">
+    @Html.ActionLink("Generate quote", "GeneratePdf", Model, new { @class="btn btn-large btn-primary form-control"})
+</div>
 <!-- Modal -->
 <div id="jobSelector" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

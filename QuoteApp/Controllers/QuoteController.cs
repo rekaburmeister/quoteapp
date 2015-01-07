@@ -94,6 +94,11 @@ namespace QuoteApp.Controllers
             return View(quote);
         }
 
+        public ActionResult GeneratePdf(QuoteViewModel model)
+        {
+            return View(model);
+        }
+
         // GET: /Quote/Delete/5
         public ActionResult Delete(string id)
         {

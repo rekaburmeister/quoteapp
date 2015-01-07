@@ -281,6 +281,7 @@
     <Content Include="Views\Quote\Details.cshtml" />
     <Content Include="Views\Quote\Edit.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
+    <Content Include="Views\Quote\GeneratePdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
