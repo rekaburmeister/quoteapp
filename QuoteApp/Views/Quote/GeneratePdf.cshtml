@@ -3,48 +3,36 @@
     Layout = null;
 }
 
-<itext creationdate="@DateTime.Now.ToString()" producer="RazorPDF">
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
-    <paragraph style="font-family:Helvetica;font-size:14;">
-        <table width="100%" cellpadding="1.0" cellspacing="1.0" widths="3;8;4;4">
-        <row>
-            <cell borderwidth="0.5" left="false" right="false" top="false" bottom="true"><img style="width: 200px;" src="~/Content/Images/TonySquashHeader.png"></cell>
-            <cell borderwidth="0.5" left="false" right="false" top="false" bottom="true">Tony Gay<newline/>SCPS<newline />18 Ransome Close<newline />Cambridge<newline />CB4 1WH</cell>
-            <cell borderwidth="0.5" left="false" right="false" top="false" bottom="true" horizontalalign="right">07 771 631 876<newline/>tonysquash@mac.com<newline/>www.tonysquash.com</cell>
-        </row>
-            </table>
+</head>
+<div class="container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
+            <div class="col-lg-4 col-lg-offset-2">
+                <span style="text-align: center;">
+                    Tony Gay<br />
+                    SCPS<br />
+                    18 Ransome close<br />
+                    Cambridge<br />
+                    CB4 1WH<br />
+                </span>
+            </div>
+            <div class="col-lg-4">
+                <span style="text-align: left;">
+                    07 771 631 876<br />
+                    tonysquash@mac.com<br />
+                    www.tonysquash.com<br />
+                </span>
+            </div>
+        </div>
+    </div>
 
-            @*<table width="100%" cellpadding="0.5" cellspacing="0.5" widths="30;60" borderwidth="1.0" left="false" right="false" top="false" bottom="false" red="0" green="0" blue="0">
-                <row>
-                    <cell>
-                        <chunk><img style="width: 200px;" src="~/Content/Images/TonySquashHeader.png"></chunk>
-                    </cell>
-                    <cell>
-                        <chunk style="text-align: center">Tony Gay<br>SCPS<br>18 Ransome Close<br>Cambridge<br>CB4 1WH</chunk>
-                    </cell>
-                    <cell>
-                        <chunk style="text-align: right">07 771 631 876<br>tonysquash@mac.com<br>www.tonysquash.com</chunk>
-                    </cell>
-                </row>
-            </table>*@
-
-</paragraph>
-    <table width="100%" cellpadding="0.5" cellspacing="0.5" widths="30;60" borderwidth="1.0" left="false" right="false" top="false" bottom="false" red="0" green="0" blue="0">
-        <row>
-            <cell>
-                <chunk style="font-weight:bold;">To:</chunk>
-            </cell>
-            <cell>
-                <chunk style="">@Model.ContactName</chunk>
-            </cell>
-        </row>
-        <row>
-            <cell>
-                <chunk style="font-weight:bold;">Something else</chunk>
-            </cell>
-            <cell>
-                <chunk style="">@Model.QuoteId</chunk>
-            </cell>
-        </row>
-    </table>
-</itext>
+</div>
