@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuoteApp.Models;
-using RazorPDF;
 
 namespace QuoteApp.Controllers
 {
@@ -18,38 +17,7 @@ namespace QuoteApp.Controllers
         // GET: /Contact/
         public ActionResult Index()
         {
-            //return View(db.Contacts.ToList());
-            List<Contact> Contacts = new List<Contact>();
-
-            for (int i = 1; i <= 10; i++)
-            {
-                Contact Contact = new Contact
-                {
-                    ContactId = i,
-                    FirstName = string.Format("FirstName{0}", i.ToString()),
-                    LastName = string.Format("LastName{0}", i.ToString())
-                };
-                Contacts.Add(Contact);
-            }
-            return View(Contacts);
-        }
-
-        public PdfResult PDF()
-        {
-            List<Contact> Contacts = new List<Contact>();
-
-            for (int i = 1; i <= 10; i++)
-            {
-                Contact Contact = new Contact
-                {
-                    ContactId = i,
-                    FirstName = string.Format("FirstName{0}", i.ToString()),
-                    LastName = string.Format("LastName{0}", i.ToString())
-                };
-                Contacts.Add(Contact);
-            }
-
-            return new RazorPDF.PdfResult(Contacts, "PDF");
+            return View(db.Contacts.ToList());
         }
 
         // GET: /Contact/Details/5
@@ -59,12 +27,12 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact Contact = db.Contacts.Find(id);
-            if (Contact == null)
+            Contact contact = db.Contacts.Find(id);
+            if (contact == null)
             {
                 return HttpNotFound();
             }
-            return View(Contact);
+            return View(contact);
         }
 
         // GET: /Contact/Create
@@ -78,16 +46,16 @@ namespace QuoteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ContactId,FirstName,LastName")] Contact Contact)
+        public ActionResult Create([Bind(Include="ContactId,FirstName,MiddleName,LastName,Email,MobileNumber,PhoneNumber")] Contact contact)
         {
             if (ModelState.IsValid)
             {
-                db.Contacts.Add(Contact);
+                db.Contacts.Add(contact);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(Contact);
+            return View(contact);
         }
 
         // GET: /Contact/Edit/5
@@ -97,12 +65,12 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact Contact = db.Contacts.Find(id);
-            if (Contact == null)
+            Contact contact = db.Contacts.Find(id);
+            if (contact == null)
             {
                 return HttpNotFound();
             }
-            return View(Contact);
+            return View(contact);
         }
 
         // POST: /Contact/Edit/5
@@ -110,15 +78,15 @@ namespace QuoteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ContactId,FirstName,LastName")] Contact Contact)
+        public ActionResult Edit([Bind(Include="ContactId,FirstName,MiddleName,LastName,Email,MobileNumber,PhoneNumber")] Contact contact)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(Contact).State = EntityState.Modified;
+                db.Entry(contact).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(Contact);
+            return View(contact);
         }
 
         // GET: /Contact/Delete/5
@@ -128,12 +96,12 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact Contact = db.Contacts.Find(id);
-            if (Contact == null)
+            Contact contact = db.Contacts.Find(id);
+            if (contact == null)
             {
                 return HttpNotFound();
             }
-            return View(Contact);
+            return View(contact);
         }
 
         // POST: /Contact/Delete/5
@@ -141,8 +109,8 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Contact Contact = db.Contacts.Find(id);
-            db.Contacts.Remove(Contact);
+            Contact contact = db.Contacts.Find(id);
+            db.Contacts.Remove(contact);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
