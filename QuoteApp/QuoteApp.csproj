@@ -188,6 +188,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
+    <Compile Include="Controllers\WorkLocationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -296,6 +297,11 @@
     <Content Include="Views\Quote\Edit.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
     <Content Include="Views\Quote\GeneratePdf.cshtml" />
+    <Content Include="Views\WorkLocation\Create.cshtml" />
+    <Content Include="Views\WorkLocation\Delete.cshtml" />
+    <Content Include="Views\WorkLocation\Details.cshtml" />
+    <Content Include="Views\WorkLocation\Edit.cshtml" />
+    <Content Include="Views\WorkLocation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
