@@ -114,8 +114,10 @@
 
     <input type="hidden" id="selectedRowId" />
 
-
+    
 </div>
+
+<button class="btn btn-danger" onclick="submitQuote();">Submit quote</button>
 
 @section scripts{
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -237,6 +239,38 @@
         function selectWork(description, price) {
             $('#' + $('#selectedRowId').val()).find("td").eq(1).html($('#' + description).html());
             $('#' + $('#selectedRowId').val()).find("td").eq(2).html($('#' + price).val());
+        }
+        
+        function submitQuote() {
+            $('#workTables').each(function () {
+                var json = [];
+                $(this).find('table').each(function () {
+                    var court;
+                    var works = [];
+                    
+                    $(this).find('tr').each(function () {
+                        var header = $(this).find('th');
+                        if (header.length == 4) {
+                            court = header[0].innerText;
+                            
+                        } else {
+                            var cells = $(this).find('td');
+                            if (cells.length != 4) {
+                                return;
+                            }
+                            var line = {
+                                'workArea': cells[0].innerText,
+                                'description': cells[2].innerText,
+                                'price': cells[3].innerText
+                            };
+                            works.push(line);
+                        }
+                        
+                    });
+                    json.push({ 'AreaName': court, 'Works': works });
+                });
+                alert(JSON.stringify(json));
+            });
         }
     </script>
 }
