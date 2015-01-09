@@ -6,6 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using QuoteApp.Models;
 using Rotativa;
 
@@ -62,6 +65,13 @@ namespace QuoteApp.Controllers
             }
 
             return View(quote);
+        }
+
+        public JsonResult CreateQuote(string jsonString)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<WorkFromView> works = (List<WorkFromView>)Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString, typeof(List<WorkFromView>));
+            return new JsonResult();
         }
 
         // GET: /Quote/Edit/5

@@ -201,6 +201,8 @@
     <Compile Include="Models\InvoicedWork.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\QuotedWork.cs" />
+    <Compile Include="Models\WorkFromView.cs" />
+    <Compile Include="Models\WorkItem.cs" />
     <Compile Include="Models\ScheduledWork.cs" />
     <Compile Include="Models\Work.cs" />
     <Compile Include="Models\WorkArea.cs" />

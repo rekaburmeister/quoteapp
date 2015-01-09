@@ -259,9 +259,9 @@
                                 return;
                             }
                             var line = {
-                                'workArea': cells[0].innerText,
-                                'description': cells[2].innerText,
-                                'price': cells[3].innerText
+                                'WorkArea': cells[0].innerText,
+                                'Description': cells[1].innerText,
+                                'Price': cells[2].innerText
                             };
                             works.push(line);
                         }
@@ -269,7 +269,14 @@
                     });
                     json.push({ 'AreaName': court, 'Works': works });
                 });
-                alert(JSON.stringify(json));
+                //alert(JSON.stringify(json));
+                $.ajax({
+                    url: '@Url.Action("CreateQuote")',
+                    dataType: "json",
+                    data: { jsonString: JSON.stringify(json) },
+                    success: function(data) { alert("Quote created"); },
+                    error: function(data) { alert("Something bad happened: " + data); }
+                });
             });
         }
     </script>
