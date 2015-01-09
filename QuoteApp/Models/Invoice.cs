@@ -25,5 +25,13 @@ namespace QuoteApp.Models
         public DateTime InvoiceDate { get; set; }
 
         public virtual ICollection<InvoicedWork> InvoicedWorks { get; set; }
+
+        public static List<Invoice> GetInvoicesForPeriod(DateTime from, DateTime to)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.Invoices.Where(i => i.InvoiceDate >= from && i.InvoiceDate <= to).ToList();
+            }
+        } 
     }
 }

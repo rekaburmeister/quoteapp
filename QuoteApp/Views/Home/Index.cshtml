@@ -1,4 +1,75 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<h3>I'll do some dashboard here</h3>
+@model QuoteApp.Models.HomeViewModel
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-lg-6">
+            <h3>Scheduled work</h3>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Quote</th>
+                        <th>Date</th>
+                        <th>Club</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Number</th>
+                        <th>Email</th>
+                        <th>Job</th>
+                        <th>Sum</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+            <h3>Quotes issued</h3>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Quote</th>
+                        <th>Date</th>
+                        <th>Club</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Number</th>
+                        <th>Email</th>
+                        <th>Job</th>
+                        <th>Sum</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+            <h3>Unpaid invoices</h3>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Inv#</th>
+                        <th>Date</th>
+                        <th>Club</th>
+                        <th>Contact</th>
+                        <th>Number</th>
+                        <th>Email</th>
+                        <th>Sum</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <h3>Completed work this quarter</h3>
+            <p>We got paid for @Model.JobsCompleted jobs</p>
+            <h3>Money in this quarter</h3>
+            <p>Made <strong>£@Model.MoneyMade</strong> in total so far</p>
+            <h3>VAT sum</h3>
+            <p>Will have to pay around £@Model.Vat VAT</p>
+            <h3>Income tax sum</h3>
+            <p>And about £@Model.IncomeTax on income tax</p>
+        </div>
+    </div>
+</div>
+
