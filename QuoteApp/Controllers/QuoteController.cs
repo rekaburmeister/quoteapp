@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuoteApp.Models;
+using Rotativa;
 
 namespace QuoteApp.Controllers
 {
@@ -96,7 +97,12 @@ namespace QuoteApp.Controllers
 
         public ActionResult GeneratePdf(QuoteViewModel model)
         {
-            return View(model);
+            return new ViewAsPdf(model);
+        }
+
+        public ActionResult GeneratePdf2()
+        {
+            return new ViewAsPdf();
         }
 
         // GET: /Quote/Delete/5

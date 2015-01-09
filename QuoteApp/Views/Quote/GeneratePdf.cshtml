@@ -10,9 +10,11 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 
 </head>
-<div class="container">
+<div class="container" id="generateDiv">
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
@@ -36,3 +38,9 @@
     </div>
 
 </div>
+
+<a href="#" onclick="return xepOnline.Formatter.Format('generateDiv', { render: 'download' });">
+    <img src="~/Content/Images/TonySquashHeader.png" style="width: 50px;">
+</a>
+
+<script src="~/Scripts/xepOnline.jqPlugin.js"></script>
