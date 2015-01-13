@@ -116,7 +116,7 @@ namespace QuoteApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetClubsBySearchTerm(string term)
+        public JsonResult GetClubsBySearchTerm(string term)
         {
             IEnumerable<WorkLocationJson> clubs = WorkLocation.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = string.Join(", ", new []{location.Address1, 
                                                                                                                                                             location.Address2, 
