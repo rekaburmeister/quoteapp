@@ -42,7 +42,7 @@ namespace QuoteApp.Models
             }
         }
 
-        public static Contact CheckAndUpdateContact(string contactId, string contactName, string contactEmail, string contactNumber, int clubId)
+        public static Contact CheckAndUpdateContact(int contactId, string contactName, string contactEmail, string contactNumber, int clubId)
         {
             using (ApplicationDbContext database = new ApplicationDbContext())
             {
