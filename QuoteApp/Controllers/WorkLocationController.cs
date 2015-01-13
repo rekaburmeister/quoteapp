@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using QuoteApp.Models;
 
 namespace QuoteApp.Controllers
@@ -113,6 +114,23 @@ namespace QuoteApp.Controllers
             db.WorkLocations.Remove(worklocation);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GetClubsBySearchTerm(string term)
+        {
+            IEnumerable<WorkLocationJson> clubs = WorkLocation.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = string.Join(", ", new []{location.Address1, 
+                                                                                                                                                            location.Address2, 
+                                                                                                                                                            location.Address3, 
+                                                                                                                                                            location.Town, 
+                                                                                                                                                            location.Country, 
+                                                                                                                                                            location.PostCode}
+                                                                                                                                                            .Where(str => !string.IsNullOrEmpty(str))),
+                                                                                                                          id = location.WorkLocationId,
+                                                                                                                          label = location.WorkLocationName,
+                                                                                                                              text = location.WorkLocationName
+            });
+            string jsonstring = JsonConvert.SerializeObject(clubs);
+            return Json(jsonstring, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
