@@ -158,9 +158,10 @@
                 });
             },
             select: function (event, ui) {
+                $('#customerClub').val(ui.item.text);
                 $('#clubAddress').val(ui.item.Address);
                 $('#clubId').val(ui.item.id);
-
+                updateReference();
 
             },
         });
@@ -180,10 +181,11 @@
                 });
             },
             select: function (event, ui) {
+                $('#contactName').val(ui.item.text);
                 $('#contactEmail').val(ui.item.Email);
                 $('#contactNumber').val(ui.item.Number);
                 $('#contactId').val(ui.item.id);
-
+                updateReference();
 
             },
         });
@@ -268,6 +270,19 @@
         }
         
         function submitQuote() {
+            var idOK = true;
+            $.ajax({
+                url: '@Url.Action("VerifyQuoteId")',
+                dataType: "json",
+                data: { quoteId: $('#refId').html() },
+                error: function (data) {
+                    idOK = false;
+                    alert("The specified quote id already exists. Please select a new one ");
+                }
+            });
+            if (!idOK) {
+                return;
+            }
             $('#workTables').each(function () {
                 var json = [];
                 $(this).find('table').each(function () {
@@ -293,7 +308,17 @@
                         }
                         
                     });
-                    json.push({ 'AreaName': court, 'Works': works });
+                    json.push({ 'AreaName': court, 'Works': works,  
+                        'ClubId' : $('#clubId').val(),
+                        'ClubName' : $('#customerClub').val(),
+                        'ClubAddress' : $('#clubAddress').val(),
+                        'ContactName' : $('#contactName').val(),
+                        'ContactNumber' : $('#contactNumber').val(),
+                        'ContactEmail' : $('#contactEmail').val(),
+                        'ContactId': $('#contactId').val(),
+                        'QuoteId': $('#refId').html(),
+                        'QuoteDate': $('#dateId').html()
+                    });
                 });
                 //alert(JSON.stringify(json));
                 $.ajax({
