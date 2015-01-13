@@ -32,5 +32,13 @@ namespace QuoteApp.Models
         public virtual Company Company { get; set; }
 
         public virtual ICollection<WorkLocation> WorkLocations { get; set; }
+
+        public static List<Contact> GetContactsWithTerm(string term)
+        {
+            using (ApplicationDbContext database = new ApplicationDbContext())
+            {
+                return database.Contacts.Where(contact => contact.FirstName.StartsWith(term.ToLower()) || contact.LastName.StartsWith(term.ToLower())).ToList();
+            }
+        }
     }
 }

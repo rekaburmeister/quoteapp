@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using QuoteApp.Models;
 
 namespace QuoteApp.Controllers
@@ -87,6 +88,27 @@ namespace QuoteApp.Controllers
                 return RedirectToAction("Index");
             }
             return View(contact);
+        }
+
+        public JsonResult GetContactsBySearchTerm(string term)
+        {
+            IEnumerable<ContactJson> contacts = Contact.GetContactsWithTerm(term).Select(contact => new ContactJson
+            {
+                Number = string.Join(", ", new[]{contact.MobileNumber, 
+                                                 contact.PhoneNumber}
+                                                 .Where(str => !string.IsNullOrEmpty(str))),
+                Email = contact.Email,
+                id = contact.ContactId,
+                label = string.Join(" ", new[]{contact.FirstName, 
+                                               contact.MiddleName,
+                                               contact.LastName}
+                                               .Where(str => !string.IsNullOrEmpty(str))),
+                text = string.Join(" ", new[]{contact.FirstName, 
+                                               contact.MiddleName,
+                                               contact.LastName}
+                                               .Where(str => !string.IsNullOrEmpty(str))),
+            });
+            return Json(JsonConvert.SerializeObject(contacts), JsonRequestBehavior.AllowGet);
         }
 
         // GET: /Contact/Delete/5

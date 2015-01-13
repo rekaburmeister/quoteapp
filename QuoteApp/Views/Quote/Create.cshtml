@@ -23,6 +23,7 @@
         <label for="contactName" class="col-sm-2 control-label">Contact name</label>
         <div class="col-sm-6">
             <input class="form-control" id="contactName" placeholder="John Smith" onchange="updateReference();">
+            <input type="hidden" id="contactId" />
         </div>
     </div>
     <div class="form-group">
@@ -159,6 +160,29 @@
             select: function (event, ui) {
                 $('#clubAddress').val(ui.item.Address);
                 $('#clubId').val(ui.item.id);
+
+
+            },
+        });
+
+        $('#contactName').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetContactsBySearchTerm", "Contact")',
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.parseJSON(data));
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#contactEmail').val(ui.item.Email);
+                $('#contactNumber').val(ui.item.Number);
+                $('#contactId').val(ui.item.id);
 
 
             },
