@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -23,6 +25,58 @@ namespace QuoteApp.Models
         public DateTime QuoteDate { get; set; }
 
         public virtual ICollection<QuotedWork> QuotedWorks { get; set; }
+
+        public static void CreateQuote(string quoteId, WorkLocation location, Contact contact, string quoteDate,
+            List<WorkFromView> works)
+        {
+            DateTime date = DateTime.ParseExact(quoteDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            Quote quote = new Quote {Contact = contact, Location = location, QuoteDate = date, QuoteId = quoteId};
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                context.Quotes.Add(quote);
+                foreach (WorkFromView workFromView in works)
+                {
+                    foreach (WorkItem workItem in workFromView.Works)
+                    {
+                        QuotedWork quotedWork = new QuotedWork()
+                        {
+                            Quote = quote,
+                            QuotedWorkMainAreaName = workFromView.AreaName,
+                            QuotedWorkDescription = workItem.Description,
+                            QuotedWorkSubAreaName = string.IsNullOrEmpty(workItem.WorkArea) ? string.Empty : workItem.WorkArea,
+                            QuotedWorkPrice = workItem.Price
+                        };
+                        context.QuotedWorks.Add(quotedWork);
+                    }
+                }
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+            }
+        }
+
+        public static bool DoesQuoteIdExist(string quoteId)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.Quotes.Any(q => q.QuoteId.Equals(quoteId));
+            }
+        }
     }
 
     public class QuoteViewModel
@@ -50,4 +104,6 @@ namespace QuoteApp.Models
         public List<WorkViewModel> Works { get; set; }
         public List<string> WorkTypes { get; set; }
     }
+
+    
 }
