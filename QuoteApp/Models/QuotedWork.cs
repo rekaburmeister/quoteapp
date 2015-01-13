@@ -15,7 +15,6 @@ namespace QuoteApp.Models
         [Required]
         public string QuotedWorkMainAreaName { get; set; }
 
-        [Required]
         public string QuotedWorkSubAreaName { get; set; }
 
         [Required]
