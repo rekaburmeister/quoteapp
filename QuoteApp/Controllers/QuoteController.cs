@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -69,9 +70,19 @@ namespace QuoteApp.Controllers
 
         public JsonResult CreateQuote(string jsonString)
         {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            List<WorkFromView> works = (List<WorkFromView>)Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString, typeof(List<WorkFromView>));
-            return new JsonResult();
+            List<WorkFromView> works = (List<WorkFromView>)JsonConvert.DeserializeObject(jsonString, typeof(List<WorkFromView>));
+            // TODO: Currently the header details are packed into each WorkFromView object. These should be extracted and sent only once
+            WorkFromView workItem = works[0];
+            WorkLocation location = WorkLocation.CheckAndUpdateLocation(workItem.ClubId, workItem.ClubAddress, workItem.ClubName);
+            Contact contact = Contact.CheckAndUpdateContact(workItem.ContactId, workItem.ContactName,
+                workItem.ContactEmail, workItem.ContactNumber, location.WorkLocationId);
+            Quote.CreateQuote(workItem.QuoteId, location, contact, workItem.QuoteDate, works);
+            return Json(new { Success = true, Message = "Quoted work added" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult VerifyQuoteId(string quoteId)
+        {
+            return Json(new{Success = Quote.DoesQuoteIdExist(quoteId)}, JsonRequestBehavior.AllowGet);
         }
 
         // GET: /Quote/Edit/5
