@@ -16,9 +16,11 @@ namespace QuoteApp.Models
         public string QuoteId { get; set; }
 
         [Required]
+        public int LocationId { get; set; }
         public virtual WorkLocation Location { get; set; }
 
         [Required]
+        public int ContactId { get; set; }
         public virtual Contact Contact { get; set; }
 
         [Required]
