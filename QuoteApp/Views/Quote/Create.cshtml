@@ -270,21 +270,23 @@
         }
         
         function submitQuote() {
-            var idOK = true;
+            var idInUse = true;
             $.ajax({
                 url: '@Url.Action("VerifyQuoteId")',
+                async: false,
                 dataType: "json",
                 data: { quoteId: $('#refId').html() },
-                error: function (data) {
-                    idOK = false;
-                    alert("The specified quote id already exists. Please select a new one ");
+                success: function (data) {
+                    idInUse = data.Success;
                 }
             });
-            if (!idOK) {
+            if (idInUse) {
+                alert("The specified quote id already exists. Please select a new one ");
                 return;
             }
             $('#workTables').each(function () {
                 var json = [];
+                
                 $(this).find('table').each(function () {
                     var court;
                     var works = [];
@@ -308,23 +310,26 @@
                         }
                         
                     });
-                    json.push({ 'AreaName': court, 'Works': works,  
-                        'ClubId' : $('#clubId').val(),
-                        'ClubName' : $('#customerClub').val(),
-                        'ClubAddress' : $('#clubAddress').val(),
-                        'ContactName' : $('#contactName').val(),
-                        'ContactNumber' : $('#contactNumber').val(),
-                        'ContactEmail' : $('#contactEmail').val(),
-                        'ContactId': $('#contactId').val(),
-                        'QuoteId': $('#refId').html(),
-                        'QuoteDate': $('#dateId').html()
-                    });
+                    json.push({ 'AreaName': court, 'Works': works});
                 });
-                //alert(JSON.stringify(json));
+                var workFromView = {                        
+                    'QuoteRef': $('#refId').html(),
+                    'QuoteDate': $('#dateId').html(),
+                    'CourtWorkDetails': json,
+                    'ContactDetails': {
+                        'ClubId': $('#clubId').val(),
+                        'ClubName': $('#customerClub').val(),
+                        'ClubAddress': $('#clubAddress').val(),
+                        'ContactName': $('#contactName').val(),
+                        'ContactNumber': $('#contactNumber').val(),
+                        'ContactEmail': $('#contactEmail').val(),
+                        'ContactId': $('#contactId').val(),
+                    }
+                };
                 $.ajax({
                     url: '@Url.Action("CreateQuote")',
                     dataType: "json",
-                    data: { jsonString: JSON.stringify(json) },
+                    data: { jsonString: JSON.stringify(workFromView) },
                     success: function(data) { alert("Quote created"); },
                     error: function(data) { alert("Something bad happened: " + data); }
                 });
