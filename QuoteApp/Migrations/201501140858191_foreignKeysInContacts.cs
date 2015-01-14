@@ -10,7 +10,7 @@ namespace QuoteApp.Migrations
             DropForeignKey("dbo.Contacts", "Company_CompanyId", "dbo.Companies");
             DropIndex("dbo.Contacts", new[] { "Company_CompanyId" });
             RenameColumn(table: "dbo.Contacts", name: "Company_CompanyId", newName: "CompanyId");
-            AlterColumn("dbo.Contacts", "CompanyId", c => c.Int(nullable: false));
+            AlterColumn("dbo.Contacts", "CompanyId", c => c.Int(nullable: true));
             CreateIndex("dbo.Contacts", "CompanyId");
             AddForeignKey("dbo.Contacts", "CompanyId", "dbo.Companies", "CompanyId", cascadeDelete: true);
         }
