@@ -12,7 +12,7 @@ namespace QuoteApp.Models
         public int Vat { get; set; }
         public double IncomeTax { get; set; }
         public List<Invoice> Invoices { get; set; }
-        public List<Quote> Quotes { get; set; }
+        public List<QuoteSummary> Quotes { get; set; }
         public List<ScheduledWork> ScheduledWorks { get; set; }
 
         public HomeViewModel()
@@ -21,6 +21,7 @@ namespace QuoteApp.Models
             JobsCompleted = invoices.Count;
             MoneyMade = 0;
             IncomeTax = MoneyMade*0.2;
+            Quotes = Quote.GetQuoteSummaries();
         }
 
     }

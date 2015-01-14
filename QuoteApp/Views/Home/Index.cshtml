@@ -1,10 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@using QuoteApp.Models
 @model QuoteApp.Models.HomeViewModel
 <div class="form-horizontal">
     <div class="form-group">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <h3>Scheduled work</h3>
             <table class="table table-hover table-responsive">
                 <thead>
@@ -39,7 +40,22 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach (QuoteSummary summary in Model.Quotes)
+                    {
+                        <tr>
+                            <td>@summary.QuoteId</td>
+                            <td>@summary.QuoteDate</td>
+                            <td>@summary.LocationName</td>
+                            <td>@summary.LocationAddress</td>
+                            <td>@summary.ContactName</td>
+                            <td>@summary.ContactNumber</td>
+                            <td>@summary.ContactEmail</td>
+                            <td>@summary.Job</td>
+                            <td>£@summary.Sum</td>
+                        </tr>
+                    }
+                </tbody>
                 <tfoot></tfoot>
             </table>
             <h3>Unpaid invoices</h3>
@@ -60,16 +76,17 @@
                 <tfoot></tfoot>
             </table>
         </div>
-        <div class="col-lg-6">
-            <h3>Completed work this quarter</h3>
-            <p>We got paid for @Model.JobsCompleted jobs</p>
-            <h3>Money in this quarter</h3>
-            <p>Made <strong>£@Model.MoneyMade</strong> in total so far</p>
-            <h3>VAT sum</h3>
-            <p>Will have to pay around £@Model.Vat VAT</p>
-            <h3>Income tax sum</h3>
-            <p>And about £@Model.IncomeTax on income tax</p>
-        </div>
+        
+    </div>
+    <div class="col-lg-6">
+        <h3>Completed work this quarter</h3>
+        <p>We got paid for @Model.JobsCompleted jobs</p>
+        <h3>Money in this quarter</h3>
+        <p>Made <strong>£@Model.MoneyMade</strong> in total so far</p>
+        <h3>VAT sum</h3>
+        <p>Will have to pay around £@Model.Vat VAT</p>
+        <h3>Income tax sum</h3>
+        <p>And about £@Model.IncomeTax on income tax</p>
     </div>
 </div>
 

@@ -16,8 +16,8 @@ namespace QuoteApp.Models
         public string QuoteId { get; set; }
 
         [Required]
-        public int LocationId { get; set; }
-        public virtual WorkLocation Location { get; set; }
+        public int WorkLocationId { get; set; }
+        public virtual WorkLocation WorkLocation { get; set; }
 
         [Required]
         public int ContactId { get; set; }
@@ -32,7 +32,7 @@ namespace QuoteApp.Models
             List<CourtWorkDetail> works)
         {
             DateTime date = DateTime.ParseExact(quoteDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            Quote quote = new Quote { ContactId = contactId, LocationId = locationId, QuoteDate = date, QuoteId = quoteId };
+            Quote quote = new Quote { ContactId = contactId, WorkLocationId = locationId, QuoteDate = date, QuoteId = quoteId };
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 context.Quotes.Add(quote);
@@ -71,6 +71,31 @@ namespace QuoteApp.Models
                 }
             }
         }
+
+        public static List<QuoteSummary> GetQuoteSummaries()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return
+                    context.Quotes.ToList().Select(
+                        quote =>
+                            new QuoteSummary()
+                            {
+                                ContactEmail = quote.Contact.Email,
+                                ContactNumber = quote.Contact.MobileNumber,
+                                QuoteDate = quote.QuoteDate.ToString("d"),
+                                QuoteId = quote.QuoteId,
+                                ContactName = quote.Contact.FirstName + " " + quote.Contact.LastName,
+                                LocationAddress = quote.WorkLocation.Town + ", " + quote.WorkLocation.PostCode,
+                                LocationName = quote.WorkLocation.WorkLocationName,
+                                Sum = quote.QuotedWorks.Sum(work => work.QuotedWorkPrice),
+                                Job =
+                                    string.Join(", ",
+                                        quote.QuotedWorks.Select(areas => areas.QuotedWorkSubAreaName).ToArray())
+                            })
+                        .ToList();
+            }
+        } 
 
         public static bool DoesQuoteIdExist(string quoteId)
         {
