@@ -42,7 +42,7 @@ namespace QuoteApp.Models
             }
         }
 
-        public static Contact CheckAndUpdateContact(int contactId, string contactName, string contactEmail, string contactNumber, int clubId)
+        public static int CheckAndUpdateContact(int contactId, string contactName, string contactEmail, string contactNumber, int clubId)
         {
             using (ApplicationDbContext database = new ApplicationDbContext())
             {
@@ -64,25 +64,26 @@ namespace QuoteApp.Models
                     }
                     contact.WorkLocations.Add(location);
                     database.Contacts.Add(contact);
+                    database.SaveChanges();
                 }
-                else
-                {
-                    contact.FirstName = names[0];
-                    contact.LastName = names[names.Length - 1];
-                    if (names.Length > 2)
-                    {
-                        contact.MiddleName = string.Join(" ", names, 1, names.Length - 2);
-                    }
-                    contact.Email = contactEmail;
-                    contact.MobileNumber = contactNumber;
-                    if (!contact.WorkLocations.Contains(location))
-                    {
-                        contact.WorkLocations.Add(location);
-                    }
-                    database.Entry(contact).State = EntityState.Modified;
-                }
-                database.SaveChanges();
-                return contact;
+                //else
+                //{
+                //    contact.FirstName = names[0];
+                //    contact.LastName = names[names.Length - 1];
+                //    if (names.Length > 2)
+                //    {
+                //        contact.MiddleName = string.Join(" ", names, 1, names.Length - 2);
+                //    }
+                //    contact.Email = contactEmail;
+                //    contact.MobileNumber = contactNumber;
+                //    if (!contact.WorkLocations.Contains(location))
+                //    {
+                //        contact.WorkLocations.Add(location);
+                //    }
+                //    database.Entry(contact).State = EntityState.Modified;
+                //}
+                //database.SaveChanges();
+                return contact.ContactId;
             }
         }
     }

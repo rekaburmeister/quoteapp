@@ -41,41 +41,42 @@ namespace QuoteApp.Models
             }
         }
 
-        public static WorkLocation CheckAndUpdateLocation(int clubId, string clubAddress, string clubName)
+        public static int CheckAndUpdateLocation(int clubId, string clubAddress, string clubName)
         {
             using (ApplicationDbContext database = new ApplicationDbContext())
             {
                 WorkLocation location = database.WorkLocations.Find(clubId);
-                string[] addressLines = clubAddress.Split(' ');
+                string[] addressLines = clubAddress.Split(',');
                 if (location == null)
                 {
                     location = new WorkLocation
                     {
                         WorkLocationName = clubName,
-                        Address1 = addressLines[0],
-                        PostCode = addressLines[addressLines.Length - 1],
-                        Town = addressLines[addressLines.Length - 2]
+                        Address1 = clubAddress,
+                        //PostCode = addressLines[addressLines.Length - 1],
+                        //Town = addressLines[addressLines.Length - 2]
                     };
-                    if (addressLines.Length > 3)
-                    {
-                        location.Address2 = string.Join(" ", addressLines, 1, addressLines.Length - 2);
-                    }
+                    //if (addressLines.Length > 3)
+                    //{
+                    //    location.Address2 = string.Join(" ", addressLines, 1, addressLines.Length - 2);
+                    //}
                     database.WorkLocations.Add(location);
+                    database.SaveChanges();
                 }
-                else
-                {
-                    location.WorkLocationName = clubName;
-                    location.Address1 = addressLines[0];
-                    location.PostCode = addressLines[addressLines.Length - 1];
-                    location.Town = addressLines[addressLines.Length - 2];
-                    if (addressLines.Length > 3)
-                    {
-                        location.Address2 = string.Join(" ", addressLines, 1, addressLines.Length - 2);
-                    }
-                    database.Entry(location).State = EntityState.Modified;
-                }
-                database.SaveChanges();
-                return location;
+                //else
+                //{
+                //    location.WorkLocationName = clubName;
+                //    location.Address1 = addressLines[0];
+                //    location.PostCode = addressLines[addressLines.Length - 1];
+                //    location.Town = addressLines[addressLines.Length - 2];
+                //    if (addressLines.Length > 3)
+                //    {
+                //        location.Address2 = string.Join(" ", addressLines, 1, addressLines.Length - 2);
+                //    }
+                //    database.Entry(location).State = EntityState.Modified;
+                //}
+                //database.SaveChanges();
+                return location.WorkLocationId;
             }
         }
     }

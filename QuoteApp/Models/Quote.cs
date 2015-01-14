@@ -28,11 +28,11 @@ namespace QuoteApp.Models
 
         public virtual ICollection<QuotedWork> QuotedWorks { get; set; }
 
-        public static void CreateQuote(string quoteId, WorkLocation location, Contact contact, string quoteDate,
+        public static void CreateQuote(string quoteId, int locationId, int contactId, string quoteDate,
             List<CourtWorkDetail> works)
         {
             DateTime date = DateTime.ParseExact(quoteDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            Quote quote = new Quote {Contact = contact, Location = location, QuoteDate = date, QuoteId = quoteId};
+            Quote quote = new Quote { ContactId = contactId, LocationId = locationId, QuoteDate = date, QuoteId = quoteId };
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 context.Quotes.Add(quote);

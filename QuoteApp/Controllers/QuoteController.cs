@@ -71,10 +71,10 @@ namespace QuoteApp.Controllers
         public JsonResult CreateQuote(string jsonString)
         {
             WorkFromView works = (WorkFromView)JsonConvert.DeserializeObject(jsonString, typeof(WorkFromView));
-            WorkLocation location = WorkLocation.CheckAndUpdateLocation(works.ContactDetails.ClubId, works.ContactDetails.ClubAddress, works.ContactDetails.ClubName);
-            Contact contact = Contact.CheckAndUpdateContact(works.ContactDetails.ContactId, works.ContactDetails.ContactName,
-                works.ContactDetails.ContactEmail, works.ContactDetails.ContactNumber, location.WorkLocationId);
-            Quote.CreateQuote(works.QuoteRef, location, contact, works.QuoteDate, works.CourtWorkDetails);
+            int locationId = WorkLocation.CheckAndUpdateLocation(works.ContactDetails.ClubId, works.ContactDetails.ClubAddress, works.ContactDetails.ClubName);
+            int contactId = Contact.CheckAndUpdateContact(works.ContactDetails.ContactId, works.ContactDetails.ContactName,
+                works.ContactDetails.ContactEmail, works.ContactDetails.ContactNumber, locationId);
+            Quote.CreateQuote(works.QuoteRef, locationId, contactId, works.QuoteDate, works.CourtWorkDetails);
             return Json(new { Success = true, Message = "Quoted work added" }, JsonRequestBehavior.AllowGet);
         }
 
