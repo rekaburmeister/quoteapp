@@ -70,13 +70,11 @@ namespace QuoteApp.Controllers
 
         public JsonResult CreateQuote(string jsonString)
         {
-            List<WorkFromView> works = (List<WorkFromView>)JsonConvert.DeserializeObject(jsonString, typeof(List<WorkFromView>));
-            // TODO: Currently the header details are packed into each WorkFromView object. These should be extracted and sent only once
-            WorkFromView workItem = works[0];
-            WorkLocation location = WorkLocation.CheckAndUpdateLocation(workItem.ClubId, workItem.ClubAddress, workItem.ClubName);
-            Contact contact = Contact.CheckAndUpdateContact(workItem.ContactId, workItem.ContactName,
-                workItem.ContactEmail, workItem.ContactNumber, location.WorkLocationId);
-            Quote.CreateQuote(workItem.QuoteId, location, contact, workItem.QuoteDate, works);
+            WorkFromView works = (WorkFromView)JsonConvert.DeserializeObject(jsonString, typeof(WorkFromView));
+            WorkLocation location = WorkLocation.CheckAndUpdateLocation(works.ContactDetails.ClubId, works.ContactDetails.ClubAddress, works.ContactDetails.ClubName);
+            Contact contact = Contact.CheckAndUpdateContact(works.ContactDetails.ContactId, works.ContactDetails.ContactName,
+                works.ContactDetails.ContactEmail, works.ContactDetails.ContactNumber, location.WorkLocationId);
+            Quote.CreateQuote(works.QuoteRef, location, contact, works.QuoteDate, works.CourtWorkDetails);
             return Json(new { Success = true, Message = "Quoted work added" }, JsonRequestBehavior.AllowGet);
         }
 

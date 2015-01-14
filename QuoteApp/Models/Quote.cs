@@ -27,21 +27,21 @@ namespace QuoteApp.Models
         public virtual ICollection<QuotedWork> QuotedWorks { get; set; }
 
         public static void CreateQuote(string quoteId, WorkLocation location, Contact contact, string quoteDate,
-            List<WorkFromView> works)
+            List<CourtWorkDetail> works)
         {
             DateTime date = DateTime.ParseExact(quoteDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             Quote quote = new Quote {Contact = contact, Location = location, QuoteDate = date, QuoteId = quoteId};
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 context.Quotes.Add(quote);
-                foreach (WorkFromView workFromView in works)
+                foreach (CourtWorkDetail quoteWorkDetail in works)
                 {
-                    foreach (WorkItem workItem in workFromView.Works)
+                    foreach (WorkItem workItem in quoteWorkDetail.Works)
                     {
                         QuotedWork quotedWork = new QuotedWork()
                         {
                             Quote = quote,
-                            QuotedWorkMainAreaName = workFromView.AreaName,
+                            QuotedWorkMainAreaName = quoteWorkDetail.AreaName,
                             QuotedWorkDescription = workItem.Description,
                             QuotedWorkSubAreaName = string.IsNullOrEmpty(workItem.WorkArea) ? string.Empty : workItem.WorkArea,
                             QuotedWorkPrice = workItem.Price
