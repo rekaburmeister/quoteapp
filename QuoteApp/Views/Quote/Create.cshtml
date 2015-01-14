@@ -330,7 +330,10 @@
                     url: '@Url.Action("CreateQuote")',
                     dataType: "json",
                     data: { jsonString: JSON.stringify(workFromView) },
-                    success: function(data) { alert("Quote created"); },
+                    success: function (data) {
+                        alert("Quote created");
+                        location.href = '@Url.Action("Index", "Home")';
+                    },
                     error: function(data) { alert("Something bad happened: " + data); }
                 });
             });
