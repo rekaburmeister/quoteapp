@@ -30,6 +30,7 @@ namespace QuoteApp.Models
         public string MobileNumber { get; set; }
         public string PhoneNumber { get; set; }
 
+        public int CompanyId { get; set; }
         public virtual Company Company { get; set; }
 
         public virtual ICollection<WorkLocation> WorkLocations { get; set; }

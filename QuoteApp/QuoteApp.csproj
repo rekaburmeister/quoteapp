@@ -200,6 +200,14 @@
     <Compile Include="Migrations\201501130956374_AllowNullsForSubArea.Designer.cs">
       <DependentUpon>201501130956374_AllowNullsForSubArea.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501140851220_foreignKeysInQuotes.cs" />
+    <Compile Include="Migrations\201501140851220_foreignKeysInQuotes.Designer.cs">
+      <DependentUpon>201501140851220_foreignKeysInQuotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501140858191_foreignKeysInContacts.cs" />
+    <Compile Include="Migrations\201501140858191_foreignKeysInContacts.Designer.cs">
+      <DependentUpon>201501140858191_foreignKeysInContacts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
@@ -334,6 +342,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501130956374_AllowNullsForSubArea.resx">
       <DependentUpon>201501130956374_AllowNullsForSubArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501140851220_foreignKeysInQuotes.resx">
+      <DependentUpon>201501140851220_foreignKeysInQuotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501140858191_foreignKeysInContacts.resx">
+      <DependentUpon>201501140858191_foreignKeysInContacts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
