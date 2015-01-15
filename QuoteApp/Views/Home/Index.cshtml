@@ -61,7 +61,7 @@
                 <tbody>
                     @foreach (QuoteSummary summary in Model.Quotes)
                     {
-                        <tr>
+                        <tr onclick="displayQuote('@summary.QuoteId');">
                             <td>@summary.QuoteId</td>
                             <td>@summary.QuoteDate</td>
                             <td>@summary.LocationName</td>
@@ -109,3 +109,12 @@
         <p>And about £@Model.IncomeTax on income tax</p>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        function displayQuote(quoteId) {
+            var url = '@Url.Action("Details", "Quote", new {id = "PLACEHOLDER"})'.replace('PLACEHOLDER', quoteId);
+            window.location.href = url;
+        }
+    </script>
+}

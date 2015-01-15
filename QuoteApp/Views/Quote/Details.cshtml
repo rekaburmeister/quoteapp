@@ -1,34 +1,115 @@
-﻿@model QuoteApp.Models.Quote
+﻿@model QuoteApp.Models.WorkFromView
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>Quote</h4>
-    	<hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.QuoteDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.QuoteDate)
-            </dd>
-    
-        </dl>
+<div class="form-horizontal" style="margin-top: 3%" id="headerDiv">
+    <div class="form-group">
+        <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
+        <div class="col-lg-6" style="text-align: center">
+            Tony Gay<br/>
+            SCPS<br />
+            18 Ransome Close<br />
+            Cambridge<br />
+            CB4 1WH
+        </div>
+        <div class="col-lg-4" style="text-align: right">
+            07 771 631 876<br/>
+            tonysquash@mac.com<br/>
+            www.tonysquash.com
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.QuoteId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+</div>
+<hr class="header-hr" />
+<div class="col-lg-2 col-lg-offset-10">
+    <table style="font-weight: bold; font-size: 16px; border:none;">
+        <tr>
+            <td style="text-align: right;">Ref #: </td>
+            <td>@Model.QuoteRef</td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">Date: </td>
+            <td>@Model.QuoteDate</td>
+        </tr>
+    </table>
+</div>
+<div style="font-weight: bold; font-size: 16px;" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-lg-1">
+            To:
+        </div>
+        <div class="col-lg-10">
+            @Model.ContactDetails.ContactName
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="col-lg-1">
+            Care of:
+        </div>
+        <div class="col-lg-10">
+            @Model.ContactDetails.ClubName<br />
+            <span style="font-weight: normal">
+                @Model.ContactDetails.ClubAddress
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-1">
+            Ref:
+        </div>
+        <div class="col-lg-10">
+            <span style="font-weight: normal">Squash court refurbishment</span>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="col-lg-1">
+            Contact:
+        </div>
+        <div class="col-lg-10">
+            <span style="font-style: oblique;">@Model.ContactDetails.ContactEmail</span><br/>
+            @Model.ContactDetails.ContactNumber
+        </div>
+    </div>
+</div>
+
+<div id="workTables">
+    @foreach (var workArea in Model.CourtWorkDetails)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>@workArea.AreaName</th>
+                    <th></th>
+                    <th>Price @if(workArea.NumberOfCourts > 1){<span>per court</span>}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var work in workArea.Works)
+                {
+                    <tr>
+                        <td style="text-align: right; width: 20%;">@work.WorkArea</td>
+                        <td style="width: 65%;">@work.Description</td>
+                        <td style="width: 15%;">@work.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<div style="width: 100%; text-align: center; font-weight: bold;">
+    All above prices are subject to VAT!
+</div>
+
+
+<hr />
+<div class="form-horizontal" id="footerDiv">
+    <div class="form-group">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-6" style="text-align: center">
+            Mr A G Gay<br/>
+            Approved by England Squash<br/>
+            VAT REG NO: 650 727831
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+</div>
+

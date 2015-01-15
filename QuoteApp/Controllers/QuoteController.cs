@@ -38,7 +38,12 @@ namespace QuoteApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(quote);
+
+            WorkFromView model = new WorkFromView() { QuoteRef = quote.QuoteId, 
+                                                      QuoteDate = quote.QuoteDate.ToString("d"), 
+                                                      ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation), 
+                                                      CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList()) };
+            return View(model);
         }
 
         // GET: /Quote/Create
@@ -50,23 +55,6 @@ namespace QuoteApp.Controllers
                 Works = m_DbContext.Works.ToList().Select(work=>new WorkViewModel(work)).ToList()
             };
             return View(model);
-        }
-
-        // POST: /Quote/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="QuoteId,QuoteDate")] Quote quote)
-        {
-            if (ModelState.IsValid)
-            {
-                m_DbContext.Quotes.Add(quote);
-                m_DbContext.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(quote);
         }
 
         public JsonResult CreateQuote(string jsonString)

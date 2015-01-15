@@ -20,7 +20,6 @@ namespace QuoteApp.Models
         [Required]
         public int Price { get; set; }
 
-        [Required]
-        public int NumberOfCourts { get; set; }
+        
     }
 }

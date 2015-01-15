@@ -47,6 +47,18 @@ input[type="checkbox"].input-validation-error {
 
 }
 
+.header-hr {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 4px;
+    border-color: #3B9CFC;
+    border-style: groove;
+}
+
 footer {
             /*background-color: darkgray;*/
             bottom: 0;

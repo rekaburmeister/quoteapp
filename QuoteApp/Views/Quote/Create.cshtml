@@ -300,14 +300,14 @@
                                 'WorkArea': cells[0].innerText,
                                 'WorkTitle': cells[4].innerText,
                                 'Description': cells[1].innerText,
-                                'Price': cells[2].innerText,
-                                'NumberOfCourts': numberOfCourts
+                                'Price': cells[2].innerText
+                                
                         };
                             works.push(line);
                         }
                         
                     });
-                    json.push({ 'AreaName': court, 'Works': works});
+                    json.push({ 'AreaName': court, 'Works': works, 'NumberOfCourts': numberOfCourts });
                 });
                 var workFromView = {                        
                     'QuoteRef': $('#refId').html(),

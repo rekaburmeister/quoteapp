@@ -55,7 +55,7 @@ namespace QuoteApp.Models
                             QuotedWorkDescription = workItem.Description,
                             QuotedWorkSubAreaName = string.IsNullOrEmpty(workItem.WorkArea) ? string.Empty : workItem.WorkArea,
                             WorkTitle = workItem.WorkTitle,
-                            NumberOfCourts = workItem.NumberOfCourts,
+                            NumberOfCourts = quoteWorkDetail.NumberOfCourts,
                             QuotedWorkPrice = workItem.Price
                         };
                         context.QuotedWorks.Add(quotedWork);
