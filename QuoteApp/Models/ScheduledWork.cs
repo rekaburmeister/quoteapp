@@ -38,6 +38,7 @@ namespace QuoteApp.Models
                                     string.Join(", ",
                                         quote.QuotedWorks.Select(areas => areas.WorkTitle + "(" + areas.NumberOfCourts + ")").ToArray())
                             })
+                        .OrderBy(work=>work.Date)
                         .ToList();
             }
         } 
