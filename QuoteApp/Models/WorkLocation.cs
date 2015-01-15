@@ -52,14 +52,14 @@ namespace QuoteApp.Models
                     location = new WorkLocation
                     {
                         WorkLocationName = clubName,
-                        Address1 = clubAddress,
-                        //PostCode = addressLines[addressLines.Length - 1],
-                        //Town = addressLines[addressLines.Length - 2]
+                        Address1 = addressLines[0],
+                        PostCode = addressLines[addressLines.Length - 1],
+                        Town = addressLines[addressLines.Length - 2]
                     };
-                    //if (addressLines.Length > 3)
-                    //{
-                    //    location.Address2 = string.Join(" ", addressLines, 1, addressLines.Length - 2);
-                    //}
+                    if (addressLines.Length > 3)
+                    {
+                        location.Address2 = string.Join(", ", addressLines, 1, addressLines.Length - 2);
+                    }
                     database.WorkLocations.Add(location);
                     database.SaveChanges();
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
@@ -63,7 +64,7 @@ namespace QuoteApp.Models
                     {
                         contact.MiddleName = string.Join(" ", names, 1, names.Length - 2);
                     }
-                    contact.WorkLocations.Add(location);
+                    contact.WorkLocations = new Collection<WorkLocation> {location};
                     database.Contacts.Add(contact);
                     database.SaveChanges();
                 }
