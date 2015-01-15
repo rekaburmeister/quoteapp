@@ -213,7 +213,7 @@
             var newRowId = "row_" + rowId;
             $table.attr("id", tableId);
             $table.addClass("table table-bordered");
-            $table.append("<thead><tr><th style=width:20%; contenteditable=true>Court</th><th style=width:65%;></th><th style=width:10%; contenteditable=true>Price</th><th style=width:5%;><i class=\"glyphicon glyphicon-trash hover\" onclick=removeElement(" + tableId + ")></i></th></tr></thead>");
+            $table.append("<thead><tr><th style=width:20%; contenteditable=true>Court</th><th style=width:65%;>Number of courts for these works: <span contenteditable=true>1</span></th><th style=width:10%; contenteditable=true>Price</th><th style=width:5%;><i class=\"glyphicon glyphicon-trash hover\" onclick=removeElement(" + tableId + ")></i></th></tr></thead>");
             $table.append("<tbody><tr id=" + newRowId + ">" + emptyEditableField + '<td contenteditable=true onclick=(setRowId("' + newRowId + '"));>'
                                                                                             + pencilIcon + '</td>' + emptyEditableField +
                                     "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeElement(" + newRowId + ")></i></td>" +
@@ -227,17 +227,9 @@
             rowId++;
         }
 
-        function getClubCode() {
-            return getAcronym('customerClub');
-        }
-
-        function getCustomerCode() {
-            return getAcronym('contactName');
-        }
-
         function updateReference() {
-            var code = getClubCode();
-            var customer = getCustomerCode();
+            var code = getAcronym('customerClub');
+            var customer = getAcronym('contactName');
             if (code.length > 0) {
                 code += "-";
                 if (customer.length > 0) {
@@ -289,13 +281,15 @@
                 
                 $(this).find('table').each(function () {
                     var court;
+                    var numberOfCourts;
                     var works = [];
                     
                     $(this).find('tr').each(function () {
                         var header = $(this).find('th');
                         if (header.length == 4) {
                             court = header[0].innerText;
-                            
+                            numberOfCourts = $(header[1]).find('span')[0].textContent;
+
                         } else {
                             var cells = $(this).find('td');
                             if (cells.length != 4) {
