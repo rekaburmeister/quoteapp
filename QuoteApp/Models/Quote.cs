@@ -28,11 +28,19 @@ namespace QuoteApp.Models
 
         public virtual ICollection<QuotedWork> QuotedWorks { get; set; }
 
+        [Required]
+        public bool Archived { get; set; }
+        public DateTime? ScheduledFor { get; set; }
+        public int JobLength { get; set; }
+
+        [Required]
+        public bool Finished { get; set; }
+
         public static void CreateQuote(string quoteId, int locationId, int contactId, string quoteDate,
             List<CourtWorkDetail> works)
         {
             DateTime date = DateTime.ParseExact(quoteDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            Quote quote = new Quote { ContactId = contactId, WorkLocationId = locationId, QuoteDate = date, QuoteId = quoteId };
+            Quote quote = new Quote { ContactId = contactId, WorkLocationId = locationId, QuoteDate = date, QuoteId = quoteId, Archived = false, Finished = false};
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 context.Quotes.Add(quote);
@@ -79,7 +87,7 @@ namespace QuoteApp.Models
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 return
-                    context.Quotes.ToList().Select(
+                    context.Quotes.ToList().Where(archived => !archived.Archived && archived.ScheduledFor == null).Select(
                         quote =>
                             new QuoteSummary()
                             {

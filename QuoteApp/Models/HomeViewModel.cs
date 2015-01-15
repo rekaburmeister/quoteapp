@@ -22,6 +22,7 @@ namespace QuoteApp.Models
             MoneyMade = 0;
             IncomeTax = MoneyMade*0.2;
             Quotes = Quote.GetQuoteSummaries();
+            ScheduledWorks = ScheduledWork.GetScheduledWorks();
         }
 
     }

@@ -21,7 +21,24 @@
                         <th>Sum</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach (ScheduledWork work in Model.ScheduledWorks)
+                    {
+                        <tr>
+                            <td>@work.QuoteId</td>
+                            <td>@work.Date</td>
+                            <td>@work.Club</td>
+                            <td>@work.Address</td>
+                            <td>@work.Contact</td>
+                            <td>@work.Number</td>
+                            <td>@work.Email</td>
+                            <td>@work.Job</td>
+                            <td>£@work.Sum</td>
+                            <td>@Html.ActionLink("Finished", "Finish", "Quote", new { quoteId = work.QuoteId }, new { @class = "btn btn-xs btn-success" })</td>
+                            <td>@Html.ActionLink("Cancel", "Cancel", "Quote", new { quoteId = work.QuoteId }, new { @class = "btn btn-xs btn-danger" })</td>
+                        </tr>
+                    }
+                </tbody>
                 <tfoot></tfoot>
             </table>
             <h3>Quotes issued</h3>
@@ -38,6 +55,7 @@
                         <th>Job</th>
                         <th>Sum</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +71,8 @@
                             <td>@summary.ContactEmail</td>
                             <td>@summary.Job</td>
                             <td>£@summary.Sum</td>
+                            <td>@Html.ActionLink("Schedule", "ScheduleQuote", "Quote", new { quoteId = @summary.QuoteId }, new { @class = "btn btn-xs btn-success" })</td>
+                            <td>@Html.ActionLink("Archive", "ArchiveQuote", "Quote", new { quoteId = @summary.QuoteId }, new { @class = "btn btn-xs btn-danger" })</td>
                         </tr>
                     }
                 </tbody>
@@ -76,7 +96,7 @@
                 <tfoot></tfoot>
             </table>
         </div>
-        
+
     </div>
     <div class="col-lg-6">
         <h3>Completed work this quarter</h3>
@@ -89,4 +109,3 @@
         <p>And about £@Model.IncomeTax on income tax</p>
     </div>
 </div>
-

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -81,6 +82,54 @@ namespace QuoteApp.Controllers
         public JsonResult VerifyQuoteId(string quoteId)
         {
             return Json(new{Success = Quote.DoesQuoteIdExist(quoteId)}, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ScheduleQuote(string quoteId)
+        {
+            return View(new ScheduleWorkViewModel{NumberOfDays = 1, QuoteId = quoteId});
+        }
+
+        [HttpPost, ActionName("ScheduleQuote")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ScheduleQuote([Bind(Include = "QuoteId,NumberOfDays,WorkStarts")] ScheduleWorkViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Quote quote = m_DbContext.Quotes.Find(model.QuoteId);
+                if (quote != null)
+                {
+                    quote.ScheduledFor = DateTime.ParseExact(model.WorkStarts, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    quote.JobLength = model.NumberOfDays;
+                    m_DbContext.Entry(quote).State = EntityState.Modified;
+                    m_DbContext.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ArchiveQuote(string quoteId)
+        {
+            if (quoteId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Quote quote = m_DbContext.Quotes.Find(quoteId);
+            if (quote == null)
+            {
+                return HttpNotFound();
+            }
+            return View(quote);
+        }
+
+        [HttpPost, ActionName("ArchiveQuote")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ArchiveConfirmed(string quoteId)
+        {
+            Quote quote = m_DbContext.Quotes.Find(quoteId);
+            quote.Archived = true;
+            m_DbContext.Entry(quote).State = EntityState.Modified;
+            m_DbContext.SaveChanges();
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: /Quote/Edit/5
