@@ -88,7 +88,7 @@
                                                         @work.WorkName
                                                     </a>
                                                 </h4>
-                                                <button class="btn btn-xs btn-info" onclick="selectWork('@string.Format("{0}Text",@work.WorkName.Replace(" ", ""))', '@string.Format("{0}Price",@work.WorkName.Replace(" ", ""))');" data-dismiss="modal">Select</button>
+                                                <button class="btn btn-xs btn-info" onclick="selectWork('@string.Format("{0}Text",@work.WorkName.Replace(" ", ""))', '@work.WorkPrice','@work.WorkName');" data-dismiss="modal">Select</button>
                                             </div>
                                             <div id="@work.WorkName.Replace(" ", "")" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@string.Format("{0}Heading",@work.WorkName.Replace(" ", ""))">
                                                 <input type="hidden" id="@string.Format("{0}Price",@work.WorkName.Replace(" ", ""))" value="@work.WorkPrice" />
@@ -198,7 +198,7 @@
             var newRowId = "row_" + rowId;
             $(tableId).find('tbody').append("<tr id=" + newRowId + ">" + emptyEditableField + '<td contenteditable=true onclick=(setRowId("' + newRowId + '"));>'
                                                                                             + pencilIcon + '</td>' + emptyEditableField +
-                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeElement(" + newRowId + ")></i></td>" +
+                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeElement(" + newRowId + ")></i></td><td style=display:none;></td>" +
                                 "</tr></tbody>");
             rowId++;
         }
@@ -216,7 +216,7 @@
             $table.append("<thead><tr><th style=width:20%; contenteditable=true>Court</th><th style=width:65%;>Number of courts for these works: <span contenteditable=true>1</span></th><th style=width:10%; contenteditable=true>Price</th><th style=width:5%;><i class=\"glyphicon glyphicon-trash hover\" onclick=removeElement(" + tableId + ")></i></th></tr></thead>");
             $table.append("<tbody><tr id=" + newRowId + ">" + emptyEditableField + '<td contenteditable=true onclick=(setRowId("' + newRowId + '"));>'
                                                                                             + pencilIcon + '</td>' + emptyEditableField +
-                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeElement(" + newRowId + ")></i></td>" +
+                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeElement(" + newRowId + ")></i></td><td style=display:none;></td>" +
                                 "</tr></tbody>");
             $table.append("<tfoot><tr>" +
                                     "<td colspan=4>" +
@@ -256,9 +256,10 @@
             return acronym;
         }
 
-        function selectWork(description, price) {
+        function selectWork(description, price, title) {
             $('#' + $('#selectedRowId').val()).find("td").eq(1).html($('#' + description).html());
-            $('#' + $('#selectedRowId').val()).find("td").eq(2).html($('#' + price).val());
+            $('#' + $('#selectedRowId').val()).find("td").eq(2).html(price);
+            $('#' + $('#selectedRowId').val()).find("td").eq(4).html(title);
         }
         
         function submitQuote() {
@@ -292,14 +293,16 @@
 
                         } else {
                             var cells = $(this).find('td');
-                            if (cells.length != 4) {
+                            if (cells.length != 5) {
                                 return;
                             }
                             var line = {
                                 'WorkArea': cells[0].innerText,
+                                'WorkTitle': cells[4].innerText,
                                 'Description': cells[1].innerText,
-                                'Price': cells[2].innerText
-                            };
+                                'Price': cells[2].innerText,
+                                'NumberOfCourts': numberOfCourts
+                        };
                             works.push(line);
                         }
                         

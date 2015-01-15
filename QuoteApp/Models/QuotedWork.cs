@@ -15,10 +15,15 @@ namespace QuoteApp.Models
         [Required]
         public string QuotedWorkMainAreaName { get; set; }
 
+        public string WorkTitle { get; set; }
+
         public string QuotedWorkSubAreaName { get; set; }
 
         [Required]
         public string QuotedWorkDescription { get; set; }
+
+        [Required]
+        public int NumberOfCourts { get; set; }
 
         [Required]
         public int QuotedWorkPrice { get; set; }

@@ -15,6 +15,12 @@ namespace QuoteApp.Models
         public string Description { get; set; }
 
         [Required]
+        public string WorkTitle { get; set; }
+
+        [Required]
         public int Price { get; set; }
+
+        [Required]
+        public int NumberOfCourts { get; set; }
     }
 }

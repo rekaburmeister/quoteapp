@@ -46,6 +46,8 @@ namespace QuoteApp.Models
                             QuotedWorkMainAreaName = quoteWorkDetail.AreaName,
                             QuotedWorkDescription = workItem.Description,
                             QuotedWorkSubAreaName = string.IsNullOrEmpty(workItem.WorkArea) ? string.Empty : workItem.WorkArea,
+                            WorkTitle = workItem.WorkTitle,
+                            NumberOfCourts = workItem.NumberOfCourts,
                             QuotedWorkPrice = workItem.Price
                         };
                         context.QuotedWorks.Add(quotedWork);
@@ -88,10 +90,10 @@ namespace QuoteApp.Models
                                 ContactName = quote.Contact.FirstName + " " + quote.Contact.LastName,
                                 LocationAddress = quote.WorkLocation.Town + ", " + quote.WorkLocation.PostCode,
                                 LocationName = quote.WorkLocation.WorkLocationName,
-                                Sum = quote.QuotedWorks.Sum(work => work.QuotedWorkPrice),
+                                Sum = quote.QuotedWorks.Sum(work => work.QuotedWorkPrice * work.NumberOfCourts),
                                 Job =
                                     string.Join(", ",
-                                        quote.QuotedWorks.Select(areas => areas.QuotedWorkSubAreaName).ToArray())
+                                        quote.QuotedWorks.Select(areas => areas.WorkTitle + "(" +areas.NumberOfCourts + ")").ToArray())
                             })
                         .ToList();
             }
