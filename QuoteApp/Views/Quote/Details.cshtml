@@ -1,37 +1,40 @@
 ﻿@model QuoteApp.Models.WorkFromView
 
-    <div id="quoteToConvert">
-    <div class="form-horizontal" style="margin-top: 3%" id="headerDiv">
-        <div class="form-group">
-            <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
-            <div class="col-lg-8" style="text-align: center">
-                Tony Gay<br />
-                SCPS<br />
-                18 Ransome Close<br />
-                Cambridge<br />
-                CB4 1WH
-            </div>
-            <div class="col-lg-2" style="text-align: right">
-                07 771 631 876<br />
-                tonysquash@mac.com<br />
-                www.tonysquash.com
-            </div>
+
+<div class="form-horizontal" style="margin-top: 3%" id="headerDiv">
+    <div class="form-group">
+        <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
+        <div class="col-lg-8" style="text-align: center">
+            Tony Gay<br />
+            SCPS<br />
+            18 Ransome Close<br />
+            Cambridge<br />
+            CB4 1WH
+        </div>
+        <div class="col-lg-2" style="text-align: right">
+            07 771 631 876<br />
+            tonysquash@mac.com<br />
+            www.tonysquash.com
         </div>
     </div>
-    <hr class="header-hr" />
+</div>
+<hr class="header-hr" />
+<div id="referencesDiv" style="font-size: 20px; font-family: Georgia">
+    <div class="col-md-3 col-md-offset-9">
+        <table style="font-weight: bold; border:none;">
+            <tr>
+                <td style="text-align: right; width: 40%; padding-right: 10px;">Ref #: </td>
+                <td>@Model.QuoteRef</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding-right: 10px;">Date: </td>
+                <td>@Model.QuoteDate</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="quoteToConvert">
     <div id="detailsDiv" style="font-size: 20px; font-family: Georgia">
-        <div class="col-md-3 col-md-offset-9">
-            <table style="font-weight: bold; border:none;">
-                <tr>
-                    <td style="text-align: right; width: 40%; padding-right: 10px;">Ref #: </td>
-                    <td>@Model.QuoteRef</td>
-                </tr>
-                <tr>
-                    <td style="text-align: right; padding-right: 10px;">Date: </td>
-                    <td>@Model.QuoteDate</td>
-                </tr>
-            </table>
-        </div>
         <div style="font-weight: bold;" class="form-horizontal">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -81,12 +84,15 @@
 
         Tony
     </div>
-    <div id="workTables" style="margin-top: 100px;">
+    <div id="workTables" style="margin-top: 200px;">
+        <div style="text-align: center; font-family: Georgia; border-bottom: 30px">
+            <h1>Quotation</h1>
+        </div>
         @foreach (var workArea in Model.CourtWorkDetails)
         {
             <table class="table table-bordered">
                 <thead>
-                    <tr style="background-color: #87C1FD; ">
+                    <tr style="background-color: #87C1FD; color: whitesmoke;">
                         <th style="border-right:none">@workArea.AreaName</th>
                         <th style="border-right: none; border-left: none; "></th>
                         <th style="border-left:none">
@@ -111,30 +117,31 @@
     <div style="width: 100%; text-align: center; font-weight: bold; margin-top: 150px; margin-bottom: 100px;">
         All above prices are subject to VAT!
     </div>
-
-
-    <hr />
-    <div class="form-horizontal" id="footerDiv">
-        <div class="form-group">
-            <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/EnglandSquash.jpg"></div>
-            <div class="col-lg-8" style="text-align: center">
-                Mr A G Gay<br />
-                Approved by England Squash<br />
-                VAT REG NO: 650 727831
-            </div>
-            <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/Armourcoat.JPG"></div>
-        </div>
-    </div>
-
 </div>
 
+    
+<div class="form-horizontal" id="footerDiv">
+    <hr />
+    <div class="form-group">
+        <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/EnglandSquash.jpg"></div>
+        <div class="col-lg-8" style="text-align: center">
+            Mr A G Gay<br />
+            Approved by England Squash<br />
+            VAT REG NO: 650 727831
+        </div>
+        <div class="col-lg-2"><img class="img-responsive" src="~/Content/Images/Armourcoat.JPG"></div>
+    </div>
+</div>
+
+
+
 <button class="btn btn-default" onclick="generatePdf('@Model.QuoteRef');">Generate PDF</button>
-@Html.ActionLink("Get PDF", "GetPdf", new { reference=Model.QuoteRef})
+@Html.ActionLink("Get PDF", "GetPdf", new { reference = Model.QuoteRef })
 
 @section scripts{
     <script>
         //$('#Html').val($('#quoteToConvert').html());
-            function generatePdf(quoteReference) {
+        function generatePdf(quoteReference) {
 
             $.ajax({
                 type: "POST",
@@ -142,11 +149,13 @@
                 dataType: "json",
                 data: {
                     html: $('#quoteToConvert').html(),
+                    header: $('#headerDiv').html(),
+                    footer: $('#footerDiv').html(),
                     quoteRef: quoteReference
                 },
                 success: function (data) { alert("PDF uploaded to database"); },
-                error: function(data) {
-                     alert("Something bad happened: " + data.errorMessage);
+                error: function (data) {
+                    alert("Something bad happened: " + data.errorMessage);
                 }
             });
         }

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using QuoteApp.Helpers;
 using QuoteApp.Models;
 using Rotativa;
 
@@ -154,12 +155,21 @@ namespace QuoteApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public JsonResult GeneratePdf(string html, string quoteRef)
+        public JsonResult GeneratePdf(string html, string header, string footer, string quoteRef)
         {
+            html = PdfHelper.FormatBasePdf(html, Server.MapPath("~"));
             MemoryStream stream = new MemoryStream();
             try
             {
                 pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
+                client.enableBackgrounds();
+                client.enableHyperlinks();
+                client.enableImages();
+                client.setHeaderHtml(header);
+                client.setFooterHtml(footer);
+                client.setPageWidth("8.267in");
+                client.setPageHeight("11.692in");
+                client.setVerticalMargin("1.8in");
                 client.convertHtml(html, stream);
                 
             }
@@ -170,12 +180,22 @@ namespace QuoteApp.Controllers
 
             byte[] content = new byte[stream.Length];
             stream.Read(content, 0, Convert.ToInt32(stream.Length));
-            GeneratedPdf pdf = new GeneratedPdf()
+            GeneratedPdf pdf = m_DbContext.GeneratedPdfs.Find(quoteRef);
+            if (pdf == null)
             {
-                Content = content,
-                Reference = quoteRef
-            };
-            m_DbContext.GeneratedPdfs.Add(pdf);
+                pdf = new GeneratedPdf()
+                {
+                    Content = content,
+                    Reference = quoteRef
+                };
+                m_DbContext.GeneratedPdfs.Add(pdf);
+            }
+            else
+            {
+                pdf.Content = content;
+                m_DbContext.Entry(pdf).State = EntityState.Modified;
+            }
+            
             m_DbContext.SaveChanges();
 
             return Json(new{Success=true});
