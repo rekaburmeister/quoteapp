@@ -29,6 +29,7 @@ namespace QuoteApp.Models
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<QuotedWork> QuotedWorks { get; set; }
         public DbSet<InvoicedWork> InvoicedWorks { get; set; }
+        public DbSet<GeneratedPdf> GeneratedPdfs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

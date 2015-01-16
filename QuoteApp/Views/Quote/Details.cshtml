@@ -128,8 +128,8 @@
 
 </div>
 
-@*<button class="btn btn-default" onclick="generatePdf('@Model.QuoteRef');">Generate PDF</button>*@
-@*@Html.ActionLink("Get PDF", "GeneratePdf", new { html = Model.Html , quoteRef=Model.QuoteRef })*@
+<button class="btn btn-default" onclick="generatePdf('@Model.QuoteRef');">Generate PDF</button>
+@Html.ActionLink("Get PDF", "GetPdf", new { reference=Model.QuoteRef})
 
 @section scripts{
     <script>
@@ -144,8 +144,9 @@
                     html: $('#quoteToConvert').html(),
                     quoteRef: quoteReference
                 },
+                success: function (data) { alert("PDF uploaded to database"); },
                 error: function(data) {
-                     alert("Something bad happened: " + data);
+                     alert("Something bad happened: " + data.errorMessage);
                 }
             });
         }

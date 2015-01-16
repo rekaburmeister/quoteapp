@@ -239,11 +239,16 @@
     <Compile Include="Migrations\201501150850588_quoteFinished.Designer.cs">
       <DependentUpon>201501150850588_quoteFinished.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501160904304_pdfFiles.cs" />
+    <Compile Include="Migrations\201501160904304_pdfFiles.Designer.cs">
+      <DependentUpon>201501160904304_pdfFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ContactJson.cs" />
+    <Compile Include="Models\GeneratedPdf.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
@@ -441,6 +446,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501150850588_quoteFinished.resx">
       <DependentUpon>201501150850588_quoteFinished.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501160904304_pdfFiles.resx">
+      <DependentUpon>201501160904304_pdfFiles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

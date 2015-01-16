@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -151,13 +152,41 @@ namespace QuoteApp.Controllers
             }
             return View(quote);
         }
-        [ValidateInput(false)]
-        public FileContentResult GeneratePdf(string html, string quoteRef)
+
+        [HttpPost, ValidateInput(false)]
+        public JsonResult GeneratePdf(string html, string quoteRef)
         {
-            pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
             MemoryStream stream = new MemoryStream();
-            client.convertHtml(html, stream);
-            string fileName = quoteRef + ".pdf";
+            try
+            {
+                pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
+                client.convertHtml(html, stream);
+                
+            }
+            catch (Exception exception)
+            {
+                return Json(new{errorMessage = exception.Message});
+            }
+
+            byte[] content = new byte[stream.Length];
+            stream.Read(content, 0, Convert.ToInt32(stream.Length));
+            GeneratedPdf pdf = new GeneratedPdf()
+            {
+                Content = content,
+                Reference = quoteRef
+            };
+            m_DbContext.GeneratedPdfs.Add(pdf);
+            m_DbContext.SaveChanges();
+
+            return Json(new{Success=true});
+
+        }
+
+        public FileContentResult GetPdf(string reference)
+        {
+            GeneratedPdf pdf = m_DbContext.GeneratedPdfs.Find(reference);
+            MemoryStream stream = new MemoryStream(pdf.Content);
+            string fileName = reference + ".pdf";
             return File(stream.ToArray(), MimeMapping.GetMimeMapping(fileName), fileName);
         }
 
