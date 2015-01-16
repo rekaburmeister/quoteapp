@@ -108,6 +108,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="pdfcrowd">
+      <HintPath>C:\Users\reka.burmeister\Downloads\pdfcrowd.dll</HintPath>
+    </Reference>
     <Reference Include="RazorPDF">
       <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
     </Reference>

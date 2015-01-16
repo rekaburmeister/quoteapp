@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -150,10 +151,14 @@ namespace QuoteApp.Controllers
             }
             return View(quote);
         }
-
-        public ActionResult GeneratePdf(QuoteViewModel model)
+        [ValidateInput(false)]
+        public FileContentResult GeneratePdf(string html, string quoteRef)
         {
-            return new ViewAsPdf(model);
+            pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
+            MemoryStream stream = new MemoryStream();
+            client.convertHtml(html, stream);
+            string fileName = quoteRef + ".pdf";
+            return File(stream.ToArray(), MimeMapping.GetMimeMapping(fileName), fileName);
         }
 
         public ActionResult GeneratePdf2()
