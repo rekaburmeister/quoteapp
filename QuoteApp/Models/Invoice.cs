@@ -32,6 +32,16 @@ namespace QuoteApp.Models
             {
                 return context.Invoices.Where(i => i.InvoiceDate >= from && i.InvoiceDate <= to).ToList();
             }
-        } 
+        }
+
+        public static string GetNextInvoiceId()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                string id = context.Invoices.Last().InvoiceId.Split('-').Last();
+                id = id.Remove(0, 1);
+                return "I" + Convert.ToInt16(id) + 1;
+            }
+        }
     }
 }
