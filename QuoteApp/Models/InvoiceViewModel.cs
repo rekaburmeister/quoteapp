@@ -27,18 +27,15 @@ namespace QuoteApp.Models
         {
             string[] split = quote.QuoteId.Split('-');
             var acceptedWorks = quote.QuotedWorks.Where(work => work.Accepted > 0);
-            InvoiceViewModel model = new InvoiceViewModel
-            {
-                InvoiceId = string.Join("-", split.Select(s => !s.Equals(split.Last()))) + "-" + nextInvoice,
-                Date = DateTime.Today.ToString("dd-MM-yyyy"),
-                InvoiceTo = quote.WorkLocation.WorkLocationName,
-                InvoiceToAddress = quote.WorkLocation.GetAddress(),
-                Details = "Refurbishment to squash courts as agrred",
-                CareOf = quote.Contact.GetName(),
-                CareOfEmail = quote.Contact.Email,
-                CareOfNumber = quote.Contact.MobileNumber ?? quote.Contact.PhoneNumber,
-                Price = acceptedWorks.Sum(work => work.QuotedWorkPrice * work.Accepted),
-            };
+            InvoiceId = string.Join("-", split.Where(s => !s.Equals(split.Last()))) + "-" + nextInvoice;
+            Date = DateTime.Today.ToString("dd-MM-yyyy");
+            InvoiceTo = quote.WorkLocation.WorkLocationName;
+            InvoiceToAddress = quote.WorkLocation.GetAddress();
+            Details = "Refurbishment to squash courts as agrred";
+            CareOf = quote.Contact.GetName();
+            CareOfEmail = quote.Contact.Email;
+            CareOfNumber = quote.Contact.MobileNumber ?? quote.Contact.PhoneNumber;
+            Price = acceptedWorks.Sum(work => work.QuotedWorkPrice*work.Accepted);
 
         }
     }

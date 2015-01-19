@@ -38,9 +38,15 @@ namespace QuoteApp.Models
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
-                string id = context.Invoices.Last().InvoiceId.Split('-').Last();
-                id = id.Remove(0, 1);
-                return "I" + Convert.ToInt16(id) + 1;
+                if (context.Invoices.Any())
+                {
+                    var id = context.Invoices.ToList().Last();
+                    string idString = id.InvoiceId;
+                    string idPart = idString.Split('-').Last();
+                    idPart = idPart.Remove(0, 1);
+                    return "I" + Convert.ToInt16(idPart) + 1;
+                }
+                return "I1658";
             }
         }
     }
