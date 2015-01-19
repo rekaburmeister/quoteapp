@@ -32,8 +32,7 @@ namespace QuoteApp.Models
         public ContactDetails(Contact contact, WorkLocation location)
         {
             ClubName = location.WorkLocationName;
-            ClubAddress = string.Join(", ",
-                new[] {location.Address1, location.Address2, location.Town, location.PostCode});
+            ClubAddress = location.GetAddress();
             ContactName = contact.FirstName + " " + contact.LastName;
             ContactNumber = contact.MobileNumber ?? contact.PhoneNumber;
             ContactEmail = contact.Email;
