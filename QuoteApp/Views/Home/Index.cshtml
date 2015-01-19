@@ -92,7 +92,21 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach (Invoice invoice in Model.Invoices)
+                    {
+                        <tr onclick="displayQuote('@invoice.InvoiceId');">
+                            <td>@invoice.InvoiceId</td>
+                            <td>@invoice.InvoiceDate.ToString("dd-MM-yyyy")</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>@invoice.Price</td>
+        <td>@Html.ActionLink("Paid", "MarkAsPaid", "Invoice", new { quoteId = @invoice.InvoiceId }, new { @class = "btn btn-xs btn-success" })</td>
+    </tr>
+                    }
+                </tbody>
                 <tfoot></tfoot>
             </table>
         </div>
@@ -116,7 +130,7 @@
             var url = '@Url.Action("Details", "Quote", new {id = "PLACEHOLDER"})'.replace('PLACEHOLDER', quoteId);
             window.location.href = url;
         }
-        
+
         function createInvoice(quoteId) {
             var url = '@Url.Action("Create", "Invoice", new {id = "PLACEHOLDER"})'.replace('PLACEHOLDER', quoteId);
             window.location.href = url;
