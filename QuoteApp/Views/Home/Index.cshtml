@@ -34,7 +34,7 @@
                             <td>@work.Email</td>
                             <td>@work.Job</td>
                             <td>£@work.Sum</td>
-                            <td>@Html.ActionLink("Finished", "Finish", "Quote", new { quoteId = work.QuoteId }, new { @class = "btn btn-xs btn-success" })</td>
+                            <td>@Html.ActionLink("Finished", "Create", "Invoice", new { quoteId = work.QuoteId }, new { @class = "btn btn-xs btn-success" })</td>
                             <td>@Html.ActionLink("Cancel", "Cancel", "Quote", new { quoteId = work.QuoteId }, new { @class = "btn btn-xs btn-danger" })</td>
                         </tr>
                     }
@@ -114,6 +114,11 @@
     <script>
         function displayQuote(quoteId) {
             var url = '@Url.Action("Details", "Quote", new {id = "PLACEHOLDER"})'.replace('PLACEHOLDER', quoteId);
+            window.location.href = url;
+        }
+        
+        function createInvoice(quoteId) {
+            var url = '@Url.Action("Create", "Invoice", new {id = "PLACEHOLDER"})'.replace('PLACEHOLDER', quoteId);
             window.location.href = url;
         }
     </script>

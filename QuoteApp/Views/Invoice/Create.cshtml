@@ -1,4 +1,4 @@
-﻿@model QuoteApp.Models.Invoice
+﻿@model QuoteApp.Models.InvoiceViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -19,24 +19,80 @@
         <div class="form-group">
             @Html.LabelFor(model => model.InvoiceId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.InvoiceId)
+                @Html.TextBoxFor(model => model.InvoiceId, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.InvoiceId)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceNumber, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.InvoiceNumber)
-                @Html.ValidationMessageFor(model => model.InvoiceNumber)
+                @Html.TextBoxFor(model => model.Date, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Date)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceDate, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.InvoiceTo, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.InvoiceDate)
-                @Html.ValidationMessageFor(model => model.InvoiceDate)
+                @Html.TextBoxFor(model => model.InvoiceTo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.InvoiceTo)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.InvoiceToAddress, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.InvoiceToAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.InvoiceToAddress)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Reference, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Reference, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Reference)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.CareOf, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CareOf, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CareOf)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.CareOfEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CareOfEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CareOfEmail)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.CareOfNumber, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CareOfNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CareOfNumber)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Details, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Details, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Details)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Price)
             </div>
         </div>
 
@@ -49,5 +105,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Cancel", "Index", "Home")
 </div>
