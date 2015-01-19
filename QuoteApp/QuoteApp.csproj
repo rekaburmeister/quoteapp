@@ -190,6 +190,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PdfHelper.cs" />
+    <Compile Include="Helpers\TimeService.cs" />
     <Compile Include="Migrations\201412121540416_InitialCreate.cs" />
     <Compile Include="Migrations\201412121540416_InitialCreate.Designer.cs">
       <DependentUpon>201412121540416_InitialCreate.cs</DependentUpon>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using QuoteApp.Helpers;
 
 namespace QuoteApp.Models
 {
@@ -18,14 +19,14 @@ namespace QuoteApp.Models
         public HomeViewModel()
         {
             Invoices = Invoice.GetUnpaidInvoices();
-            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(DateTime.Now.AddMonths(3), DateTime.Now);
+            TimeService timeService = new TimeService();
+            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(timeService.GetCurrentQuarterStartDate(), timeService.GetCurrentQuarterStartDate());
             JobsCompleted = invoicesForPeriod.Count;
-            MoneyMade = 0;
+            MoneyMade = invoicesForPeriod.Sum(m=>m.Price);
             IncomeTax = MoneyMade*0.2;
             Quotes = Quote.GetQuoteSummaries();
             ScheduledWorks = ScheduledWork.GetScheduledWorks();
         }
-
     }
     
 }
