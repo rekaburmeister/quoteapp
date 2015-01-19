@@ -9,8 +9,8 @@ namespace QuoteApp.Models
     public class HomeViewModel
     {
         public int JobsCompleted { get; set; }
-        public int MoneyMade { get; set; }
-        public int Vat { get; set; }
+        public double MoneyMade { get; set; }
+        public double Vat { get; set; }
         public double IncomeTax { get; set; }
         public List<Invoice> Invoices { get; set; }
         public List<QuoteSummary> Quotes { get; set; }
@@ -20,10 +20,11 @@ namespace QuoteApp.Models
         {
             Invoices = Invoice.GetUnpaidInvoices();
             TimeService timeService = new TimeService();
-            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(timeService.GetCurrentQuarterStartDate(), timeService.GetCurrentQuarterStartDate());
+            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(timeService.GetCurrentQuarterStartDate(), timeService.GetCurrentQuarterEndDate());
             JobsCompleted = invoicesForPeriod.Count;
             MoneyMade = invoicesForPeriod.Sum(m=>m.Price);
-            IncomeTax = MoneyMade*0.2;
+            IncomeTax = MoneyMade*0.3;
+            Vat = MoneyMade * 0.2;
             Quotes = Quote.GetQuoteSummaries();
             ScheduledWorks = ScheduledWork.GetScheduledWorks();
         }

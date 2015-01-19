@@ -83,7 +83,7 @@ namespace QuoteApp.Controllers
                     }
                     throw;
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return RedirectToAction("Index", "Home");
