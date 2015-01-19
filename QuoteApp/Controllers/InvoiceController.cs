@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -48,16 +50,43 @@ namespace QuoteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="InvoiceId,InvoiceNumber,InvoiceDate")] Invoice invoice)
+        public ActionResult Create([Bind(Include = "InvoiceId,Date,InvoiceTo,InvoiceToAddress,Reference,CareOf,CareOfEmail,CareOfNumber,Details,Price,ContactId,WorkLocationId")] InvoiceViewModel model)
         {
             if (ModelState.IsValid)
             {
+                Invoice invoice = new Invoice
+                {
+                    InvoiceDate = DateTime.ParseExact(model.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                    InvoiceId = model.InvoiceId,
+                    ContactId = model.ContactId,
+                    Price = model.Price,
+                    Details = model.Details,
+                    PaidDate = null,
+                    WorkLocationId = model.WorkLocationId
+                };
                 m_Context.Invoices.Add(invoice);
-                m_Context.SaveChanges();
+                try
+                {
+                    m_Context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
                 return RedirectToAction("Index");
             }
 
-            return View(invoice);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: /Invoice/Edit/5
