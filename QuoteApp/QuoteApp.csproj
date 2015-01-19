@@ -238,6 +238,10 @@
     <Compile Include="Migrations\201501160904304_pdfFiles.Designer.cs">
       <DependentUpon>201501160904304_pdfFiles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501190802247_AcceptedNumberOfCourts.cs" />
+    <Compile Include="Migrations\201501190802247_AcceptedNumberOfCourts.Designer.cs">
+      <DependentUpon>201501190802247_AcceptedNumberOfCourts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
@@ -448,6 +452,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501160904304_pdfFiles.resx">
       <DependentUpon>201501160904304_pdfFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501190802247_AcceptedNumberOfCourts.resx">
+      <DependentUpon>201501190802247_AcceptedNumberOfCourts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

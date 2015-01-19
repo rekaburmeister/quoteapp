@@ -25,6 +25,8 @@ namespace QuoteApp.Models
         [Required]
         public int NumberOfCourts { get; set; }
 
+        public int? Accepted { get; set; }
+
         [Required]
         public int QuotedWorkPrice { get; set; }
 
