@@ -189,6 +189,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
     <Compile Include="Controllers\WorkLocationController.cs" />
@@ -406,6 +407,11 @@
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Quote\ArchiveQuote.cshtml" />
     <Content Include="Views\Quote\ScheduleQuote.cshtml" />
+    <Content Include="Views\Invoice\Create.cshtml" />
+    <Content Include="Views\Invoice\Delete.cshtml" />
+    <Content Include="Views\Invoice\Details.cshtml" />
+    <Content Include="Views\Invoice\Edit.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
