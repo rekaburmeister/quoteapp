@@ -17,8 +17,9 @@ namespace QuoteApp.Models
 
         public HomeViewModel()
         {
-            var invoices = Invoice.GetInvoicesForPeriod(DateTime.Now.AddMonths(3), DateTime.Now);
-            JobsCompleted = invoices.Count;
+            Invoices = Invoice.GetUnpaidInvoices();
+            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(DateTime.Now.AddMonths(3), DateTime.Now);
+            JobsCompleted = invoicesForPeriod.Count;
             MoneyMade = 0;
             IncomeTax = MoneyMade*0.2;
             Quotes = Quote.GetQuoteSummaries();
