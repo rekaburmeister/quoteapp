@@ -46,7 +46,7 @@ namespace QuoteApp.Controllers
                                                       QuoteDate = quote.QuoteDate.ToString("d"), 
                                                       ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation), 
                                                       CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList()) };
-            return View(model);
+            return new ViewAsPdf(model);
         }
 
         // GET: /Quote/Create
