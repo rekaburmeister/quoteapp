@@ -38,7 +38,9 @@ namespace QuoteApp.Controllers
         // GET: /Invoice/Create
         public ActionResult Create(string quoteId)
         {
-            return View();
+            Quote quote = Quote.GetQuote(m_Context, quoteId);
+            string nextInvoice = Invoice.GetNextInvoiceId();
+            return View(new InvoiceViewModel(quote, nextInvoice));
         }
 
         // POST: /Invoice/Create
