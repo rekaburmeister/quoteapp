@@ -135,6 +135,20 @@ namespace QuoteApp.Controllers
             return View(invoice);
         }
 
+        public ActionResult MarkAsPaid(string invoiceId)
+        {
+            ViewBag["InvoiceId"] = invoiceId;
+            return View();
+        }
+
+        [HttpPost, ActionName("PaymentConfirmed")]
+        [ValidateAntiForgeryToken]
+        public ActionResult PaymentConfirmed([Bind(Include = "invoiceId")] string invoiceId)
+        {
+            Invoice.MarkAsPaid(invoiceId);
+            return RedirectToAction("Index", "Home");
+        }
+
         // POST: /Invoice/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

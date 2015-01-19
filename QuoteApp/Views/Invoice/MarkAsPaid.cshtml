@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "MarkAsPaid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Are you sure you want to mark @ViewBag["InvoiceId"] as paid?</h3>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Yes, it's been paid", "PaymentConfirmed", new { invoiceId = ViewBag["InvoiceId"] }, new { @class = "btn btn success" })
+            @Html.ActionLink("No, sorry", "Index", "Home", null, new { @class = "btn btn default" })
+        </div>
+    }
+</div>

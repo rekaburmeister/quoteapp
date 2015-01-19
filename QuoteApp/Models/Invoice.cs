@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -63,6 +64,17 @@ namespace QuoteApp.Models
                     return "I" + Convert.ToInt16(idPart) + 1;
                 }
                 return "I1658";
+            }
+        }
+
+        public static void MarkAsPaid(string invoiceId)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                Invoice invoice = context.Invoices.Find(invoiceId);
+                invoice.PaidDate = DateTime.UtcNow;
+                context.Entry(invoice).State = EntityState.Modified;
+                context.SaveChanges();
             }
         }
     }
