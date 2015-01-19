@@ -105,7 +105,12 @@ namespace QuoteApp.Models
                             })
                         .ToList();
             }
-        } 
+        }
+
+        public static Quote GetQuote(ApplicationDbContext context, string quoteId)
+        {
+            return context.Quotes.Find(quoteId);
+        }
 
         public static bool DoesQuoteIdExist(string quoteId)
         {
