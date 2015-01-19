@@ -43,6 +43,14 @@ namespace QuoteApp.Models
             }
         }
 
+        public static List<Invoice> GetAllInvoices()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.Invoices.ToList();
+            }
+        }
+
         public static List<Invoice> GetUnpaidInvoices()
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
