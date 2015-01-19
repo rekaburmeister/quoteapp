@@ -103,7 +103,7 @@
                             <td></td>
                             <td></td>
                             <td>£@invoice.Price</td>
-        <td>@Html.ActionLink("Paid", "MarkAsPaid", "Invoice", new { quoteId = @invoice.InvoiceId }, new { @class = "btn btn-xs btn-success" })</td>
+        <td>@Html.ActionLink("Paid", "MarkAsPaid", "Invoice", new { invoiceId = @invoice.InvoiceId }, new { @class = "btn btn-xs btn-success" })</td>
     </tr>
                     }
                 </tbody>
