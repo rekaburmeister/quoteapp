@@ -13,24 +13,40 @@ namespace QuoteApp.Models
         public string InvoiceId { get; set; }
 
         [Required]
-        public string InvoiceNumber { get; set; }
+        public int WorkLocationId { get; set; }
+        public virtual WorkLocation WorkLocation { get; set; }
 
         [Required]
-        public virtual WorkLocation Location { get; set; }
-
-        [Required]
+        public int ContactId { get; set; }
         public virtual Contact Contact { get; set; }
 
         [Required]
         public DateTime InvoiceDate { get; set; }
 
-        public virtual ICollection<InvoicedWork> InvoicedWorks { get; set; }
+        public DateTime? PaidDate { get; set; }
+
+        [Required]
+        public int Price { get; set; }
+
+        [Required]
+        public string Details { get; set; }
+
+        // I was thinking of approving the quoted works individually with the invoice but now it seems daft. Still, leaving it here to think about it later
+        //public virtual ICollection<InvoicedWork> InvoicedWorks { get; set; }
 
         public static List<Invoice> GetInvoicesForPeriod(DateTime from, DateTime to)
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
                 return context.Invoices.Where(i => i.InvoiceDate >= from && i.InvoiceDate <= to).ToList();
+            }
+        }
+
+        public static List<Invoice> GetUnpaidInvoices()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.Invoices.Where(i => i.PaidDate == null).ToList();
             }
         }
 
