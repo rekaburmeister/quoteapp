@@ -246,6 +246,22 @@
     <Compile Include="Migrations\201501190852422_AcceptedNumberOfCourtsNotNull.Designer.cs">
       <DependentUpon>201501190852422_AcceptedNumberOfCourtsNotNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501190932534_InvoiceRedo.cs" />
+    <Compile Include="Migrations\201501190932534_InvoiceRedo.Designer.cs">
+      <DependentUpon>201501190932534_InvoiceRedo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501190935526_InvoicePaidDate.cs" />
+    <Compile Include="Migrations\201501190935526_InvoicePaidDate.Designer.cs">
+      <DependentUpon>201501190935526_InvoicePaidDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501190947376_ChangeForeignKeys.cs" />
+    <Compile Include="Migrations\201501190947376_ChangeForeignKeys.Designer.cs">
+      <DependentUpon>201501190947376_ChangeForeignKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501190950431_PaidDateNotRequired.cs" />
+    <Compile Include="Migrations\201501190950431_PaidDateNotRequired.Designer.cs">
+      <DependentUpon>201501190950431_PaidDateNotRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
@@ -463,6 +479,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501190852422_AcceptedNumberOfCourtsNotNull.resx">
       <DependentUpon>201501190852422_AcceptedNumberOfCourtsNotNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501190932534_InvoiceRedo.resx">
+      <DependentUpon>201501190932534_InvoiceRedo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501190935526_InvoicePaidDate.resx">
+      <DependentUpon>201501190935526_InvoicePaidDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501190947376_ChangeForeignKeys.resx">
+      <DependentUpon>201501190947376_ChangeForeignKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501190950431_PaidDateNotRequired.resx">
+      <DependentUpon>201501190950431_PaidDateNotRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
