@@ -79,5 +79,11 @@ namespace QuoteApp.Models
                 return location.WorkLocationId;
             }
         }
+
+        public string GetAddress()
+        {
+            return string.Join(", ",
+                new[] {Address1, Address2, Address3, Town, Country, PostCode}.Where(str => !string.IsNullOrEmpty(str)));
+        }
     }
 }

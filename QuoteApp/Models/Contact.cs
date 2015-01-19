@@ -88,5 +88,10 @@ namespace QuoteApp.Models
                 return contact.ContactId;
             }
         }
+
+        public string GetName()
+        {
+            return string.Join(" ", new[] {FirstName, MiddleName, LastName}.Where(str => !string.IsNullOrEmpty(str)));
+        }
     }
 }
