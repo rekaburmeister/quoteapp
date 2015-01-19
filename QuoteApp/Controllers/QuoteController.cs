@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using QuoteApp.Helpers;
 using QuoteApp.Models;
 using Rotativa;
+using Rotativa.Options;
 
 namespace QuoteApp.Controllers
 {
@@ -42,11 +43,19 @@ namespace QuoteApp.Controllers
                 return HttpNotFound();
             }
 
-            WorkFromView model = new WorkFromView() { QuoteRef = quote.QuoteId, 
-                                                      QuoteDate = quote.QuoteDate.ToString("d"), 
-                                                      ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation), 
-                                                      CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList()) };
-            return new ViewAsPdf(model);
+            WorkFromView model = new WorkFromView()
+            {
+                QuoteRef = quote.QuoteId,
+                QuoteDate = quote.QuoteDate.ToString("d"),
+                ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
+                CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
+            };
+            return new ViewAsPdf(model) { FileName = quote.QuoteId, 
+                                          PageSize = Size.A4, 
+                                          PageOrientation = Orientation.Portrait, 
+                                          PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 }, 
+                                          IsLowQuality = false, 
+                                          MinimumFontSize = 14 };
         }
 
         // GET: /Quote/Create
@@ -55,7 +64,7 @@ namespace QuoteApp.Controllers
             QuoteViewModel model = new QuoteViewModel()
             {
                 WorkTypes = m_DbContext.WorkAreas.Select(area => area.WorkAreaName).ToList(),
-                Works = m_DbContext.Works.ToList().Select(work=>new WorkViewModel(work)).ToList()
+                Works = m_DbContext.Works.ToList().Select(work => new WorkViewModel(work)).ToList()
             };
             return View(model);
         }
@@ -72,12 +81,12 @@ namespace QuoteApp.Controllers
 
         public JsonResult VerifyQuoteId(string quoteId)
         {
-            return Json(new{Success = Quote.DoesQuoteIdExist(quoteId)}, JsonRequestBehavior.AllowGet);
+            return Json(new { Success = Quote.DoesQuoteIdExist(quoteId) }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ScheduleQuote(string quoteId)
         {
-            return View(new ScheduleWorkViewModel{NumberOfDays = 1, QuoteId = quoteId});
+            return View(new ScheduleWorkViewModel { NumberOfDays = 1, QuoteId = quoteId });
         }
 
         [HttpPost, ActionName("ScheduleQuote")]
@@ -143,7 +152,7 @@ namespace QuoteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="QuoteId,QuoteDate")] Quote quote)
+        public ActionResult Edit([Bind(Include = "QuoteId,QuoteDate")] Quote quote)
         {
             if (ModelState.IsValid)
             {
@@ -171,11 +180,11 @@ namespace QuoteApp.Controllers
                 client.setPageHeight("11.692in");
                 client.setVerticalMargin("1.8in");
                 client.convertHtml(html, stream);
-                
+
             }
             catch (Exception exception)
             {
-                return Json(new{errorMessage = exception.Message});
+                return Json(new { errorMessage = exception.Message });
             }
 
             byte[] content = new byte[stream.Length];
@@ -195,10 +204,10 @@ namespace QuoteApp.Controllers
                 pdf.Content = content;
                 m_DbContext.Entry(pdf).State = EntityState.Modified;
             }
-            
+
             m_DbContext.SaveChanges();
 
-            return Json(new{Success=true});
+            return Json(new { Success = true });
 
         }
 
