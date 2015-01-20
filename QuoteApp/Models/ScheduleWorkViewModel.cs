@@ -23,10 +23,13 @@ namespace QuoteApp.Models
 
         public ScheduleWorkViewModel()
         {
-            if (QuotedWorks != null)
-            {
-                TotalPrice = QuotedWorks.Sum(w => w.QuotedWorkPrice*w.NumberOfCourts);
-            }
+            
+        }
+
+        public ScheduleWorkViewModel(List<QuotedWork> quotedWorks)
+        {
+            QuotedWorks = quotedWorks;
+            TotalPrice = quotedWorks.Sum(w => w.QuotedWorkPrice * w.NumberOfCourts);
         }
     }
 }
