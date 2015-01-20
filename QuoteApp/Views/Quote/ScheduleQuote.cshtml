@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h3>Schedule work for @Model.QuoteId</h3>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <div class="form-group">
@@ -27,11 +24,11 @@
     <table class="table table-striped" id="worksTable">
         <thead>
             <tr>
-                <th>Court</th>
-                <th>Work type</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Accepted #</th>
+                <th style="width: 10%">Court</th>
+                <th style="width: 15%">Work type</th>
+                <th style="width: 55%">Description</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 10%">Accepted #</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +38,7 @@
                     <td contenteditable="true">@quotedWork.QuotedWorkMainAreaName</td>
                     <td contenteditable="true">@quotedWork.WorkTitle</td>
                     <td contenteditable="true">@quotedWork.QuotedWorkDescription</td>
-                    <td contenteditable="true">@quotedWork.QuotedWorkPrice</td>
+                    <td contenteditable="true">£@quotedWork.QuotedWorkPrice</td>
                     <td contenteditable="true">@quotedWork.NumberOfCourts</td>
                     <td style="display: none">@quotedWork.QuotedWorkId</td>
                 </tr>
@@ -50,7 +47,7 @@
         <tfoot>
             <tr>
                 <td colspan="3" style="text-align: right;">Total expected income:</td>
-                <td><strong></strong></td>
+                <td colspan="2"><strong>£@Model.TotalPrice</strong></td>
             </tr>
         </tfoot>
     </table>
@@ -58,7 +55,7 @@
     <input type="submit" value="Schedule work" class="btn btn-success" />
         @Html.HiddenFor(m => m.QuoteId)
         @Html.ActionLink("Maybe not", "Index", "Home", null, new {@class="btn btn-default"})
-}
+
 
 @section Scripts{
     <script type="text/javascript" src="~/Scripts/jquery-ui-1.11.2.min.js"></script>

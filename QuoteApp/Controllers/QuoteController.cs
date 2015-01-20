@@ -86,15 +86,30 @@ namespace QuoteApp.Controllers
 
         public ActionResult ScheduleQuote(string quoteId)
         {
-            return View(new ScheduleWorkViewModel { NumberOfDays = 1, QuoteId = quoteId, QuotedWorks = Quote.GetWorksForId(quoteId)});
+            ScheduleWorkViewModel model = new ScheduleWorkViewModel(Quote.GetWorksForId(quoteId))
+            {
+                NumberOfDays = 1,
+                QuoteId = quoteId,
+            };
+            return View(model);
         }
 
         [HttpPost, ActionName("ScheduleQuote")]
         [ValidateAntiForgeryToken]
-        public ActionResult ScheduleQuote([Bind(Include = "QuoteId,NumberOfDays,WorkStarts")] ScheduleWorkViewModel model)
+        public ActionResult ScheduleQuote([Bind(Include = "QuoteId,NumberOfDays,WorkStarts,QuotedWorks")] ScheduleWorkViewModel model)
         {
             if (ModelState.IsValid)
             {
+                foreach (QuotedWork quotedWork in model.QuotedWorks)
+                {
+                    AcceptedWork acceptedWork = new AcceptedWork
+                    {
+                        Description = quotedWork.QuotedWorkDescription,
+                        QuoteId = model.QuoteId,
+                        Price = quotedWork.QuotedWorkPrice
+                    };
+                    acceptedWork.Add();
+                }
                 Quote quote = m_DbContext.Quotes.Find(model.QuoteId);
                 if (quote != null)
                 {
