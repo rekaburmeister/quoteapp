@@ -27,5 +27,13 @@ namespace QuoteApp.Models
                                               // to see what work has actually been carried out on a job
         public virtual Invoice Invoice { get; set; }
 
+        public void Add()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                context.AcceptedWork.Add(this);
+                context.SaveChanges();
+            }
+        }
     }
 }
