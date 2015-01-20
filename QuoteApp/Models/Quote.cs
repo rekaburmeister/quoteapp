@@ -119,6 +119,14 @@ namespace QuoteApp.Models
                 return context.Quotes.Any(q => q.QuoteId.Equals(quoteId));
             }
         }
+
+        public static List<QuotedWork> GetWorksForId(string quoteId)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.QuotedWorks.Where(q => q.Quote.QuoteId.Equals(quoteId)).ToList();
+            }
+        }
     }
 
     public class QuoteViewModel

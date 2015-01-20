@@ -86,7 +86,7 @@ namespace QuoteApp.Controllers
 
         public ActionResult ScheduleQuote(string quoteId)
         {
-            return View(new ScheduleWorkViewModel { NumberOfDays = 1, QuoteId = quoteId });
+            return View(new ScheduleWorkViewModel { NumberOfDays = 1, QuoteId = quoteId, QuotedWorks = Quote.GetWorksForId(quoteId)});
         }
 
         [HttpPost, ActionName("ScheduleQuote")]

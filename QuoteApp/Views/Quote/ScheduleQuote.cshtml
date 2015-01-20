@@ -1,4 +1,5 @@
-﻿@model QuoteApp.Models.ScheduleWorkViewModel
+﻿@using QuoteApp.Models
+@model QuoteApp.Models.ScheduleWorkViewModel
 @{
     ViewBag.Title = "ScheduleQuote";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,10 +22,42 @@
                 @Html.TextBoxFor(m => m.NumberOfDays, new { @class = "form-control" })
             </div>
         </div>
-        <input type="submit" value="Schedule work" class="btn btn-success" /> |
+        
+    </div>
+    <table class="table table-striped" id="worksTable">
+        <thead>
+            <tr>
+                <th>Court</th>
+                <th>Work type</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Accepted #</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (QuotedWork quotedWork in Model.QuotedWorks)
+            {
+                <tr>
+                    <td contenteditable="true">@quotedWork.QuotedWorkMainAreaName</td>
+                    <td contenteditable="true">@quotedWork.WorkTitle</td>
+                    <td contenteditable="true">@quotedWork.QuotedWorkDescription</td>
+                    <td contenteditable="true">@quotedWork.QuotedWorkPrice</td>
+                    <td contenteditable="true">@quotedWork.NumberOfCourts</td>
+                    <td style="display: none">@quotedWork.QuotedWorkId</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align: right;">Total expected income:</td>
+                <td><strong></strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <input type="submit" value="Schedule work" class="btn btn-success" />
         @Html.HiddenFor(m => m.QuoteId)
         @Html.ActionLink("Maybe not", "Index", "Home", null, new {@class="btn btn-default"})
-    </div>
 }
 
 @section Scripts{
