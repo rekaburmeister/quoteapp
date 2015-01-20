@@ -267,6 +267,10 @@
     <Compile Include="Migrations\201501200724178_ChangeInvoicedWork.Designer.cs">
       <DependentUpon>201501200724178_ChangeInvoicedWork.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501200923517_AddingExtraFieldsToAcceptedWork.cs" />
+    <Compile Include="Migrations\201501200923517_AddingExtraFieldsToAcceptedWork.Designer.cs">
+      <DependentUpon>201501200923517_AddingExtraFieldsToAcceptedWork.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
@@ -500,6 +504,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501200724178_ChangeInvoicedWork.resx">
       <DependentUpon>201501200724178_ChangeInvoicedWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501200923517_AddingExtraFieldsToAcceptedWork.resx">
+      <DependentUpon>201501200923517_AddingExtraFieldsToAcceptedWork.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
