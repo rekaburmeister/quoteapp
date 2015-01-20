@@ -6,55 +6,55 @@
 }
 <h3>Schedule work for @Model.QuoteId</h3>
 
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="WorkStarts" class="col-sm-2 control-label">Start work at</label>
-            <div class="col-sm-3">
-                @Html.TextBoxFor(m=>m.WorkStarts, new{@class="form-control"})
-            </div>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label for="WorkStarts" class="col-sm-2 control-label">Start work at</label>
+        <div class="col-sm-3">
+            @Html.TextBoxFor(m => m.WorkStarts, new { @class = "form-control" })
         </div>
-        <div class="form-group">
-            <label for="NumberOfDays" class="col-sm-2 control-label">It will take these many days</label>
-            <div class="col-sm-1">
-                @Html.TextBoxFor(m => m.NumberOfDays, new { @class = "form-control" })
-            </div>
-        </div>
-        
     </div>
-    <table class="table table-striped" id="worksTable">
-        <thead>
+    <div class="form-group">
+        <label for="NumberOfDays" class="col-sm-2 control-label">It will take these many days</label>
+        <div class="col-sm-1">
+            @Html.TextBoxFor(m => m.NumberOfDays, new { @class = "form-control" })
+        </div>
+    </div>
+
+</div>
+<table class="table table-striped" id="worksTable">
+    <thead>
+        <tr>
+            <th style="width: 10%">Court</th>
+            <th style="width: 15%">Work type</th>
+            <th style="width: 55%">Description</th>
+            <th style="width: 10%">Price</th>
+            <th style="width: 10%">Accepted #</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (QuotedWork quotedWork in Model.QuotedWorks)
+        {
             <tr>
-                <th style="width: 10%">Court</th>
-                <th style="width: 15%">Work type</th>
-                <th style="width: 55%">Description</th>
-                <th style="width: 10%">Price</th>
-                <th style="width: 10%">Accepted #</th>
+                <td contenteditable="true">@quotedWork.QuotedWorkMainAreaName</td>
+                <td contenteditable="true">@quotedWork.WorkTitle</td>
+                <td contenteditable="true">@quotedWork.QuotedWorkDescription</td>
+                <td contenteditable="true">£@quotedWork.QuotedWorkPrice</td>
+                <td contenteditable="true">@quotedWork.NumberOfCourts</td>
+                <td style="display: none">@quotedWork.QuotedWorkId</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (QuotedWork quotedWork in Model.QuotedWorks)
-            {
-                <tr>
-                    <td contenteditable="true">@quotedWork.QuotedWorkMainAreaName</td>
-                    <td contenteditable="true">@quotedWork.WorkTitle</td>
-                    <td contenteditable="true">@quotedWork.QuotedWorkDescription</td>
-                    <td contenteditable="true">£@quotedWork.QuotedWorkPrice</td>
-                    <td contenteditable="true">@quotedWork.NumberOfCourts</td>
-                    <td style="display: none">@quotedWork.QuotedWorkId</td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3" style="text-align: right;">Total expected income:</td>
-                <td colspan="2"><strong>£@Model.TotalPrice</strong></td>
-            </tr>
-        </tfoot>
-    </table>
-    
-    <input type="submit" value="Schedule work" class="btn btn-success" />
-        @Html.HiddenFor(m => m.QuoteId)
-        @Html.ActionLink("Maybe not", "Index", "Home", null, new {@class="btn btn-default"})
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" style="text-align: right;">Total expected income:</td>
+            <td colspan="2"><strong>£@Model.TotalPrice</strong></td>
+        </tr>
+    </tfoot>
+</table>
+
+<button class="btn btn-success" onclick="scheduleWork();">Schedule work</button>
+@Html.HiddenFor(m => m.QuoteId)
+@Html.ActionLink("Maybe not", "Index", "Home", null, new { @class = "btn btn-default" })
 
 
 @section Scripts{
@@ -62,5 +62,44 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <script type="text/javascript">
         $("#WorkStarts").datepicker({ dateFormat: 'dd/mm/yy' });
+        
+        function scheduleWork() {
+
+            var quotedWorks = [];
+
+            $('#worksTable > tbody >tr').each(function () {
+                var cells = $(this).find('td');
+                quotedWorks.push({
+                    'QuotedWorkId': cells[5].innerText,
+                    'QuotedWorkMainAreaName': cells[0].innerText,
+                    'QuotedWorkDescription': cells[2].innerText,
+                    'Accepted': cells[4].innerText,
+                    'QuotedWorkPrice': cells[3].innerText.replace("£", "")
+                });
+            });
+
+            var scheduleWorkViewModel = {
+                'NumberOfDays': $('#NumberOfDays').val(),
+                'WorkStarts': $("#WorkStarts").val(),
+                'QuoteId': $("#QuoteId").val(),
+                'QuotedWorks': quotedWorks
+            };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ScheduleQuoteJson")',
+                dataType: "json",
+                data: { scheduleWorkViewModel: JSON.stringify(scheduleWorkViewModel) },
+                success: function (data) {
+                    location.href = '@Url.Action("Index", "Home")';
+                },
+                error: function(data) {
+                     alert("Something bad happened: " + data);
+                }
+            });
+        }
+
+        
+
     </script>
-    }
+}

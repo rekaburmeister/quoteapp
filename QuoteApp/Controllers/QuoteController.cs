@@ -94,22 +94,18 @@ namespace QuoteApp.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("ScheduleQuote")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ScheduleQuote([Bind(Include = "QuoteId,NumberOfDays,WorkStarts,QuotedWorks")] ScheduleWorkViewModel model)
+        [HttpPost]
+        public JsonResult ScheduleQuoteJson(string scheduleWorkViewModel)
         {
+            ScheduleWorkViewModel model = JsonConvert.DeserializeObject<ScheduleWorkViewModel>(scheduleWorkViewModel);
             if (ModelState.IsValid)
             {
-                foreach (QuotedWork quotedWork in model.QuotedWorks)
+                if (!model.QuotedWorks.Any())
                 {
-                    AcceptedWork acceptedWork = new AcceptedWork
-                    {
-                        Description = quotedWork.QuotedWorkDescription,
-                        QuoteId = model.QuoteId,
-                        Price = quotedWork.QuotedWorkPrice
-                    };
-                    acceptedWork.Add();
+                    return Json(new { errorMessage = "Didn't capture any work" }, JsonRequestBehavior.AllowGet);
                 }
+                AcceptedWork acceptedWork = new AcceptedWork(); // will be changed once the service is implemented
+                acceptedWork.Add(model.QuotedWorks, model.QuoteId);
                 Quote quote = m_DbContext.Quotes.Find(model.QuoteId);
                 if (quote != null)
                 {
@@ -118,8 +114,9 @@ namespace QuoteApp.Controllers
                     m_DbContext.Entry(quote).State = EntityState.Modified;
                     m_DbContext.SaveChanges();
                 }
+                return Json(new { Success = true, Message = "Work scheduled" }, JsonRequestBehavior.AllowGet);
             }
-            return RedirectToAction("Index", "Home");
+            return Json(new { errorMessage = "ModelState invalid:" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ArchiveQuote(string quoteId)
