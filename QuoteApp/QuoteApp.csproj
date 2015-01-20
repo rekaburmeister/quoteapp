@@ -263,6 +263,10 @@
     <Compile Include="Migrations\201501190950431_PaidDateNotRequired.Designer.cs">
       <DependentUpon>201501190950431_PaidDateNotRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501200724178_ChangeInvoicedWork.cs" />
+    <Compile Include="Migrations\201501200724178_ChangeInvoicedWork.Designer.cs">
+      <DependentUpon>201501200724178_ChangeInvoicedWork.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
@@ -272,7 +276,7 @@
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\InvoicedWork.cs" />
+    <Compile Include="Models\AcceptedWork.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\QuotedWork.cs" />
@@ -493,6 +497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501190950431_PaidDateNotRequired.resx">
       <DependentUpon>201501190950431_PaidDateNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501200724178_ChangeInvoicedWork.resx">
+      <DependentUpon>201501200724178_ChangeInvoicedWork.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
