@@ -69,7 +69,7 @@ namespace QuoteApp.Models
                     string idString = id.InvoiceId;
                     string idPart = idString.Split('-').Last();
                     idPart = idPart.Remove(0, 1);
-                    return "I" + Convert.ToInt16(idPart) + 1;
+                    return "I" + (Convert.ToInt16(idPart) + 1);
                 }
                 return "I1658";
             }
