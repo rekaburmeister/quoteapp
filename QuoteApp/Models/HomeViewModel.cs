@@ -19,8 +19,8 @@ namespace QuoteApp.Models
         public HomeViewModel()
         {
             Invoices = Invoice.GetUnpaidInvoices();
-            TimeService timeService = new TimeService();
-            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(timeService.GetCurrentQuarterStartDate(), timeService.GetCurrentQuarterEndDate());
+            Quarter quarter = new Quarter();
+            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(quarter.Start, quarter.End);
             JobsCompleted = invoicesForPeriod.Count;
             MoneyMade = invoicesForPeriod.Sum(m=>m.Price);
             IncomeTax = MoneyMade*0.3;
