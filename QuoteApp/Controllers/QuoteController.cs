@@ -106,6 +106,8 @@ namespace QuoteApp.Controllers
                 }
                 AcceptedWork acceptedWork = new AcceptedWork(); // will be changed once the service is implemented
                 acceptedWork.Add(model.QuotedWorks, model.QuoteId);
+
+                // TODO: extract this
                 Quote quote = m_DbContext.Quotes.Find(model.QuoteId);
                 if (quote != null)
                 {
