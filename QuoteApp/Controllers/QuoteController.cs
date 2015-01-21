@@ -233,11 +233,6 @@ namespace QuoteApp.Controllers
             return File(stream.ToArray(), MimeMapping.GetMimeMapping(fileName), fileName);
         }
 
-        public ActionResult GeneratePdf2()
-        {
-            return new ViewAsPdf();
-        }
-
         // GET: /Quote/Delete/5
         public ActionResult Delete(string id)
         {
