@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
@@ -135,6 +136,16 @@ namespace QuoteApp.Models
         {
             var split = QuoteId.Split('-');
             return string.Join("-", split.Where(s => !s.Equals(split.Last())));
+        }
+
+        public void MarkAsFinished()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                Finished = true;
+                context.Entry(this).State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
     }
 
