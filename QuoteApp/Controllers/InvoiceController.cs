@@ -41,7 +41,7 @@ namespace QuoteApp.Controllers
         public ActionResult Create(string quoteId)
         {
             string nextInvoice = Invoice.GetNextInvoiceId();
-            return View(new InvoiceViewModel(quoteId, nextInvoice));
+            return View(new CreateInvoiceViewModel(quoteId, nextInvoice));
         }
 
         // POST: /Invoice/Create
@@ -49,10 +49,11 @@ namespace QuoteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InvoiceId,Date,InvoiceTo,InvoiceToAddress,Reference,CareOf,CareOfEmail,CareOfNumber,Details,Price,ContactId,WorkLocationId")] InvoiceViewModel model)
+        public ActionResult Create([Bind(Include = "InvoiceId,Date,InvoiceTo,InvoiceToAddress,Reference,CareOf,CareOfEmail,CareOfNumber,Details,Price,ContactId,WorkLocationId,QuoteId")] CreateInvoiceViewModel model)
         {
             if (ModelState.IsValid)
             {
+                
                 Invoice invoice = new Invoice
                 {
                     InvoiceDate = DateTime.ParseExact(model.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -82,6 +83,10 @@ namespace QuoteApp.Controllers
                     }
                     throw;
                 }
+
+                // Only mark the quote finished if the invoice was successfully created
+                Quote quote = Quote.GetQuote(model.QuoteId);
+                quote.MarkAsFinished();
                 return RedirectToAction("Index", "Home");
             }
 

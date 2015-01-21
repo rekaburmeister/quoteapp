@@ -6,10 +6,13 @@ using System.Web;
 
 namespace QuoteApp.Models
 {
-    public class InvoiceViewModel
+    public class CreateInvoiceViewModel
     {
         [Required]
         public string InvoiceId { get; set; }
+
+        [Required]
+        public string QuoteId { get; set; }
 
         [Required]
         public string Date { get; set; }
@@ -44,13 +47,14 @@ namespace QuoteApp.Models
         [Required]
         public int Price { get; set; }
 
-        public InvoiceViewModel()
+        public CreateInvoiceViewModel()
         {
 
         }
 
-        public InvoiceViewModel(string quoteId, string nextInvoice)
+        public CreateInvoiceViewModel(string quoteId, string nextInvoice)
         {
+            QuoteId = quoteId;
             Quote quote = Quote.GetQuote(quoteId);
             WorkLocation location = WorkLocation.GetLocation(quote.WorkLocationId);
             Contact contact = Contact.GetContact(quote.ContactId);

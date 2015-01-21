@@ -281,7 +281,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\AcceptedWork.cs" />
-    <Compile Include="Models\InvoiceViewModel.cs" />
+    <Compile Include="Models\CreateInvoiceViewModel.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\QuotedWork.cs" />
     <Compile Include="Models\QuoteSummary.cs" />

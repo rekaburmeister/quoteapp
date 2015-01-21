@@ -1,4 +1,4 @@
-﻿@model QuoteApp.Models.InvoiceViewModel
+﻿@model QuoteApp.Models.CreateInvoiceViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -10,7 +10,7 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+    @Html.HiddenFor(m=>m.QuoteId)
     <div class="form-horizontal">
         <h4>Invoice</h4>
         <hr />
