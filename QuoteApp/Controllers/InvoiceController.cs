@@ -40,9 +40,8 @@ namespace QuoteApp.Controllers
         // GET: /Invoice/Create
         public ActionResult Create(string quoteId)
         {
-            Quote quote = Quote.GetQuote(m_Context, quoteId);
             string nextInvoice = Invoice.GetNextInvoiceId();
-            return View(new InvoiceViewModel(quote, nextInvoice));
+            return View(new InvoiceViewModel(quoteId, nextInvoice));
         }
 
         // POST: /Invoice/Create

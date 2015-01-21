@@ -93,5 +93,13 @@ namespace QuoteApp.Models
         {
             return string.Join(" ", new[] {FirstName, MiddleName, LastName}.Where(str => !string.IsNullOrEmpty(str)));
         }
+
+        public static Contact GetContact(int contactId)
+        {
+            using (ApplicationDbContext database = new ApplicationDbContext())
+            {
+                return database.Contacts.Find(contactId);
+            }
+        }
     }
 }

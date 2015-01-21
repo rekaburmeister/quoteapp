@@ -57,5 +57,13 @@ namespace QuoteApp.Models
                 context.SaveChanges();
             }
         }
+
+        public static List<AcceptedWork> GetWorksForQuote(string quoteId)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.AcceptedWork.Where(work => work.QuoteId.Equals(quoteId)).ToList();
+            }
+        }
     }
 }

@@ -85,5 +85,13 @@ namespace QuoteApp.Models
             return string.Join(", ",
                 new[] {Address1, Address2, Address3, Town, Country, PostCode}.Where(str => !string.IsNullOrEmpty(str)));
         }
+
+        public static WorkLocation GetLocation(int workLocationId)
+        {
+            using (ApplicationDbContext database = new ApplicationDbContext())
+            {
+                return database.WorkLocations.Find(workLocationId);
+            }
+        }
     }
 }

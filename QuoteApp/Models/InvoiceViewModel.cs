@@ -49,22 +49,23 @@ namespace QuoteApp.Models
 
         }
 
-        public InvoiceViewModel(Quote quote, string nextInvoice)
+        public InvoiceViewModel(string quoteId, string nextInvoice)
         {
-            string[] split = quote.QuoteId.Split('-');
-            var acceptedWorks = quote.QuotedWorks.Where(work => work.Accepted > 0);
-            InvoiceId = string.Join("-", split.Where(s => !s.Equals(split.Last()))) + "-" + nextInvoice;
+            Quote quote = Quote.GetQuote(quoteId);
+            WorkLocation location = WorkLocation.GetLocation(quote.WorkLocationId);
+            Contact contact = Contact.GetContact(quote.ContactId);
+            var acceptedWorks = AcceptedWork.GetWorksForQuote(quoteId);
+            InvoiceId = quote.GetCustomerIdentifier() + "-" + nextInvoice;
             Date = DateTime.Today.ToString("dd-MM-yyyy");
-            InvoiceTo = quote.WorkLocation.WorkLocationName;
-            InvoiceToAddress = quote.WorkLocation.GetAddress();
+            InvoiceTo = location.WorkLocationName;
+            InvoiceToAddress = location.GetAddress();
             Details = "Refurbishment to squash courts as agrred";
             ContactId = quote.ContactId;
             WorkLocationId = quote.WorkLocationId;
-            CareOf = quote.Contact.GetName();
-            CareOfEmail = quote.Contact.Email;
-            CareOfNumber = quote.Contact.MobileNumber ?? quote.Contact.PhoneNumber;
-            Price = acceptedWorks.Sum(work => work.QuotedWorkPrice*work.Accepted);
-
+            CareOf = contact.GetName();
+            CareOfEmail = contact.Email;
+            CareOfNumber = contact.MobileNumber ?? contact.PhoneNumber;
+            Price = acceptedWorks.Sum(work => work.Price);
         }
     }
 

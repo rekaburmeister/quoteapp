@@ -107,9 +107,12 @@ namespace QuoteApp.Models
             }
         }
 
-        public static Quote GetQuote(ApplicationDbContext context, string quoteId)
+        public static Quote GetQuote(string quoteId)
         {
-            return context.Quotes.Find(quoteId);
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.Quotes.Find(quoteId);
+            }
         }
 
         public static bool DoesQuoteIdExist(string quoteId)
@@ -126,6 +129,12 @@ namespace QuoteApp.Models
             {
                 return context.QuotedWorks.Where(q => q.Quote.QuoteId.Equals(quoteId)).ToList();
             }
+        }
+
+        public string GetCustomerIdentifier()
+        {
+            var split = QuoteId.Split('-');
+            return string.Join("-", split.Where(s => !s.Equals(split.Last())));
         }
     }
 
