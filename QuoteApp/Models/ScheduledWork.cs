@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json.Schema;
 
 namespace QuoteApp.Models
 {
@@ -21,6 +22,10 @@ namespace QuoteApp.Models
         {
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
+                var quoteIds =
+                    context.Quotes.Where(q => !q.Archived && q.ScheduledFor != null && !q.Finished).Select(quote => quote.QuoteId);
+                var workForQuotes = context.AcceptedWork.Where(work => quoteIds.Contains(work.QuoteId)).ToArray();
+
                 return
                     context.Quotes.ToList().Where(q => !q.Archived && q.ScheduledFor != null && ! q.Finished).Select(
                         quote =>
@@ -33,10 +38,10 @@ namespace QuoteApp.Models
                                 Contact = quote.Contact.FirstName + " " + quote.Contact.LastName,
                                 Address = quote.WorkLocation.Town + ", " + quote.WorkLocation.PostCode,
                                 Club = quote.WorkLocation.WorkLocationName,
-                                Sum = quote.QuotedWorks.Sum(work => work.QuotedWorkPrice * work.NumberOfCourts),
-                                Job =
-                                    string.Join(", ",
-                                        quote.QuotedWorks.Select(areas => areas.WorkTitle + "(" + areas.NumberOfCourts + ")").ToArray())
+                                Sum = workForQuotes.Where(work=>work.QuoteId.Equals(quote.QuoteId)).Sum(w=>w.Price),
+                                Job = string.Join(", ", workForQuotes
+                                                        .Where(work=>work.QuoteId.Equals(quote.QuoteId))
+                                                        .GroupBy(w=>w.WorkType).Select(o=> string.Format("{0} ({1})", o.Key, o.Count())))
                             })
                         .OrderBy(work=>work.Date)
                         .ToList();
