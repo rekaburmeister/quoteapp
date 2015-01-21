@@ -12,13 +12,14 @@ namespace QuoteApp.Models
         public double MoneyMade { get; set; }
         public double Vat { get; set; }
         public double IncomeTax { get; set; }
-        public List<Invoice> Invoices { get; set; }
+        public List<InvoiceViewModel> Invoices { get; set; }
         public List<QuoteSummary> Quotes { get; set; }
         public List<ScheduledWork> ScheduledWorks { get; set; }
 
         public HomeViewModel()
         {
-            Invoices = Invoice.GetUnpaidInvoices();
+            InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
+            Invoices = invoiceViewModel.GetUnPaidInvoices();
             Quarter quarter = new Quarter();
             var invoicesForPeriod = Invoice.GetInvoicesForPeriod(quarter.Start, quarter.End);
             JobsCompleted = invoicesForPeriod.Count;

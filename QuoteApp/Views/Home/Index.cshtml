@@ -31,7 +31,7 @@
                             <td>@work.Address</td>
                             <td>@work.Contact</td>
                             <td>@work.Number</td>
-                            <td>@work.Email</td>
+                            <td><a href="mailto:@work.Email">@work.Email</a></td>
                             <td>@work.Job</td>
                             <td>£@work.Sum</td>
                             <td>@Html.ActionLink("Finished", "Create", "Invoice", new { quoteId = work.QuoteId }, new { @class = "btn btn-xs btn-success" })</td>
@@ -68,7 +68,7 @@
                             <td>@summary.LocationAddress</td>
                             <td>@summary.ContactName</td>
                             <td>@summary.ContactNumber</td>
-                            <td>@summary.ContactEmail</td>
+                            <td><a href="mailto:@summary.ContactEmail">@summary.ContactEmail</a></td>
                             <td>@summary.Job</td>
                             <td>£@summary.Sum</td>
                             <td>@Html.ActionLink("Schedule", "ScheduleQuote", "Quote", new { quoteId = @summary.QuoteId }, new { @class = "btn btn-xs btn-success" })</td>
@@ -93,15 +93,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (Invoice invoice in Model.Invoices)
+                    @foreach (InvoiceViewModel invoice in Model.Invoices)
                     {
                         <tr onclick="displayQuote('@invoice.InvoiceId');">
                             <td>@invoice.InvoiceId</td>
-                            <td>@invoice.InvoiceDate.ToString("dd-MM-yyyy")</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>@invoice.Date</td>
+                            <td>@invoice.InvoiceTo</td>
+                            <td>@invoice.ContactName</td>
+                            <td>@invoice.ContactNumber</td>
+                            <td><a href="mailto:@invoice.ContactEmail">@invoice.ContactEmail</a></td>
                             <td>£@invoice.Price</td>
         <td>@Html.ActionLink("Paid", "MarkAsPaid", "Invoice", new { invoiceId = @invoice.InvoiceId }, new { @class = "btn btn-xs btn-success" })</td>
     </tr>
