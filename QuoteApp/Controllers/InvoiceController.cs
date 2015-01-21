@@ -9,6 +9,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuoteApp.Models;
+using Rotativa;
+using Rotativa.Options;
 
 namespace QuoteApp.Controllers
 {
@@ -149,6 +151,29 @@ namespace QuoteApp.Controllers
         {
             Invoice.MarkAsPaid(invoiceId);
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult GetPdfInvoice(string invoiceId)
+        {
+            if (invoiceId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            InvoiceViewModel invoice = new InvoiceViewModel(invoiceId);
+            if (invoice.InvoiceId == null)
+            {
+                return HttpNotFound();
+            }
+
+            return new ViewAsPdf(invoice)
+            {
+                FileName = invoice.InvoiceId,
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Portrait,
+                PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
+                IsLowQuality = false,
+                MinimumFontSize = 14
+            };
         }
 
         // POST: /Invoice/Delete/5

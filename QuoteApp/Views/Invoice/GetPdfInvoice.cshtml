@@ -1,0 +1,197 @@
+﻿@model QuoteApp.Models.InvoiceViewModel
+
+@{ Layout = null;}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <style>
+        .col-md-3 {
+            width: 25%;
+        }
+
+        .col-md-4 {
+            width: 33.33333333%;
+        }
+
+        .col-md-offset-9 {
+            margin-left: 75%;
+        }
+
+        .col-md-offset-8 {
+            margin-left: 66.66666667%;
+        }
+
+        .col-lg-2 {
+            width: 16.66666667%;
+        }
+
+        .middle {
+            width: 50%;
+        }
+
+        .col-lg-8 {
+            width: 66.66666667%;
+        }
+
+        .col-lg-10 {
+            width: 83.33333333%;
+        }
+
+        .table-totals {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+            .table-totals > thead > tr > th,
+            .table-totals > tbody > tr > th,
+            .table-totals > tfoot > tr > th,
+            .table-totals > thead > tr > td,
+            .table-totals > tbody > tr > td,
+            .table-totals > tfoot > tr > td {
+                padding: 8px;
+                line-height: 1.42857143;
+                vertical-align: top;
+            }
+
+            .table-totals > thead > tr > th {
+                vertical-align: bottom;
+            }
+
+    </style>
+
+</head>
+<body>
+    <div class="form-horizontal" id="headerDiv">
+        <div class="form-group">
+            <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
+            <div class="middle" style="text-align: center; float: left">
+                Tony Gay<br />
+                SCPS<br />
+                18 Ransome Close<br />
+                Cambridge<br />
+                CB4 1WH
+            </div>
+            <div class="col-md-3" style="text-align: right; float: left">
+                07 771 631 876<br />
+                tonysquash@mac.com<br />
+                www.tonysquash.com
+            </div>
+        </div>
+    </div>
+    <h1 style="text-align: center; font-family: Georgia"><strong>Invoice</strong></h1>
+    <hr class="header-hr" />
+    <div id="referencesDiv" style="font-size: xx-large; font-family: Georgia">
+        <div class="col-md-4 col-md-offset-8">
+            <table style="font-weight: bold; border:none;">
+                <tr>
+                    <td style="text-align: right; width: 40%; padding-right: 10px;">Inv #: </td>
+                    <td>@Model.InvoiceId</td>
+                </tr>
+                <tr>
+                    <td style="text-align: right; padding-right: 10px;">Date: </td>
+                    <td>@Model.Date</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="invoiceToConvert">
+        <div id="detailsDiv" style="font-size: 16px; margin-top: 100px;">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-lg-2" style="float: left">
+                        Invoice to:
+                    </div>
+                    <div class="col-lg-10" style="float: left">
+                        <strong>@Model.InvoiceTo</strong><br />
+                        @Model.InvoiceToAddress
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Reference))
+                {
+                    <div class="form-group">
+                        <div class="col-lg-2" style="float: left">
+                            Ref:
+                        </div>
+                        <div class="col-lg-10" style="float: left">
+                            <span style="font-weight: normal">@Model.Reference</span>
+                        </div>
+                    </div>
+                }
+                <br />
+                <div class="form-group">
+                    <div class="col-lg-2" style="float: left">
+                        Care of:
+                    </div>
+                    <div class="col-lg-10" style="float: left">
+                        <strong>@Model.ContactName</strong><br />
+                        <a href="mailto:@Model.ContactEmail">@Model.ContactEmail</a><br />
+                        @Model.ContactNumber
+                    </div>
+                </div>
+
+
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr style="background-color: #87C1FD; color: whitesmoke;">
+                        <th style="border-right:none">Details</th>
+                        <th style="border-right: none; border-left: none; "></th>
+                        <th style="border-left:none">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="text-align: center">@Model.Details</td>
+                        <td style="text-align: right;">£@Model.Price</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div style="width: 100%;">
+                <table style="border: none; float: right; width: 30%" class="table-totals">
+                    <tr style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 20px;">
+                        <td style="width: 50%; text-align: right">Total:</td>
+                        <td style="text-align: right;"><strong>£@Model.Price</strong></td>
+                    </tr>
+                    <tr style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 20px;">
+                        <td style="text-align: right;">VAT 20%:</td>
+                        <td style ="text-align: right;"><strong>£@(Model.Price * 0.2)</strong></td>
+                    </tr>
+                    <tr style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 20px;">
+                        <td style="text-align: right;">Total:</td>
+                        <td style="text-align: right;"><strong>£@(Model.Price + Model.Price * 0.2)</strong></td>
+                    </tr>
+                </table>    
+            </div>
+            
+            <div style="width: 100%; margin-top: 150px;">
+                <span style="color: red">Please note account details:</span>
+                <p><strong>Barclays Bank PLC</strong></p>
+                <p>A/C name: <strong>SCPS</strong></p>
+                <p>A/C number: <strong>20117064</strong></p>
+                <p>Sort Code: <strong>20-74-81</strong></p>
+                <p style="color: red"><strong><u>Please make cheques payable to: SCPS</u></strong></p>
+                <p>Payment terms: <strong>We would kindly ask you to settle payment within 14 days.</strong></p>
+                <br/>
+                <p style="text-align: center"><strong>Thank you for your business!</strong></p>
+            </div>
+        </div>
+
+        <div class="form-horizontal" id="footerDiv" style="margin-top: 150px">
+            <hr />
+            <div class="form-group">
+                <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/EnglandSquash.jpg"></div>
+                <div class="middle" style="text-align: center; float: left">
+                    Mr A G Gay<br />
+                    Approved by England Squash<br />
+                    VAT REG NO: 650 727831
+                </div>
+                <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/Armourcoat.JPG"></div>
+            </div>
+        </div>
+    </div>
+</body>

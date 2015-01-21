@@ -95,7 +95,7 @@
                 <tbody>
                     @foreach (InvoiceViewModel invoice in Model.Invoices)
                     {
-                        <tr onclick="displayQuote('@invoice.InvoiceId');">
+                        <tr onclick="createInvoice('@invoice.InvoiceId');">
                             <td>@invoice.InvoiceId</td>
                             <td>@invoice.Date</td>
                             <td>@invoice.InvoiceTo</td>
@@ -103,8 +103,8 @@
                             <td>@invoice.ContactNumber</td>
                             <td><a href="mailto:@invoice.ContactEmail">@invoice.ContactEmail</a></td>
                             <td>£@invoice.Price</td>
-        <td>@Html.ActionLink("Paid", "MarkAsPaid", "Invoice", new { invoiceId = @invoice.InvoiceId }, new { @class = "btn btn-xs btn-success" })</td>
-    </tr>
+                            <td>@Html.ActionLink("Paid", "MarkAsPaid", "Invoice", new { invoiceId = @invoice.InvoiceId }, new { @class = "btn btn-xs btn-success" })</td>
+                        </tr>
                     }
                 </tbody>
                 <tfoot></tfoot>
@@ -131,8 +131,8 @@
             window.location.href = url;
         }
 
-        function createInvoice(quoteId) {
-            var url = '@Url.Action("Create", "Invoice", new {id = "PLACEHOLDER"})'.replace('PLACEHOLDER', quoteId);
+        function createInvoice(invoiceId) {
+            var url = '@Url.Action("GetPdfInvoice", "Invoice", new { invoiceId = "PLACEHOLDER" })'.replace('PLACEHOLDER', invoiceId);
             window.location.href = url;
         }
     </script>

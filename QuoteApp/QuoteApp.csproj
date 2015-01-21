@@ -440,6 +440,7 @@
     <Content Include="Views\Invoice\Edit.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Invoice\MarkAsPaid.cshtml" />
+    <Content Include="Views\Invoice\GetPdfInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

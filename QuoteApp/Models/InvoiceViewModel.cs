@@ -8,6 +8,8 @@ namespace QuoteApp.Models
 {
     public class InvoiceViewModel
     {
+        
+
         [Required]
         public string InvoiceId { get; set; }
 
@@ -16,6 +18,9 @@ namespace QuoteApp.Models
 
         [Required]
         public string InvoiceTo { get; set; }
+
+        [Required]
+        public string InvoiceToAddress { get; set; }
 
         [Required]
         public string ContactName { get; set; }
@@ -29,6 +34,34 @@ namespace QuoteApp.Models
 
         [Required]
         public int Price { get; set; }
+
+        public string Details { get; set; }
+        public string Reference { get; set; }
+
+        public InvoiceViewModel()
+        {
+            
+        }
+
+        public InvoiceViewModel(string invoiceId)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                Invoice invoice = context.Invoices.Find(invoiceId);
+                if (invoice != null)
+                {
+                    InvoiceId = invoice.InvoiceId;
+                    Date = invoice.InvoiceDate.ToString("dd-MM-yyyy");
+                    InvoiceTo = invoice.WorkLocation.WorkLocationName;
+                    InvoiceToAddress = invoice.WorkLocation.GetAddress();
+                    ContactName = invoice.Contact.GetName();
+                    ContactNumber = invoice.Contact.MobileNumber ?? invoice.Contact.PhoneNumber;
+                    ContactEmail = invoice.Contact.Email;
+                    Price = invoice.Price;
+                    Details = invoice.Details;
+                }
+            }
+        }
 
         public List<InvoiceViewModel> GetUnPaidInvoices()
         {
