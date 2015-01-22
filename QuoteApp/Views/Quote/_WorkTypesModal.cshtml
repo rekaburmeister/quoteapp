@@ -1,0 +1,64 @@
+﻿@using QuoteApp.Models
+@model PartialWorkViewModel
+<div id="jobSelector" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Select the work to insert</h4>
+            </div>
+            <div class="modal-body">
+                <div role="tabpanel">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" id="workTypeTabs">
+                        @foreach (string workType in Model.WorkTypes)
+                        {
+                            <li role="presentation"><a href="#@workType.ToLower()" role="tab" data-toggle="tab">@workType</a></li>
+                        }
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        @foreach (string workType in Model.WorkTypes)
+                        {
+                            <div role="tabpanel" class="tab-pane" id="@workType.ToLower()">
+                                <div class="panel-group" id="@string.Format("accordion{0}",workType)" role="tablist" aria-multiselectable="true">
+                                    @foreach (WorkViewModel work in Model.Works.Where(m => m.WorkAreaName.Equals(workType)))
+                                    {
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="@string.Format("{0}Heading",@work.WorkName.Replace(" ", ""))">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#@work.WorkName.Replace(" ", "")" aria-expanded="false" aria-controls="@work.WorkName.Replace(" ", "")">
+                                                        @work.WorkName
+                                                    </a>
+                                                </h4>
+                                                <button class="btn btn-xs btn-info" onclick="selectWork('@string.Format("{0}Text",@work.WorkName.Replace(" ", ""))', '@work.WorkPrice','@work.WorkName');" data-dismiss="modal">Select</button>
+                                            </div>
+                                            <div id="@work.WorkName.Replace(" ", "")" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@string.Format("{0}Heading",@work.WorkName.Replace(" ", ""))">
+                                                <input type="hidden" id="@string.Format("{0}Price",@work.WorkName.Replace(" ", ""))" value="@work.WorkPrice" />
+                                                <div class="panel-body" id="@string.Format("{0}Text",@work.WorkName.Replace(" ", ""))">
+                                                    @work.WorkDescription
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="selectedRowId" />
+
+
+</div>

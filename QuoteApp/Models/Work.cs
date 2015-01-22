@@ -31,5 +31,27 @@ namespace QuoteApp.Models
                 return context.Works.ToList();
             }
         }
+
+        public List<WorkViewModel> GetWorkViewModelsForWorks()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.Works.ToArray().Select(work=>work.GetWorkViewModel()).ToList();
+            }
+        }
+
+        private WorkViewModel GetWorkViewModel()
+        {
+            return new WorkViewModel
+            {
+                WorkId = WorkId,
+                WorkName = WorkName,
+                WorkDescription = WorkDescription,
+                WorkPrice = WorkPrice,
+                WorkAreaId = WorkArea.WorkAreaId,
+                WorkAreaName = WorkArea.WorkAreaName
+            };
+            
+        }
     }
 }

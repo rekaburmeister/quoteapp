@@ -283,6 +283,7 @@
     <Compile Include="Models\AcceptedWork.cs" />
     <Compile Include="Models\CreateInvoiceViewModel.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
+    <Compile Include="Models\PartialWorkViewModel.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\QuotedWork.cs" />
     <Compile Include="Models\QuoteSummary.cs" />
@@ -441,6 +442,7 @@
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Invoice\MarkAsPaid.cshtml" />
     <Content Include="Views\Invoice\GetPdfInvoice.cshtml" />
+    <Content Include="Views\Quote\_WorkTypesModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

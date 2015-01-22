@@ -50,21 +50,26 @@ namespace QuoteApp.Controllers
                 ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
                 CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
             };
-            return new ViewAsPdf(model) { FileName = quote.QuoteId, 
-                                          PageSize = Size.A4, 
-                                          PageOrientation = Orientation.Portrait, 
-                                          PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 }, 
-                                          IsLowQuality = false, 
-                                          MinimumFontSize = 14 };
+            return new ViewAsPdf(model)
+            {
+                FileName = quote.QuoteId,
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Portrait,
+                PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
+                IsLowQuality = false,
+                MinimumFontSize = 14
+            };
         }
 
         // GET: /Quote/Create
         public ActionResult Create()
         {
+            Work work = new Work();
             QuoteViewModel model = new QuoteViewModel()
             {
                 WorkTypes = WorkArea.GetWorkAreas().Select(area => area.WorkAreaName).ToList(),
-                Works = Work.GetWorks().ToList().Select(work => new WorkViewModel(work)).ToList()
+
+                Works = work.GetWorkViewModelsForWorks()
             };
             return View(model);
         }
