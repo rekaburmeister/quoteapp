@@ -26,9 +26,10 @@
         <tr>
             <th style="width: 10%">Court</th>
             <th style="width: 15%">Work type</th>
-            <th style="width: 55%">Description</th>
+            <th style="width: 50%">Description</th>
             <th style="width: 10%">Price</th>
             <th style="width: 10%">Accepted #</th>
+            <th style="width: 5%"></th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +41,7 @@
                 <td contenteditable="true">@quotedWork.QuotedWorkDescription</td>
                 <td contenteditable="true">£@quotedWork.QuotedWorkPrice</td>
                 <td contenteditable="true">@quotedWork.NumberOfCourts</td>
+                <td><i class="glyphicon glyphicon-remove hover" onclick=removeRow($(this))></i></td>
                 <td style="display: none">@quotedWork.QuotedWorkId</td>
             </tr>
         }
@@ -47,22 +49,48 @@
     <tfoot>
         <tr>
             <td colspan="3" style="text-align: right;">Total expected income:</td>
-            <td colspan="2"><strong>£@Model.TotalPrice</strong></td>
+            <td colspan="3"><strong>£@Model.TotalPrice</strong></td>
         </tr>
     </tfoot>
 </table>
-
-<button class="btn btn-success" onclick="scheduleWork();">Schedule work</button>
+<button class="btn btn-success" type=button data-toggle=modal data-target=#jobSelector><i class=" glyphicon glyphicon-plus"></i> Add work</button>
+<button class="btn btn-primary" id="scheduleButton" onclick="scheduleWork();" disabled="disabled" title="You must specify a date first">Schedule work</button>
 @Html.HiddenFor(m => m.QuoteId)
 @Html.ActionLink("Maybe not", "Index", "Home", null, new { @class = "btn btn-default" })
-
-
+@{
+    Html.RenderPartial("_WorkTypesModal", new PartialWorkViewModel { WorkTypes = Model.WorkTypes, Works = Model.Works });
+}
 @section Scripts{
     <script type="text/javascript" src="~/Scripts/jquery-ui-1.11.2.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <script type="text/javascript">
-        $("#WorkStarts").datepicker({ dateFormat: 'dd/mm/yy' });
-        
+        $("#WorkStarts").datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function() {
+                 $('#scheduleButton').removeAttr('disabled');
+            }
+        });
+
+        $('#workTypeTabs').find("li").first().addClass("active");
+        $('.tab-content').find(".tab-pane").first().addClass("active");
+
+        function removeRow(sender) {
+            var parent = $(sender).parents('tr');
+            parent.remove();
+        }
+
+        function selectWork(description, price, title) {
+            $('#worksTable >tbody').append('<tr>' +
+                                                '<td contenteditable=true></td>' +
+                                                "<td>" + title + "</td>" +
+                                                '<td contenteditable=true>' + $('#' + description).html() + '</td>' +
+                                                '<td contenteditable=true>£' + price + '</td>' +
+                                                '<td contenteditable=true>1</td>' +
+                                                '<td><i class="glyphicon glyphicon-remove hover" onclick=removeRow($(this))></i></td>' +
+                                                '<td style=display:none;>0</td>' +
+                                           '</tr>');
+        }
+
         function scheduleWork() {
 
             var quotedWorks = [];
@@ -70,7 +98,7 @@
             $('#worksTable > tbody >tr').each(function () {
                 var cells = $(this).find('td');
                 quotedWorks.push({
-                    'QuotedWorkId': cells[5].innerText,
+                    'QuotedWorkId': cells[6].innerText,
                     'QuotedWorkMainAreaName': cells[0].innerText,
                     'WorkTitle': cells[1].innerText,
                     'QuotedWorkDescription': cells[2].innerText,
@@ -94,13 +122,13 @@
                 success: function (data) {
                     location.href = '@Url.Action("Index", "Home")';
                 },
-                error: function(data) {
-                     alert("Something bad happened: " + data);
+                error: function (data) {
+                    alert("Something bad happened: " + data);
                 }
             });
         }
 
-        
+
 
     </script>
 }
