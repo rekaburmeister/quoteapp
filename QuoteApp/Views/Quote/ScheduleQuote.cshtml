@@ -49,7 +49,7 @@
     <tfoot>
         <tr>
             <td colspan="3" style="text-align: right;">Total expected income:</td>
-            <td colspan="3"><strong>£@Model.TotalPrice</strong></td>
+            <td colspan="3"><strong>£</strong><strong id="totalPriceId">@Model.TotalPrice</strong></td>
         </tr>
     </tfoot>
 </table>
@@ -76,6 +76,9 @@
 
         function removeRow(sender) {
             var parent = $(sender).parents('tr');
+            var priceTd = parent.find('td:eq(3)');
+            var price = parseInt(priceTd[0].innerText.replace('£', ''));
+            $('#totalPriceId').html(parseInt($('#totalPriceId').html()) - parseInt(price));
             parent.remove();
         }
 
@@ -89,6 +92,7 @@
                                                 '<td><i class="glyphicon glyphicon-remove hover" onclick=removeRow($(this))></i></td>' +
                                                 '<td style=display:none;>0</td>' +
                                            '</tr>');
+            $('#totalPriceId').html(parseInt($('#totalPriceId').html()) + parseInt(price));
         }
 
         function scheduleWork() {
