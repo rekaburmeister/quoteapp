@@ -154,9 +154,6 @@
             $('#' + tableIdGlobal + ' >tbody').append("<tr>" + emptyEditableField + '<td contenteditable=true>' + $('#' + description).html() + '</td>' + '<td contenteditable=true>' + price + '</td>' +
                                     "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeRow($(this))></i></td><td style=display:none;>" + title + "</td>" +
                                 "</tr>");
-            $('#' + $('#selectedRowId').val()).find("td").eq(1).html($('#' + description).html());
-            $('#' + $('#selectedRowId').val()).find("td").eq(2).html(price);
-            $('#' + $('#selectedRowId').val()).find("td").eq(4).html(title);
         }
 
         function setTableId(tableId) {
