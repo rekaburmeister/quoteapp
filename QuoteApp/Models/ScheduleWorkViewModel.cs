@@ -18,7 +18,8 @@ namespace QuoteApp.Models
         public string QuoteId { get; set; }
 
         public int TotalPrice { get; set; }
-
+        public List<WorkViewModel> Works { get; set; }
+        public List<string> WorkTypes { get; set; }
         public List<QuotedWork> QuotedWorks { get; set; }
 
         public ScheduleWorkViewModel()
