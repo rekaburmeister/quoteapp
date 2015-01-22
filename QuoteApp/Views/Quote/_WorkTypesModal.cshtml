@@ -29,12 +29,20 @@
                                     {
                                         <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="@string.Format("{0}Heading",@work.WorkName.Replace(" ", ""))">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#@work.WorkName.Replace(" ", "")" aria-expanded="false" aria-controls="@work.WorkName.Replace(" ", "")">
-                                                        @work.WorkName
-                                                    </a>
-                                                </h4>
-                                                <button class="btn btn-xs btn-info" onclick="selectWork('@string.Format("{0}Text",@work.WorkName.Replace(" ", ""))', '@work.WorkPrice','@work.WorkName');" data-dismiss="modal">Select</button>
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-9">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#@work.WorkName.Replace(" ", "")" aria-expanded="false" aria-controls="@work.WorkName.Replace(" ", "")">
+                                                                    @work.WorkName
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <button class="btn btn-xs btn-info" onclick="selectWork('@string.Format("{0}Text",@work.WorkName.Replace(" ", ""))', '@work.WorkPrice','@work.WorkName');" data-dismiss="modal">Select</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div id="@work.WorkName.Replace(" ", "")" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@string.Format("{0}Heading",@work.WorkName.Replace(" ", ""))">
                                                 <input type="hidden" id="@string.Format("{0}Price",@work.WorkName.Replace(" ", ""))" value="@work.WorkPrice" />
