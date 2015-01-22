@@ -44,7 +44,7 @@
         <strong>Ref: <span contenteditable="true" id="refId"></span></strong>
     </div>
     <div>
-        <strong>Date: <span contenteditable="true" id="dateId"></span></strong>
+        <strong>Date: <span contenteditable="true" id="dateId">@DateTime.UtcNow.ToString("dd-MM-yyyy")</span></strong>
     </div>
 </div>
 
@@ -65,22 +65,13 @@
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
     <script>
-        var dateVar = new Date();
-        var month = dateVar.getMonth() + 1;
-        var day = dateVar.getDate();
-        var dialog;
-        var pencilIcon = '<i class="glyphicon glyphicon-pencil hover" type="button" data-toggle="modal" data-target="#jobSelector"></i>';
+
         var emptyEditableField = "<td contenteditable=true></td>";
+        var tableIdGlobal;
 
         $('#workTypeTabs').find("li").first().addClass("active");
         $('.tab-content').find(".tab-pane").first().addClass("active");
-        
-        month = (('' + month).length < 2 ? '0' : '') + month;
-        day = (('' + day).length < 2 ? '0' : '') + day;
 
-        $('#dateId').html(day + "-" + month + "-" + dateVar.getFullYear());
-
-        var rowId = 0;
         addQuoteTable();
 
         $('#customerClub').autocomplete({
@@ -130,41 +121,46 @@
             },
         });
 
-        function setRowId(rowid) {
-            $('#selectedRowId').val(rowid);
+        function removeRow(sender) {
+            var parent = $(sender).parents('tr');
+            parent.remove();
         }
 
-        function addRow(tableId) {
-            var newRowId = "row_" + rowId;
-            $(tableId).find('tbody').append("<tr id=" + newRowId + ">" + emptyEditableField + '<td contenteditable=true onclick=(setRowId("' + newRowId + '"));>'
-                                                                                            + pencilIcon + '</td>' + emptyEditableField +
-                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeElement(" + newRowId + ")></i></td><td style=display:none;></td>" +
-                                "</tr></tbody>");
-            rowId++;
-        }
-
-        function removeElement(elementId) {
-            $(elementId).remove();
+        function removeTable(sender) {
+            var parent = $(sender).parents('table');
+            parent.remove();
         }
 
         function addQuoteTable() {
             var $table = $(document.createElement('table'));
             var tableId = "table_" + $('.table-bordered').length;
-            var newRowId = "row_" + rowId;
             $table.attr("id", tableId);
             $table.addClass("table table-bordered");
-            $table.append("<thead><tr><th style=width:20%; contenteditable=true>Court</th><th style=width:65%;>Number of courts for these works: <span contenteditable=true>1</span></th><th style=width:10%; contenteditable=true>Price</th><th style=width:5%;><i class=\"glyphicon glyphicon-trash hover\" onclick=removeElement(" + tableId + ")></i></th></tr></thead>");
-            $table.append("<tbody><tr id=" + newRowId + ">" + emptyEditableField + '<td contenteditable=true onclick=(setRowId("' + newRowId + '"));>'
-                                                                                            + pencilIcon + '</td>' + emptyEditableField +
-                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeElement(" + newRowId + ")></i></td><td style=display:none;></td>" +
-                                "</tr></tbody>");
+            $table.append("<thead><tr><th style=width:20%; contenteditable=true>Court</th>" +
+                                     "<th style=width:65%;>Number of courts for these works: <span contenteditable=true>1</span></th>" +
+                                     "<th style=width:10%; contenteditable=true>Price</th>" +
+                                     "<th style=width:5%;><i class=\"glyphicon glyphicon-trash hover\" onclick='removeTable($(this));'></i></th>" +
+                          "</tr></thead>");
+            $table.append("<tbody></tbody>");
             $table.append("<tfoot><tr>" +
-                                    "<td colspan=4>" +
-                                        "<button class=\"btn btn-success btn-sm table-add\" onclick=addRow(" + tableId + ")>" +
+                                    "<td colspan=4 style=text-align:center;>" +
+                                        "<button class=\"btn btn-success btn-sm table-add\" type=button data-toggle=modal data-target=#jobSelector onclick=setTableId(" + tableId + ");>" +
                                             "<i class=\"glyphicon glyphicon-plus\"></i> Add work" +
                                         "</button></td></tr></tfoot>");
             $('#workTables').append($table);
-            rowId++;
+        }
+
+        function selectWork(description, price, title) {
+            $('#' + tableIdGlobal + ' >tbody').append("<tr>" + emptyEditableField + '<td contenteditable=true>' + $('#' + description).html() + '</td>' + '<td contenteditable=true>' + price + '</td>' +
+                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeRow($(this))></i></td><td style=display:none;>" + title + "</td>" +
+                                "</tr>");
+            $('#' + $('#selectedRowId').val()).find("td").eq(1).html($('#' + description).html());
+            $('#' + $('#selectedRowId').val()).find("td").eq(2).html(price);
+            $('#' + $('#selectedRowId').val()).find("td").eq(4).html(title);
+        }
+
+        function setTableId(tableId) {
+            tableIdGlobal = tableId.id;
         }
 
         function updateReference() {
@@ -195,12 +191,6 @@
                 acronym += element.substring(0, 1);
             });
             return acronym;
-        }
-
-        function selectWork(description, price, title) {
-            $('#' + $('#selectedRowId').val()).find("td").eq(1).html($('#' + description).html());
-            $('#' + $('#selectedRowId').val()).find("td").eq(2).html(price);
-            $('#' + $('#selectedRowId').val()).find("td").eq(4).html(title);
         }
         
         function submitQuote() {
