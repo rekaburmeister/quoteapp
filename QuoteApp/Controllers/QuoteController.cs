@@ -63,8 +63,8 @@ namespace QuoteApp.Controllers
         {
             QuoteViewModel model = new QuoteViewModel()
             {
-                WorkTypes = m_DbContext.WorkAreas.Select(area => area.WorkAreaName).ToList(),
-                Works = m_DbContext.Works.ToList().Select(work => new WorkViewModel(work)).ToList()
+                WorkTypes = WorkArea.GetWorkAreas().Select(area => area.WorkAreaName).ToList(),
+                Works = Work.GetWorks().ToList().Select(work => new WorkViewModel(work)).ToList()
             };
             return View(model);
         }

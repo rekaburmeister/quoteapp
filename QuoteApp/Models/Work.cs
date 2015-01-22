@@ -23,5 +23,13 @@ namespace QuoteApp.Models
 
         [Required]
         public virtual WorkArea WorkArea { get; set; }
+
+        internal static List<Work> GetWorks()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                return context.Works.ToList();
+            }
+        }
     }
 }
