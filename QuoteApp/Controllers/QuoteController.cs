@@ -74,6 +74,7 @@ namespace QuoteApp.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public JsonResult CreateQuote(string jsonString)
         {
             WorkFromView works = JsonConvert.DeserializeObject<WorkFromView>(jsonString);

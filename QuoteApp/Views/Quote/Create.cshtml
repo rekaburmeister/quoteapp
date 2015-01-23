@@ -251,7 +251,9 @@
                         'ContactId': $('#contactId').val(),
                     }
                 };
+
                 $.ajax({
+                    type: "POST",
                     url: '@Url.Action("CreateQuote")',
                     dataType: "json",
                     data: { jsonString: JSON.stringify(workFromView) },
@@ -259,7 +261,12 @@
                         alert("Quote created");
                         location.href = '@Url.Action("Index", "Home")';
                     },
-                    error: function(data) { alert("Something bad happened: " + data); }
+                    error: function(data) {
+                        alert("Something bad happened!\n Status: "
+                            + data.status + ": "
+                            + data.statusText + "\nResponse text:\n"
+                            + data.responseText);
+                    }
                 });
             });
         }
