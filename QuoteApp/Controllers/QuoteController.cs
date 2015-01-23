@@ -50,6 +50,12 @@ namespace QuoteApp.Controllers
                 ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
                 CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
             };
+
+            string header = ToHtml("_PdfHeader", null);
+            string footer = ToHtml("_PdfFooter", null);
+
+            string cusomtSwitches = string.Format("--print-media-type --footer-center {0} --footer-spacing -10 --header-center {1} --header-spacing -10",footer, header);
+
             return new ViewAsPdf(model)
             {
                 FileName = quote.QuoteId,
@@ -57,8 +63,35 @@ namespace QuoteApp.Controllers
                 PageOrientation = Orientation.Portrait,
                 PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
                 IsLowQuality = false,
-                MinimumFontSize = 14
+                MinimumFontSize = 14,
+                CustomSwitches = cusomtSwitches
             };
+        }
+
+        private string ToHtml(string viewToRender, ViewDataDictionary viewData)
+        {
+            var result = ViewEngines.Engines.FindView(ControllerContext, viewToRender, null);
+
+            StringWriter output;
+            using (output = new StringWriter())
+            {
+                var viewContext = new ViewContext(ControllerContext, result.View, new ViewDataDictionary(), 
+                    ControllerContext.Controller.TempData, output);
+                result.View.Render(viewContext, output);
+                result.ViewEngine.ReleaseView(ControllerContext, result.View);
+            }
+
+            return output.ToString();
+        }
+
+        public ActionResult Footer()
+        {
+            return View("_PdfFooter");
+        }
+
+        public ActionResult Header()
+        {
+            return View("_PdfHeader");
         }
 
         // GET: /Quote/Create

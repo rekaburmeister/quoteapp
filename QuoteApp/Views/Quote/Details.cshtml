@@ -33,38 +33,7 @@
 
 </head>
 <body>
-    <div class="form-horizontal" id="headerDiv">
-        <div class="form-group">
-            <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
-            <div class="middle" style="text-align: center; float: left">
-                Tony Gay<br />
-                SCPS<br />
-                18 Ransome Close<br />
-                Cambridge<br />
-                CB4 1WH
-            </div>
-            <div class="col-md-3" style="text-align: right; float: left">
-                07 771 631 876<br />
-                tonysquash@mac.com<br />
-                www.tonysquash.com
-            </div>
-        </div>
-    </div>
-    <hr class="header-hr" />
-    <div id="referencesDiv" style="font-size: 20px; font-family: Georgia">
-        <div class="col-md-3 col-md-offset-9">
-            <table style="font-weight: bold; border:none;">
-                <tr>
-                    <td style="text-align: right; width: 40%; padding-right: 10px;">Ref #: </td>
-                    <td>@Model.QuoteRef</td>
-                </tr>
-                <tr>
-                    <td style="text-align: right; padding-right: 10px;">Date: </td>
-                    <td>@Model.QuoteDate</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    
     <div id="quoteToConvert">
         <div id="detailsDiv" style="font-size: 20px; font-family: Georgia">
             <div style="font-weight: bold;" class="form-horizontal">
@@ -116,54 +85,14 @@
 
             Tony
         </div>
-        <div class="form-horizontal" id="footerDiv" style="margin-top: 450px">
-            <hr />
-            <div class="form-group">
-                <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/EnglandSquash.jpg"></div>
-                <div class="middle" style="text-align: center; float: left">
-                    Mr A G Gay<br />
-                    Approved by England Squash<br />
-                    VAT REG NO: 650 727831
-                </div>
-                <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/Armourcoat.JPG"></div>
-            </div>
-        </div>
+        
         <div id="workTables" style="margin-top: 50px;">
-            <div class="form-horizontal" id="headerDiv">
-                <div class="form-group">
-                    <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/TonySquashHeader.png"></div>
-                    <div class="middle" style="text-align: center; float: left">
-                        Tony Gay<br />
-                        SCPS<br />
-                        18 Ransome Close<br />
-                        Cambridge<br />
-                        CB4 1WH
-                    </div>
-                    <div class="col-md-3" style="text-align: right; float: left">
-                        07 771 631 876<br />
-                        tonysquash@mac.com<br />
-                        www.tonysquash.com
-                    </div>
-                </div>
-            </div>
+            
             <div style="text-align: center; font-family: Georgia; ">
                 <h1>Quotation</h1>
-                <hr class="header-hr" />
+
             </div>
-            <div id="referencesDiv" style="font-size: 20px; font-family: Georgia; margin-bottom: 50px;">
-                <div class="col-md-3 col-md-offset-9">
-                    <table style="font-weight: bold; border:none;">
-                        <tr>
-                            <td style="text-align: right; width: 40%; padding-right: 10px;">Ref #: </td>
-                            <td>@Model.QuoteRef</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; padding-right: 10px;">Date: </td>
-                            <td>@Model.QuoteDate</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            
             @foreach (var workArea in Model.CourtWorkDetails)
             {
                 <table class="table table-bordered">
@@ -190,24 +119,11 @@
                 </table>
             }
         </div>
-        <div style="width: 100%; text-align: center; font-weight: bold; margin-top: 150px; margin-bottom: 100px;">
+        <div style="width: 100%; text-align: center; font-weight: bold; margin-top: 150px;">
             All above prices are subject to VAT!
         </div>
     </div>
 
-
-    <div class="form-horizontal" id="footerDiv">
-        <hr />
-        <div class="form-group">
-            <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/EnglandSquash.jpg"></div>
-            <div class="middle" style="text-align: center; float: left">
-                Mr A G Gay<br />
-                Approved by England Squash<br />
-                VAT REG NO: 650 727831
-            </div>
-            <div class="col-md-3" style="float: left"><img class="img-responsive" src="~/Content/Images/Armourcoat.JPG"></div>
-        </div>
-    </div>
 </body>
 
 
