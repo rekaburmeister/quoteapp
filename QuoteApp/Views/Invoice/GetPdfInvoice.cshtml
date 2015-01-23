@@ -8,9 +8,12 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/site.css" rel="stylesheet" />
     <style>
-        .col-md-3 {
-            width: 25%;
+        table,tr, td {
+            page-break-inside: avoid !important;
         }
+         .col-md-3 {
+             width: 25%;
+         }
 
         .col-md-4 {
             width: 33.33333333%;
@@ -46,21 +49,20 @@
             margin-bottom: 20px;
         }
 
-            .table-totals > thead > tr > th,
-            .table-totals > tbody > tr > th,
-            .table-totals > tfoot > tr > th,
-            .table-totals > thead > tr > td,
-            .table-totals > tbody > tr > td,
-            .table-totals > tfoot > tr > td {
-                padding: 8px;
-                line-height: 1.42857143;
-                vertical-align: top;
-            }
+        .table-totals > thead > tr > th,
+        .table-totals > tbody > tr > th,
+        .table-totals > tfoot > tr > th,
+        .table-totals > thead > tr > td,
+        .table-totals > tbody > tr > td,
+        .table-totals > tfoot > tr > td {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
 
-            .table-totals > thead > tr > th {
-                vertical-align: bottom;
-            }
-
+        .table-totals > thead > tr > th {
+            vertical-align: bottom;
+        }
     </style>
 
 </head>
