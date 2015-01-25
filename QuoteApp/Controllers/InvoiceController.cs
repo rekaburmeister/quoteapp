@@ -51,7 +51,7 @@ namespace QuoteApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InvoiceId,Date,InvoiceTo,InvoiceToAddress,Reference,CareOf,CareOfEmail,CareOfNumber,Details,Price,ContactId,WorkLocationId,QuoteId")] CreateInvoiceViewModel model)
+        public ActionResult Create([Bind(Include = "InvoiceId,Date,InvoiceTo,InvoiceToAddress,Reference,CareOf,CareOfEmail,CareOfNumber,InvoiceDetails,ContactId,WorkLocationId,QuoteId")] CreateInvoiceViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -61,9 +61,9 @@ namespace QuoteApp.Controllers
                     InvoiceDate = DateTime.ParseExact(model.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     InvoiceId = model.InvoiceId,
                     ContactId = model.ContactId,
-                    Price = model.Price,
-                    //Details = model.Details,
-                    
+                    InvoiceDetails = model.InvoiceDetails,
+                    Reference = model.Reference,
+                    Price = model.InvoiceDetails.Sum(p=>p.Price),
                     PaidDate = null,
                     WorkLocationId = model.WorkLocationId
                 };

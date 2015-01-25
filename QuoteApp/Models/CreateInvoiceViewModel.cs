@@ -25,7 +25,7 @@ namespace QuoteApp.Models
 
         [Required]
         public string InvoiceToAddress { get; set; }
-        
+
         public string Reference { get; set; }
 
         [Required]
@@ -41,11 +41,7 @@ namespace QuoteApp.Models
         [Required]
         public string CareOfNumber { get; set; }
 
-        [Required]
-        public string Details { get; set; }
-
-        [Required]
-        public int Price { get; set; }
+        public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 
         public CreateInvoiceViewModel()
         {
@@ -63,13 +59,15 @@ namespace QuoteApp.Models
             Date = DateTime.Today.ToString("dd-MM-yyyy");
             InvoiceTo = location.WorkLocationName;
             InvoiceToAddress = location.GetAddress();
-            Details = "Refurbishment to squash courts as agrred";
             ContactId = quote.ContactId;
             WorkLocationId = quote.WorkLocationId;
             CareOf = contact.GetName();
             CareOfEmail = contact.Email;
             CareOfNumber = contact.MobileNumber ?? contact.PhoneNumber;
-            Price = acceptedWorks.Sum(work => work.Price);
+            InvoiceDetails = new List<InvoiceDetail>() 
+                { new InvoiceDetail() 
+                    { Description = "Refurbishment to squash courts as agrred", 
+                      Price = acceptedWorks.Sum(work => work.Price) } };
         }
     }
 
