@@ -275,6 +275,10 @@
     <Compile Include="Migrations\201501251113348_InvoiceDetails.Designer.cs">
       <DependentUpon>201501251113348_InvoiceDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501251115323_ReferenceInInvoice.cs" />
+    <Compile Include="Migrations\201501251115323_ReferenceInInvoice.Designer.cs">
+      <DependentUpon>201501251115323_ReferenceInInvoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
@@ -523,6 +527,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501251113348_InvoiceDetails.resx">
       <DependentUpon>201501251113348_InvoiceDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501251115323_ReferenceInInvoice.resx">
+      <DependentUpon>201501251115323_ReferenceInInvoice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

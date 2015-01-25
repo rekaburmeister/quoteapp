@@ -32,6 +32,8 @@ namespace QuoteApp.Models
         [Required]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 
+        public string Reference { get; set; }
+
         // I was thinking of approving the quoted works individually with the invoice but now it seems daft. Still, leaving it here to think about it later
         //public virtual ICollection<InvoicedWork> InvoicedWorks { get; set; }
 
