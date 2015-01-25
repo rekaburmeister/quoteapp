@@ -283,6 +283,7 @@
     <Compile Include="Models\AcceptedWork.cs" />
     <Compile Include="Models\CreateInvoiceViewModel.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
+    <Compile Include="Models\PartialWorkViewModel.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\QuotedWork.cs" />
     <Compile Include="Models\QuoteSummary.cs" />
@@ -379,7 +380,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -441,6 +444,9 @@
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Invoice\MarkAsPaid.cshtml" />
     <Content Include="Views\Invoice\GetPdfInvoice.cshtml" />
+    <Content Include="Views\Quote\_WorkTypesModal.cshtml" />
+    <Content Include="Views\Shared\_PdfHeader.cshtml" />
+    <Content Include="Views\Shared\_PdfFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

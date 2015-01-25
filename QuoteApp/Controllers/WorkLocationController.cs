@@ -118,17 +118,10 @@ namespace QuoteApp.Controllers
 
         public JsonResult GetClubsBySearchTerm(string term)
         {
-            IEnumerable<WorkLocationJson> clubs = WorkLocation.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = string.Join(", ", new []{location.Address1, 
-                                                                                                                                                            location.Address2, 
-                                                                                                                                                            location.Address3, 
-                                                                                                                                                            location.Town, 
-                                                                                                                                                            location.Country, 
-                                                                                                                                                            location.PostCode}
-                                                                                                                                                            .Where(str => !string.IsNullOrEmpty(str))),
-                                                                                                                          id = location.WorkLocationId,
-                                                                                                                          label = location.WorkLocationName,
-                                                                                                                              text = location.WorkLocationName
-            });
+            IEnumerable<WorkLocationJson> clubs = WorkLocation.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = location.GetAddress(),
+                                                                                                                              id = location.WorkLocationId,
+                                                                                                                              label = location.WorkLocationName,
+                                                                                                                              text = location.WorkLocationName});
             string jsonstring = JsonConvert.SerializeObject(clubs);
             return Json(jsonstring, JsonRequestBehavior.AllowGet);
         }

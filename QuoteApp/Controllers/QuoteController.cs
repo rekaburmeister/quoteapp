@@ -50,25 +50,64 @@ namespace QuoteApp.Controllers
                 ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
                 CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
             };
-            return new ViewAsPdf(model) { FileName = quote.QuoteId, 
-                                          PageSize = Size.A4, 
-                                          PageOrientation = Orientation.Portrait, 
-                                          PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 }, 
-                                          IsLowQuality = false, 
-                                          MinimumFontSize = 14 };
+
+            string header = ToHtml("_PdfHeader", null);
+            string footer = ToHtml("_PdfFooter", null);
+
+            string cusomtSwitches = string.Format("--print-media-type --footer-center {0} --footer-spacing -10 --header-center {1} --header-spacing -10",footer, header);
+
+            return new ViewAsPdf(model)
+            {
+                FileName = quote.QuoteId,
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Portrait,
+                PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
+                IsLowQuality = false,
+                MinimumFontSize = 14,
+                CustomSwitches = cusomtSwitches
+            };
+        }
+
+        private string ToHtml(string viewToRender, ViewDataDictionary viewData)
+        {
+            var result = ViewEngines.Engines.FindView(ControllerContext, viewToRender, null);
+
+            StringWriter output;
+            using (output = new StringWriter())
+            {
+                var viewContext = new ViewContext(ControllerContext, result.View, new ViewDataDictionary(), 
+                    ControllerContext.Controller.TempData, output);
+                result.View.Render(viewContext, output);
+                result.ViewEngine.ReleaseView(ControllerContext, result.View);
+            }
+
+            return output.ToString();
+        }
+
+        public ActionResult Footer()
+        {
+            return View("_PdfFooter");
+        }
+
+        public ActionResult Header()
+        {
+            return View("_PdfHeader");
         }
 
         // GET: /Quote/Create
         public ActionResult Create()
         {
+            Work work = new Work();
             QuoteViewModel model = new QuoteViewModel()
             {
-                WorkTypes = m_DbContext.WorkAreas.Select(area => area.WorkAreaName).ToList(),
-                Works = m_DbContext.Works.ToList().Select(work => new WorkViewModel(work)).ToList()
+                WorkTypes = WorkArea.GetWorkAreas().Select(area => area.WorkAreaName).ToList(),
+
+                Works = work.GetWorkViewModelsForWorks()
             };
             return View(model);
         }
 
+        [HttpPost]
         public JsonResult CreateQuote(string jsonString)
         {
             WorkFromView works = JsonConvert.DeserializeObject<WorkFromView>(jsonString);
