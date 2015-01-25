@@ -30,7 +30,7 @@ namespace QuoteApp.Models
         public int Price { get; set; }
 
         [Required]
-        public string Details { get; set; }
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 
         // I was thinking of approving the quoted works individually with the invoice but now it seems daft. Still, leaving it here to think about it later
         //public virtual ICollection<InvoicedWork> InvoicedWorks { get; set; }

@@ -62,7 +62,8 @@ namespace QuoteApp.Controllers
                     InvoiceId = model.InvoiceId,
                     ContactId = model.ContactId,
                     Price = model.Price,
-                    Details = model.Details,
+                    //Details = model.Details,
+                    
                     PaidDate = null,
                     WorkLocationId = model.WorkLocationId
                 };

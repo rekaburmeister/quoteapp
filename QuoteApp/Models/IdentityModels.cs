@@ -30,6 +30,7 @@ namespace QuoteApp.Models
         public DbSet<QuotedWork> QuotedWorks { get; set; }
         public DbSet<AcceptedWork> AcceptedWork { get; set; }
         public DbSet<GeneratedPdf> GeneratedPdfs { get; set; }
+        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

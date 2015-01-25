@@ -271,6 +271,10 @@
     <Compile Include="Migrations\201501200923517_AddingExtraFieldsToAcceptedWork.Designer.cs">
       <DependentUpon>201501200923517_AddingExtraFieldsToAcceptedWork.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501251113348_InvoiceDetails.cs" />
+    <Compile Include="Migrations\201501251113348_InvoiceDetails.Designer.cs">
+      <DependentUpon>201501251113348_InvoiceDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Company.cs" />
@@ -282,6 +286,7 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\AcceptedWork.cs" />
     <Compile Include="Models\CreateInvoiceViewModel.cs" />
+    <Compile Include="Models\InvoiceDetail.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\PartialWorkViewModel.cs" />
     <Compile Include="Models\Quote.cs" />
@@ -515,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501200923517_AddingExtraFieldsToAcceptedWork.resx">
       <DependentUpon>201501200923517_AddingExtraFieldsToAcceptedWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501251113348_InvoiceDetails.resx">
+      <DependentUpon>201501251113348_InvoiceDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

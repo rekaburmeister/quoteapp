@@ -58,7 +58,7 @@ namespace QuoteApp.Models
                     ContactNumber = invoice.Contact.MobileNumber ?? invoice.Contact.PhoneNumber;
                     ContactEmail = invoice.Contact.Email;
                     Price = invoice.Price;
-                    Details = invoice.Details;
+                    //Details = invoice.Details;
                 }
             }
         }
