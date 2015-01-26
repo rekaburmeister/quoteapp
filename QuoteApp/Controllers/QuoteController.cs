@@ -47,7 +47,7 @@ namespace QuoteApp.Controllers
             WorkFromView model = new WorkFromView()
             {
                 QuoteRef = quote.QuoteId,
-                QuoteDate = quote.QuoteDate.ToString("d"),
+                QuoteDate = quote.QuoteDate.ToString("dd-MM-yyyy"),
                 ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
                 CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
             };
