@@ -1,4 +1,5 @@
-﻿@model QuoteApp.Models.CreateInvoiceViewModel
+﻿@using QuoteApp.Models
+@model QuoteApp.Models.CreateInvoiceViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -7,105 +8,179 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m=>m.QuoteId)
-    <div class="form-horizontal">
-        <h4>Invoice</h4>
-        <hr />
-        @Html.ValidationSummary(true)
+@Html.HiddenFor(m => m.QuoteId)
+<div class="form-horizontal">
+    <h4>Invoice</h4>
+    <hr />
+    @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.InvoiceId, new {@class = "form-control"})
-                @Html.ValidationMessageFor(model => model.InvoiceId)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Date, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Date)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceTo, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.InvoiceTo, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.InvoiceTo)
-                @Html.HiddenFor(m => m.WorkLocationId)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceToAddress, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.InvoiceToAddress, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.InvoiceToAddress)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Reference, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Reference, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Reference)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.CareOf, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.CareOf, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CareOf)
-                @Html.HiddenFor(m=>m.ContactId)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.CareOfEmail, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.CareOfEmail, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CareOfEmail)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.CareOfNumber, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.CareOfNumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CareOfNumber)
-            </div>
-        </div>
-        
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Details, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Details, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Details)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Price)
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.InvoiceId, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.InvoiceId, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.InvoiceId)
         </div>
     </div>
-}
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Date, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Date)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.InvoiceTo, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.InvoiceTo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.InvoiceTo)
+            @Html.HiddenFor(m => m.WorkLocationId)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.InvoiceToAddress, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.InvoiceToAddress, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.InvoiceToAddress)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Reference, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Reference, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Reference)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CareOf, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.CareOf, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CareOf)
+            @Html.HiddenFor(m => m.ContactId)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CareOfEmail, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.CareOfEmail, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CareOfEmail)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CareOfNumber, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.CareOfNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CareOfNumber)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.InvoiceDetails, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 70%">Details</th>
+                        <th style="width: 20%">Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="detailsBody">
+                    @foreach (InvoiceDetail detail in Model.InvoiceDetails)
+                    {
+                        <tr>
+                            <td contenteditable="true">@detail.Description</td>
+                            <td contenteditable="true">@detail.Price</td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan=3 style="text-align:center;">
+                            <span class="btn btn-success btn-sm" onclick="addInvoiceItem();"> <i class=" glyphicon glyphicon-plus"></i> Add item</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-primary" onclick="createInvoice();">Create invoice</button>
+        </div>
+    </div>
+</div>
+
 
 <div>
     @Html.ActionLink("Cancel", "Index", "Home")
 </div>
+
+@section scripts{
+    <script>
+
+        //$('#InvoiceDetails').val({ DetailId: '0', InvoiceId: $('#InvoiceId').val(), Description: 'Some description', Price: '400' });
+
+        function addInvoiceItem() {
+            var cell = '<td contenteditable="true"></td>';
+            $('#detailsBody').append('<tr>' + cell + cell + '<td><i class="glyphicon glyphicon-trash hover" onclick="removeItem($(this));"></i></td></tr>');
+        }
+
+        function removeItem(item) {
+            $(item).parents('tr').remove();
+        }
+
+        function createInvoice() {
+
+            var invoiceDetails = [];
+            $('#detailsBody > tr').each(function () {
+
+                var cells = $(this).find('td');
+                var detail = {
+                    'InvoiceId': $('#InvoiceId').val(),
+                    'Description': cells[0].innerText,
+                    'Price': cells[1].innerText
+
+                };
+                invoiceDetails.push(detail);
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Create")',
+                dataType: "json",
+                data: {
+                    InvoiceId: $('#InvoiceId').val(),
+                    Date: $('#Date').val(),
+                    InvoiceTo: $('#InvoiceTo').val(),
+                    InvoiceToAddress: $('#InvoiceToAddress').val(),
+                    Reference: $('#Reference').val(),
+                    CareOf: $('#CareOf').val(),
+                    CareOfEmail: $('#CareOfEmail').val(),
+                    CareOfNumber: $('#CareOfNumber').val(),
+                    InvoiceDetails: invoiceDetails,
+                    ContactId: $('#ContactId').val(),
+                    WorkLocationId: $('#WorkLocationId').val(),
+                    QuoteId: $('#QuoteId').val()
+                },
+                success: function (data) {
+                    location.href = '@Url.Action("Index", "Home")';
+                },
+                error: function (data) {
+                    alert("Something bad happened!\n Status: "
+                        + data.status + ": "
+                        + data.statusText + "\nResponse text:\n"
+                        + data.responseText);
+                }
+            });
+        }
+
+    </script>
+}

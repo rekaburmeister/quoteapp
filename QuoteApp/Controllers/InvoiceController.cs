@@ -50,12 +50,10 @@ namespace QuoteApp.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "InvoiceId,Date,InvoiceTo,InvoiceToAddress,Reference,CareOf,CareOfEmail,CareOfNumber,InvoiceDetails,ContactId,WorkLocationId,QuoteId")] CreateInvoiceViewModel model)
         {
             if (ModelState.IsValid)
             {
-                
                 Invoice invoice = new Invoice
                 {
                     InvoiceDate = DateTime.ParseExact(model.Date, "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -67,33 +65,16 @@ namespace QuoteApp.Controllers
                     PaidDate = null,
                     WorkLocationId = model.WorkLocationId
                 };
-                m_Context.Invoices.Add(invoice);
-                try
-                {
-                    m_Context.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
-                    throw;
-                }
+                invoice.Add();
+                
 
                 // Only mark the quote finished if the invoice was successfully created
                 Quote quote = Quote.GetQuote(model.QuoteId);
                 quote.MarkAsFinished();
-                return RedirectToAction("Index", "Home");
+                return Json(new {Success = true});
             }
 
-            return RedirectToAction("Index", "Home");
+            return Json(new {Success = false, errorMessage="ModelState is invalid"});
         }
 
         // GET: /Invoice/Edit/5

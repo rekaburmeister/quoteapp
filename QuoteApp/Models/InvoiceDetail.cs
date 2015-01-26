@@ -10,7 +10,7 @@ namespace QuoteApp.Models
     {
         [Key]
         [Required]
-        public string DetailId { get; set; }
+        public int DetailId { get; set; }
 
         [Required]
         public string InvoiceId { get; set; }
@@ -21,5 +21,6 @@ namespace QuoteApp.Models
 
         [Required]
         public int Price { get; set; }
+
     }
 }

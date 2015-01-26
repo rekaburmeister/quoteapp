@@ -87,5 +87,14 @@ namespace QuoteApp.Models
                 context.SaveChanges();
             }
         }
+
+        public void Add()
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                context.Invoices.Add(this);
+                context.SaveChanges();
+            }
+        }
     }
 }
