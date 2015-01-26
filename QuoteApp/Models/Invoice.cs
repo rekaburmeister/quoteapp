@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -29,7 +30,6 @@ namespace QuoteApp.Models
         [Required]
         public int Price { get; set; }
 
-        [Required]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 
         public string Reference { get; set; }
@@ -84,7 +84,25 @@ namespace QuoteApp.Models
                 Invoice invoice = context.Invoices.Find(invoiceId);
                 invoice.PaidDate = DateTime.UtcNow;
                 context.Entry(invoice).State = EntityState.Modified;
-                context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+
             }
         }
 

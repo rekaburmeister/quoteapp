@@ -52,8 +52,8 @@ namespace QuoteApp.Controllers
                 CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
             };
 
-            string header = ToHtml("_PdfHeader", null);
-            string footer = ToHtml("_PdfFooter", null);
+            string header = ToHtml("_PdfHeader", new ViewDataDictionary{ {"QuoteRef", model.QuoteRef}, {"QuoteDate", model.QuoteDate}});
+            string footer = ToHtml("_PdfFooter", new ViewDataDictionary());
 
             string cusomtSwitches = string.Format("--print-media-type --footer-center {0} --footer-spacing -10 --header-center {1} --header-spacing -10",footer, header);
 
@@ -76,7 +76,7 @@ namespace QuoteApp.Controllers
             StringWriter output;
             using (output = new StringWriter())
             {
-                var viewContext = new ViewContext(ControllerContext, result.View, new ViewDataDictionary(), 
+                var viewContext = new ViewContext(ControllerContext, result.View, viewData, 
                     ControllerContext.Controller.TempData, output);
                 result.View.Render(viewContext, output);
                 result.ViewEngine.ReleaseView(ControllerContext, result.View);
