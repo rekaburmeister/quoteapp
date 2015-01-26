@@ -147,15 +147,17 @@ namespace QuoteApp.Controllers
                 return HttpNotFound();
             }
 
-            return new ViewAsPdf(invoice)
-            {
-                FileName = invoice.InvoiceId,
-                PageSize = Size.A4,
-                PageOrientation = Orientation.Portrait,
-                PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
-                IsLowQuality = false,
-                MinimumFontSize = 14
-            };
+            return View(invoice);
+
+            //return new ViewAsPdf(invoice)
+            //{
+            //    FileName = invoice.InvoiceId,
+            //    PageSize = Size.A4,
+            //    PageOrientation = Orientation.Portrait,
+            //    PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
+            //    IsLowQuality = false,
+            //    MinimumFontSize = 14
+            //};
         }
 
         // POST: /Invoice/Delete/5

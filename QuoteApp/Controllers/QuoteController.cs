@@ -52,21 +52,23 @@ namespace QuoteApp.Controllers
                 CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
             };
 
-            string header = ToHtml("_PdfHeader", new ViewDataDictionary{ {"QuoteRef", model.QuoteRef}, {"QuoteDate", model.QuoteDate}});
-            string footer = ToHtml("_PdfFooter", new ViewDataDictionary());
+            //string header = ToHtml("_PdfHeader", new ViewDataDictionary{ {"QuoteRef", model.QuoteRef}, {"QuoteDate", model.QuoteDate}});
+            //string footer = ToHtml("_PdfFooter", new ViewDataDictionary());
 
-            string cusomtSwitches = string.Format("--print-media-type --footer-center {0} --footer-spacing -10 --header-center {1} --header-spacing -10",footer, header);
+            //string cusomtSwitches = string.Format("--print-media-type --footer-center {0} --footer-spacing -10 --header-center {1} --header-spacing -10",footer, header);
 
-            return new ViewAsPdf(model)
-            {
-                FileName = quote.QuoteId,
-                PageSize = Size.A4,
-                PageOrientation = Orientation.Portrait,
-                PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
-                IsLowQuality = false,
-                MinimumFontSize = 14,
-                CustomSwitches = cusomtSwitches
-            };
+            return View(model);
+
+            //return new ViewAsPdf(model)
+            //{
+            //    FileName = quote.QuoteId,
+            //    PageSize = Size.A4,
+            //    PageOrientation = Orientation.Portrait,
+            //    PageMargins = { Left = 15, Bottom = 15, Right = 15, Top = 15 },
+            //    IsLowQuality = false,
+            //    MinimumFontSize = 14,
+            //    CustomSwitches = cusomtSwitches
+            //};
         }
 
         private string ToHtml(string viewToRender, ViewDataDictionary viewData)

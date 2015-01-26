@@ -1,7 +1,7 @@
 ﻿@model QuoteApp.Models.WorkFromView
 
-@{ Layout = null;}
-<head>
+@*@{ Layout = null;}*@
+@*<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
@@ -38,8 +38,10 @@
     </style>
 
 </head>
-<body>
-    
+<body>*@
+    @{
+        Html.RenderPartial("_PdfHeader", Model);
+    }
     <div id="quoteToConvert" style="margin-top: 250px;">
         <div id="detailsDiv" style="font-size: 20px; font-family: Georgia">
             <div style="font-weight: bold;" class="form-horizontal">
@@ -91,14 +93,14 @@
 
             Tony
         </div>
-        
-        <div id="workTables" style="margin-top: 750px;">
-            
+        <div id="workTables" style="margin-top: 50px;">
+            @*<div id="workTables" style="margin-top: 750px;">*@
+
             <div style="text-align: center; font-family: Georgia; margin-bottom: 50px;">
                 <h1>Quotation</h1>
 
             </div>
-            
+
             @foreach (var workArea in Model.CourtWorkDetails)
             {
                 <table class="table table-bordered">
@@ -108,7 +110,7 @@
                             <th style="border-right: none; border-left: none; "></th>
                             <th style="border-left:none">
                                 Price @if (workArea.NumberOfCourts > 1)
-                                      {<span>per court</span>}
+                                {<span>per court</span>}
                             </th>
                         </tr>
                     </thead>
@@ -125,12 +127,15 @@
                 </table>
             }
         </div>
+
         <div style="width: 100%; text-align: center; font-weight: bold; margin-top: 150px;">
             All above prices are subject to VAT!
         </div>
     </div>
-
-</body>
+@{
+    Html.RenderPartial("_PdfFooter");
+}
+@*</body>*@
 
 
 @*<button class="btn btn-default" onclick="generatePdf('@Model.QuoteRef');">Generate PDF</button>
