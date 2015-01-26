@@ -1,7 +1,5 @@
 ﻿@model QuoteApp.Models.WorkViewModel
 
-@using (Html.BeginForm())
-{
     <h4>Add new work</h4>
     <div class="form-horizontal" role="form">
         <div class="form-group">
@@ -19,10 +17,11 @@
                 @Html.TextBoxFor(m => m.WorkPrice, new { @class = "form-control", placeholder = "300" })
             </div>
             <div class="col-lg-1">
-                <input type="submit" class="btn btn-success" id="submitButton" value="Add" disabled="disabled" />
+                <input type="submit" onclick="createWork();" class=" btn btn-success" id="submitButton" value="Add" disabled="disabled" />
             </div>
 
         </div>
     </div>
-}
 
+
+    

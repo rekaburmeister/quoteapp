@@ -32,7 +32,7 @@ namespace QuoteApp.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult CreateWork(WorkViewModel work)
+        public JsonResult CreateWork(WorkViewModel work)
         {
             if (ModelState.IsValid)
             {
@@ -45,9 +45,9 @@ namespace QuoteApp.Controllers
                 };
                 m_DbContext.Works.Add(workObject);
                 m_DbContext.SaveChanges();
-                return PartialView();
+                return Json(new { Success = true});
             }
-            return PartialView();
+            return Json(new { errorMessage = "ModelState invalid" });
         }
 
         public ActionResult GetWorkAreasBySearchTerm(string term)

@@ -41,6 +41,9 @@
 @{
     Html.RenderAction("WorkDescriptions");
 }
+@{
+    Html.RenderAction("CreateWork");
+}
 @section scripts
 {
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -77,5 +80,32 @@
             var url = '@Url.Action("Create", new { workAreaName = "PLACEHOLDER" })'.replace('PLACEHOLDER', $('#workType').val());
             window.location.href = url;
         }
+
+    function createWork() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateWork")',
+            dataType: "json",
+            data: {
+                WorkAreaId: $('#WorkAreaId').val(),
+                WorkName: $('#WorkName').val(),
+                WorkDescription: $('#WorkDescription').val(),
+                WorkPrice: $('#WorkPrice').val()
+                    
+            },
+            success: function (data) {
+                location.href = '@Url.Action("Index", "Work")';
+            },
+            error: function (data) {
+                alert("Something bad happened!\n Status: "
+                    + data.status + ": "
+                    + data.statusText + "\nResponse text:\n"
+                    + data.responseText);
+            }
+        });
+    }
+</script>
+
+
     </script>
 }
