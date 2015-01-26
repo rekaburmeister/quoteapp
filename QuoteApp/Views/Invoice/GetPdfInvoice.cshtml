@@ -1,4 +1,5 @@
-﻿@model QuoteApp.Models.InvoiceViewModel
+﻿@using QuoteApp.Models
+@model QuoteApp.Models.InvoiceViewModel
 
 @{ Layout = null;}
 <head>
@@ -8,12 +9,13 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/site.css" rel="stylesheet" />
     <style>
-        table,tr, td {
+        table, tr, td {
             page-break-inside: avoid !important;
         }
-         .col-md-3 {
-             width: 25%;
-         }
+
+        .col-md-3 {
+            width: 25%;
+        }
 
         .col-md-4 {
             width: 33.33333333%;
@@ -49,20 +51,20 @@
             margin-bottom: 20px;
         }
 
-        .table-totals > thead > tr > th,
-        .table-totals > tbody > tr > th,
-        .table-totals > tfoot > tr > th,
-        .table-totals > thead > tr > td,
-        .table-totals > tbody > tr > td,
-        .table-totals > tfoot > tr > td {
-            padding: 8px;
-            line-height: 1.42857143;
-            vertical-align: top;
-        }
+            .table-totals > thead > tr > th,
+            .table-totals > tbody > tr > th,
+            .table-totals > tfoot > tr > th,
+            .table-totals > thead > tr > td,
+            .table-totals > tbody > tr > td,
+            .table-totals > tfoot > tr > td {
+                padding: 8px;
+                line-height: 1.42857143;
+                vertical-align: top;
+            }
 
-        .table-totals > thead > tr > th {
-            vertical-align: bottom;
-        }
+            .table-totals > thead > tr > th {
+                vertical-align: bottom;
+            }
     </style>
 
 </head>
@@ -140,16 +142,20 @@
             <table class="table table-bordered">
                 <thead>
                     <tr style="background-color: #87C1FD; color: whitesmoke;">
-                        <th style="border-right:none">Details</th>
+                        <th style="border-right:none; text-align: right">Details</th>
                         <th style="border-right: none; border-left: none; "></th>
                         <th style="border-left:none">Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="2" style="text-align: center">@Model.Details</td>
-                        <td style="text-align: right;">£@Model.Price</td>
-                    </tr>
+                    @foreach (InvoiceDetail detail in Model.InvoiceDetails)
+                    {
+                        <tr>
+                            <td colspan="2" style="text-align: center">@detail.Description</td>
+                            <td style="text-align: right;">£@detail.Price</td>
+                        </tr>
+                    }
+
 
                 </tbody>
             </table>
@@ -161,15 +167,15 @@
                     </tr>
                     <tr style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 20px;">
                         <td style="text-align: right;">VAT 20%:</td>
-                        <td style ="text-align: right;"><strong>£@(Model.Price * 0.2)</strong></td>
+                        <td style="text-align: right;"><strong>£@(Model.Price * 0.2)</strong></td>
                     </tr>
                     <tr style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 20px;">
                         <td style="text-align: right;">Total:</td>
                         <td style="text-align: right;"><strong>£@(Model.Price + Model.Price * 0.2)</strong></td>
                     </tr>
-                </table>    
+                </table>
             </div>
-            
+
             <div style="width: 100%; margin-top: 150px;">
                 <span style="color: red">Please note account details:</span>
                 <p><strong>Barclays Bank PLC</strong></p>
@@ -178,7 +184,7 @@
                 <p>Sort Code: <strong>20-74-81</strong></p>
                 <p style="color: red"><strong><u>Please make cheques payable to: SCPS</u></strong></p>
                 <p>Payment terms: <strong>We would kindly ask you to settle payment within 14 days.</strong></p>
-                <br/>
+                <br />
                 <p style="text-align: center"><strong>Thank you for your business!</strong></p>
             </div>
         </div>

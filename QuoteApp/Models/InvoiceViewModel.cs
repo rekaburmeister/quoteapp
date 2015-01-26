@@ -35,7 +35,7 @@ namespace QuoteApp.Models
         [Required]
         public int Price { get; set; }
 
-        public string Details { get; set; }
+        public List<InvoiceDetail> InvoiceDetails { get; set; }
         public string Reference { get; set; }
 
         public InvoiceViewModel()
@@ -58,7 +58,7 @@ namespace QuoteApp.Models
                     ContactNumber = invoice.Contact.MobileNumber ?? invoice.Contact.PhoneNumber;
                     ContactEmail = invoice.Contact.Email;
                     Price = invoice.Price;
-                    //Details = invoice.Details;
+                    InvoiceDetails = invoice.InvoiceDetails.ToList();
                 }
             }
         }
