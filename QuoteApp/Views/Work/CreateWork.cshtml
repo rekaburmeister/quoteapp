@@ -10,8 +10,8 @@
             <div class="col-lg-2">
                 @Html.TextBoxFor(m => m.WorkName, new { @class = "form-control", placeholder = "Sand floor" })
             </div>
-            <div class="col-lg-4">
-                @Html.TextBoxFor(m => m.WorkDescription, new { @class = "form-control", placeholder = "Type the description..." })
+            <div class="col-lg-5">
+                @Html.TextAreaFor(m => m.WorkDescription, new { @class = "form-control", placeholder = "Type the description..." })
             </div>
             <div class="col-lg-1">
                 @Html.TextBoxFor(m => m.WorkPrice, new { @class = "form-control", placeholder = "300" })
