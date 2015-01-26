@@ -5,12 +5,17 @@
     ViewBag.Title = "New quote";
 }
 <h3>Create new quote</h3>
+<div class="alert alert-danger col-lg-12" id="quoteNumberAlert" role="alert" hidden>
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    The specified quote number already exists. The next available number is <strong id="nextAvailableNumber"></strong>
+</div>
 <div class="form-horizontal col-lg-10" role="form" id="customerInfo">
     <div class="form-group">
         <label for="customerClub" class="col-sm-2 control-label">Customer club</label>
         <div class="col-sm-6">
-            <input class="form-control" id="customerClub" placeholder="The name of the club to quote for" onchange="updateReference();">
-            <input type="hidden" id="clubId" value="0"/>
+            <input class="form-control" id="customerClub" placeholder="The name of the club to quote for" onchange=" updateReference(); ">
+            <input type="hidden" id="clubId" value="0" />
         </div>
     </div>
     <div class="form-group">
@@ -22,8 +27,8 @@
     <div class="form-group">
         <label for="contactName" class="col-sm-2 control-label">Contact name</label>
         <div class="col-sm-6">
-            <input class="form-control" id="contactName" placeholder="John Smith" onchange="updateReference();">
-            <input type="hidden" id="contactId" value="0"/>
+            <input class="form-control" id="contactName" placeholder="John Smith" onchange=" updateReference(); ">
+            <input type="hidden" id="contactId" value="0" />
         </div>
     </div>
     <div class="form-group">
@@ -39,6 +44,7 @@
         </div>
     </div>
 </div>
+
 <div class="col-lg-2" id="refAndDate">
     <div>
         <strong>Ref: <span contenteditable="true" id="refId"></span></strong>
@@ -55,7 +61,7 @@
 
 <!-- Modal -->
 @{
-    Html.RenderPartial("_WorkTypesModal", new PartialWorkViewModel{WorkTypes = Model.WorkTypes, Works = Model.Works});
+    Html.RenderPartial("_WorkTypesModal", new PartialWorkViewModel { WorkTypes = Model.WorkTypes, Works = Model.Works });
 }
 <div class="col-md-8 col-md-offset-2" style="margin-top: 20px;">
     <button class="btn btn-danger" onclick="submitQuote();">Submit quote</button>
@@ -137,23 +143,23 @@
             $table.attr("id", tableId);
             $table.addClass("table table-bordered");
             $table.append("<thead><tr><th style=width:20%; contenteditable=true>Court</th>" +
-                                     "<th style=width:65%;>Number of courts for these works: <span contenteditable=true>1</span></th>" +
-                                     "<th style=width:10%; contenteditable=true>Price</th>" +
-                                     "<th style=width:5%;><i class=\"glyphicon glyphicon-trash hover\" onclick='removeTable($(this));'></i></th>" +
-                          "</tr></thead>");
+                "<th style=width:65%;>Number of courts for these works: <span contenteditable=true>1</span></th>" +
+                "<th style=width:10%; contenteditable=true>Price</th>" +
+                "<th style=width:5%;><i class=\"glyphicon glyphicon-trash hover\" onclick='removeTable($(this));'></i></th>" +
+                "</tr></thead>");
             $table.append("<tbody></tbody>");
             $table.append("<tfoot><tr>" +
-                                    "<td colspan=4 style=text-align:center;>" +
-                                        "<button class=\"btn btn-success btn-sm table-add\" type=button data-toggle=modal data-target=#jobSelector onclick=setTableId(" + tableId + ");>" +
-                                            "<i class=\"glyphicon glyphicon-plus\"></i> Add work" +
-                                        "</button></td></tr></tfoot>");
+                "<td colspan=4 style=text-align:center;>" +
+                "<button class=\"btn btn-success btn-sm table-add\" type=button data-toggle=modal data-target=#jobSelector onclick=setTableId(" + tableId + ");>" +
+                "<i class=\"glyphicon glyphicon-plus\"></i> Add work" +
+                "</button></td></tr></tfoot>");
             $('#workTables').append($table);
         }
 
         function selectWork(description, price, title) {
             $('#' + tableIdGlobal + ' >tbody').append("<tr>" + emptyEditableField + '<td contenteditable=true>' + $('#' + description).html() + '</td>' + '<td contenteditable=true>' + price + '</td>' +
-                                    "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeRow($(this))></i></td><td style=display:none;>" + title + "</td>" +
-                                "</tr>");
+                "<td><i class=\"glyphicon glyphicon-remove hover\"  onclick=removeRow($(this))></i></td><td style=display:none;>" + title + "</td>" +
+                "</tr>");
         }
 
         function setTableId(tableId) {
@@ -179,6 +185,23 @@
             }
             code = code.replace("&", "");
             $('#refId').html(code.toUpperCase());
+
+            $.ajax({
+                url: '@Url.Action("CheckAvailableQuoteId")',
+                async: false,
+                dataType: "json",
+                data: { currentQuoteId: $('#refId').html() },
+                success: function (data) {
+                    var availableId = data.id;
+                    if (availableId !== 0) {
+                        $('#nextAvailableNumber').html(availableId);
+                        $('#quoteNumberAlert').removeAttr('hidden');
+                    }
+                },
+                error:function(data) {
+                    alert('Something went wrong:' + data);
+                }
+            });
         }
 
         function getAcronym(elementId) {
@@ -189,7 +212,7 @@
             });
             return acronym;
         }
-        
+
         function submitQuote() {
             var idInUse = true;
             $.ajax({
@@ -207,12 +230,12 @@
             }
             $('#workTables').each(function () {
                 var json = [];
-                
+
                 $(this).find('table').each(function () {
                     var court;
                     var numberOfCourts;
                     var works = [];
-                    
+
                     $(this).find('tr').each(function () {
                         var header = $(this).find('th');
                         if (header.length == 4) {
@@ -229,15 +252,15 @@
                                 'WorkTitle': cells[4].innerText,
                                 'Description': cells[1].innerText,
                                 'Price': cells[2].innerText
-                                
-                        };
+
+                            };
                             works.push(line);
                         }
-                        
+
                     });
                     json.push({ 'AreaName': court, 'Works': works, 'NumberOfCourts': numberOfCourts });
                 });
-                var workFromView = {                        
+                var workFromView = {
                     'QuoteRef': $('#refId').html(),
                     'QuoteDate': $('#dateId').html(),
                     'CourtWorkDetails': json,
@@ -261,7 +284,7 @@
                         alert("Quote created");
                         location.href = '@Url.Action("Index", "Home")';
                     },
-                    error: function(data) {
+                    error: function (data) {
                         alert("Something bad happened!\n Status: "
                             + data.status + ": "
                             + data.statusText + "\nResponse text:\n"

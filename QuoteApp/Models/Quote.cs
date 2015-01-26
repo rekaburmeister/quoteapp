@@ -147,6 +147,21 @@ namespace QuoteApp.Models
                 context.SaveChanges();
             }
         }
+
+        public int GetNextNumberForId(string currentQuoteId)
+        {
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                if (context.Quotes.Find(currentQuoteId) == null)
+                {
+                    return 0;
+                }
+                string quoteId = context.Quotes.ToArray().Last(q => q.QuoteId.Contains(currentQuoteId)).QuoteId;
+                string quotePart = quoteId.Split('-').Last();
+                string number = quotePart.Remove(0, 1);
+                return Convert.ToInt16(number) + 1;
+            }
+        }
     }
 
     public class QuoteViewModel

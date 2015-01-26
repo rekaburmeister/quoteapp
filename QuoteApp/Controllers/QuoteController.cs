@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
@@ -298,6 +299,14 @@ namespace QuoteApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult CheckAvailableQuoteId(string currentQuoteId)
+        {
+            Quote quoteModel = new Quote();
+            int nextAvaialbleNumber = quoteModel.GetNextNumberForId(currentQuoteId);
+            return Json(new { id = nextAvaialbleNumber, Success = true }, JsonRequestBehavior.AllowGet);
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -306,5 +315,7 @@ namespace QuoteApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
     }
 }

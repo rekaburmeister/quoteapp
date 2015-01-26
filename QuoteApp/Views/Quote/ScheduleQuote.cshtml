@@ -48,7 +48,8 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3" style="text-align: right;">Total expected income:</td>
+            <td><button class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button></td>
+            <td colspan="2" style="text-align: right;">Total expected income:</td>
             <td colspan="3"><strong>£</strong><strong id="totalPriceId">@Model.TotalPrice</strong></td>
         </tr>
     </tfoot>
@@ -95,6 +96,10 @@
             $('#totalPriceId').html(parseInt($('#totalPriceId').html()) + parseInt(price));
         }
 
+        function addWork() {
+            
+        }
+        
         function scheduleWork() {
 
             var quotedWorks = [];
