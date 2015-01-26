@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace QuoteApp.IServices
 {
-    public class Class1
+    public interface IApplicationService
     {
+
     }
 }
