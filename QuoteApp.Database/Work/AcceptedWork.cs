@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using QuoteApp.Database.Quote;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Work
 {
     public class AcceptedWork
     {
@@ -29,7 +26,7 @@ namespace QuoteApp.Models
 
         public string InvoiceId { get; set; } // Once the work is comepleted I want to assign the invoiceId to these so we'll be able
                                               // to see what work has actually been carried out on a job
-        public virtual Invoice Invoice { get; set; }
+        public virtual Invoice.Invoice Invoice { get; set; }
 
         public void Add(List<QuotedWork> works, string quoteId)
         {

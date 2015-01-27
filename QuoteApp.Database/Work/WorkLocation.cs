@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Work
 {
     public class WorkLocation
     {
@@ -31,7 +27,7 @@ namespace QuoteApp.Models
 
         public virtual Company Company { get; set; }
 
-        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact.Contact> Contacts { get; set; }
 
         public static List<WorkLocation> GetClubsWithTerm(string term)
         {

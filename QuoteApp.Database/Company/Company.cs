@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using QuoteApp.Database.Work;
+using QuoteApp.Database.Contact;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Company
 {
     public class Company
     {
@@ -28,7 +27,7 @@ namespace QuoteApp.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact.Contact> Contacts { get; set; }
 
         public virtual ICollection<WorkLocation> ManagedLocations { get; set; }
     }

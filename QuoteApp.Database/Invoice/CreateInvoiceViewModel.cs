@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using QuoteApp.Database.Work;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Invoice
 {
     public class CreateInvoiceViewModel
     {
@@ -51,9 +50,9 @@ namespace QuoteApp.Models
         public CreateInvoiceViewModel(string quoteId, string nextInvoice)
         {
             QuoteId = quoteId;
-            Quote quote = Quote.GetQuote(quoteId);
+            Quote.Quote quote = Quote.Quote.GetQuote(quoteId);
             WorkLocation location = WorkLocation.GetLocation(quote.WorkLocationId);
-            Contact contact = Contact.GetContact(quote.ContactId);
+            Contact.Contact contact = Contact.Contact.GetContact(quote.ContactId);
             var acceptedWorks = AcceptedWork.GetWorksForQuote(quoteId);
             InvoiceId = quote.GetCustomerIdentifier() + "-" + nextInvoice;
             Date = DateTime.Today.ToString("dd-MM-yyyy");

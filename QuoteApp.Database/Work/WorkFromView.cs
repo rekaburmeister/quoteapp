@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using QuoteApp.Database.Quote;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Work
 {
     public class WorkFromView
     {
@@ -29,7 +28,7 @@ namespace QuoteApp.Models
             
         }
 
-        public ContactDetails(Contact contact, WorkLocation location)
+        public ContactDetails(Contact.Contact contact, WorkLocation location)
         {
             ClubName = location.WorkLocationName;
             ClubAddress = location.GetAddress();

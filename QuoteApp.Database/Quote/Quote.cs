@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
-using System.Web;
+using QuoteApp.Database.Work;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Quote
 {
     public class Quote
     {
@@ -22,7 +19,7 @@ namespace QuoteApp.Models
 
         [Required]
         public int ContactId { get; set; }
-        public virtual Contact Contact { get; set; }
+        public virtual Contact.Contact Contact { get; set; }
 
         [Required]
         public DateTime QuoteDate { get; set; }
