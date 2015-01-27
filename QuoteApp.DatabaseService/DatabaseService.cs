@@ -1,4 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using QuoteApp.Database.Company;
 using QuoteApp.Database.Contact;
@@ -6,17 +11,18 @@ using QuoteApp.Database.Invoice;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
 using QuoteApp.Models;
+using QuoteApp.Services;
 
 namespace QuoteApp.DatabaseService
 {
-    public class DatabaseContext : IdentityDbContext<ApplicationUser>
+    class DatabaseService :IdentityDbContext<ApplicationUser>, IApplicationService
     {
-        public DatabaseContext()
+        public DatabaseService()
             : base("DatabaseContext")
         {
         }
 
-        public DatabaseContext(string connectionString)
+        public DatabaseService(string connectionString)
             : base(connectionString)
         {
         }
