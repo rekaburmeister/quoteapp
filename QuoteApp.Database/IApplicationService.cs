@@ -1,22 +1,20 @@
 ﻿using System.Data.Entity;
-using QuoteApp.Database.Company;
-using QuoteApp.Database.Contact;
 using QuoteApp.Database.Invoice;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
 using QuoteApp.Models;
 
-namespace QuoteApp.Services
+namespace QuoteApp.Database
 {
     public interface IApplicationService
     {
-        DbSet<Contact> Contacts { get; set; }
-        DbSet<Company> Companies { get; set; }
+        DbSet<Contact.Contact> Contacts { get; set; }
+        DbSet<Company.Company> Companies { get; set; }
         DbSet<WorkLocation> WorkLocations { get; set; }
-        DbSet<Work> Works { get; set; }
+        DbSet<Work.Work> Works { get; set; }
         DbSet<WorkArea> WorkAreas { get; set; }
-        DbSet<Quote> Quotes { get; set; }
-        DbSet<Invoice> Invoices { get; set; }
+        DbSet<Quote.Quote> Quotes { get; set; }
+        DbSet<Invoice.Invoice> Invoices { get; set; }
         DbSet<QuotedWork> QuotedWorks { get; set; }
         DbSet<AcceptedWork> AcceptedWork { get; set; }
         DbSet<GeneratedPdf> GeneratedPdfs { get; set; }

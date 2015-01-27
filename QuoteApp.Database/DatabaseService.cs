@@ -1,14 +1,12 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using QuoteApp.Database;
-using QuoteApp.Database.Company;
-using QuoteApp.Database.Contact;
 using QuoteApp.Database.Invoice;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
+using QuoteApp.DatabaseService;
 using QuoteApp.Models;
 
-namespace QuoteApp.DatabaseService
+namespace QuoteApp.Database
 {
     class DatabaseService :IdentityDbContext<ApplicationUser>, IApplicationService
     {
@@ -22,13 +20,13 @@ namespace QuoteApp.DatabaseService
         {
         }
 
-        public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Company> Companies { get; set; }
+        public DbSet<Contact.Contact> Contacts { get; set; }
+        public DbSet<Company.Company> Companies { get; set; }
         public DbSet<WorkLocation> WorkLocations { get; set; }
-        public DbSet<Work> Works { get; set; }
+        public DbSet<Work.Work> Works { get; set; }
         public DbSet<WorkArea> WorkAreas { get; set; }
-        public DbSet<Quote> Quotes { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Quote.Quote> Quotes { get; set; }
+        public DbSet<Invoice.Invoice> Invoices { get; set; }
         public DbSet<QuotedWork> QuotedWorks { get; set; }
         public DbSet<AcceptedWork> AcceptedWork { get; set; }
         public DbSet<GeneratedPdf> GeneratedPdfs { get; set; }

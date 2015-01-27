@@ -37,7 +37,7 @@ namespace QuoteApp.Database.Invoice
 
         public static List<Invoice> GetInvoicesForPeriod(DateTime from, DateTime to)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Invoices.Where(i => i.InvoiceDate >= from && i.InvoiceDate <= to).ToList();
             }
