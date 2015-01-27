@@ -94,7 +94,7 @@ namespace QuoteApp.Models
                             {
                                 ContactEmail = quote.Contact.Email,
                                 ContactNumber = quote.Contact.MobileNumber,
-                                QuoteDate = quote.QuoteDate.ToString("d"),
+                                QuoteDate = quote.QuoteDate.ToString("dd-MM-yyyy"),
                                 QuoteId = quote.QuoteId,
                                 ContactName = quote.Contact.FirstName + " " + quote.Contact.LastName,
                                 LocationAddress = quote.WorkLocation.Town + ", " + quote.WorkLocation.PostCode,
@@ -103,7 +103,7 @@ namespace QuoteApp.Models
                                 Job =
                                     string.Join(", ", quote.QuotedWorks
                                                         .GroupBy(w => w.WorkTitle).Select(o => string.Format("{0} ({1})", o.Key, 
-                                                            quote.QuotedWorks.Where(q=>q.WorkTitle.Equals(o.Key)).Select(qw=>qw.NumberOfCourts).Count())))
+                                                            quote.QuotedWorks.Where(q=>q.WorkTitle.Equals(o.Key)).Sum(qw=>qw.NumberOfCourts))))
                             })
                         .ToList();
             }
