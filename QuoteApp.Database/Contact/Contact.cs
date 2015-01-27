@@ -36,7 +36,7 @@ namespace QuoteApp.Database.Contact
 
         public static List<Contact> GetContactsWithTerm(string term)
         {
-            using (ApplicationDbContext database = new ApplicationDbContext())
+            using (IApplicationService database = new DatabaseService())
             {
                 return database.Contacts.Where(contact => contact.FirstName.StartsWith(term.ToLower()) || contact.LastName.StartsWith(term.ToLower())).ToList();
             }
@@ -44,7 +44,7 @@ namespace QuoteApp.Database.Contact
 
         public static int CheckAndUpdateContact(int contactId, string contactName, string contactEmail, string contactNumber, int clubId)
         {
-            using (ApplicationDbContext database = new ApplicationDbContext())
+            using (IApplicationService database = new DatabaseService())
             {
                 Contact contact = database.Contacts.Find(contactId);
                 WorkLocation location = database.WorkLocations.Find(clubId);
@@ -94,7 +94,7 @@ namespace QuoteApp.Database.Contact
 
         public static Contact GetContact(int contactId)
         {
-            using (ApplicationDbContext database = new ApplicationDbContext())
+            using (IApplicationService database = new DatabaseService())
             {
                 return database.Contacts.Find(contactId);
             }

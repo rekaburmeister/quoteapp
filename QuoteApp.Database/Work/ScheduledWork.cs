@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace QuoteApp.Database.Work
 {
@@ -16,7 +17,7 @@ namespace QuoteApp.Database.Work
 
         public static List<ScheduledWork> GetScheduledWorks()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 var quoteIds =
                     context.Quotes.Where(q => !q.Archived && q.ScheduledFor != null && !q.Finished).Select(quote => quote.QuoteId);

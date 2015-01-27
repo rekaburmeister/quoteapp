@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using QuoteApp.Database.Work;
 
@@ -45,7 +47,7 @@ namespace QuoteApp.Database.Invoice
 
         public static List<Invoice> GetAllInvoices()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Invoices.ToList();
             }
@@ -53,7 +55,7 @@ namespace QuoteApp.Database.Invoice
 
         public static List<Invoice> GetUnpaidInvoices()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Invoices.Where(i => i.PaidDate == null).ToList();
             }
@@ -61,7 +63,7 @@ namespace QuoteApp.Database.Invoice
 
         public static string GetNextInvoiceId()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 if (context.Invoices.Any())
                 {
@@ -77,7 +79,7 @@ namespace QuoteApp.Database.Invoice
 
         public static void MarkAsPaid(string invoiceId)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 Invoice invoice = context.Invoices.Find(invoiceId);
                 invoice.PaidDate = DateTime.UtcNow;
@@ -106,7 +108,7 @@ namespace QuoteApp.Database.Invoice
 
         public void Add()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 context.Invoices.Add(this);
                 context.SaveChanges();

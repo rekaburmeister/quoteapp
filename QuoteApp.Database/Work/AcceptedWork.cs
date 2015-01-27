@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using QuoteApp.Database.Quote;
 
 namespace QuoteApp.Database.Work
@@ -49,7 +50,7 @@ namespace QuoteApp.Database.Work
         
         public void Add()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 context.AcceptedWork.Add(this);
                 context.SaveChanges();
@@ -58,7 +59,7 @@ namespace QuoteApp.Database.Work
 
         public static List<AcceptedWork> GetWorksForQuote(string quoteId)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.AcceptedWork.Where(work => work.QuoteId.Equals(quoteId)).ToList();
             }

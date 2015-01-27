@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using QuoteApp.Database.Invoice;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
@@ -6,7 +8,7 @@ using QuoteApp.Models;
 
 namespace QuoteApp.Database
 {
-    public interface IApplicationService
+    public interface IApplicationService : IDisposable
     {
         DbSet<Contact.Contact> Contacts { get; set; }
         DbSet<Company.Company> Companies { get; set; }
@@ -19,5 +21,7 @@ namespace QuoteApp.Database
         DbSet<AcceptedWork> AcceptedWork { get; set; }
         DbSet<GeneratedPdf> GeneratedPdfs { get; set; }
         DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        int SaveChanges();
+        DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
     }
 }

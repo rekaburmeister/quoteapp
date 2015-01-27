@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using Microsoft.AspNet.Identity.EntityFramework;
 using QuoteApp.Database.Invoice;
 using QuoteApp.Database.Quote;
@@ -8,7 +9,7 @@ using QuoteApp.Models;
 
 namespace QuoteApp.Database
 {
-    class DatabaseService :IdentityDbContext<ApplicationUser>, IApplicationService
+    public class DatabaseService :IdentityDbContext<ApplicationUser>, IApplicationService
     {
         public DatabaseService()
             : base("DatabaseContext")

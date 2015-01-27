@@ -43,7 +43,7 @@ namespace QuoteApp.Database.Invoice
 
         public InvoiceViewModel(string invoiceId)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 Invoice invoice = context.Invoices.Find(invoiceId);
                 if (invoice != null)
@@ -63,7 +63,7 @@ namespace QuoteApp.Database.Invoice
 
         public List<InvoiceViewModel> GetUnPaidInvoices()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Invoices.Where(i => i.PaidDate == null).ToList().Select(invoice => new InvoiceViewModel()
                 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuoteApp.Helpers
+namespace QuoteApp.Database.Time
 {
     public class Quarter
     {

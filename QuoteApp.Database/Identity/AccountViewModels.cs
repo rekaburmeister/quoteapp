@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Identity
 {
     public class ExternalLoginConfirmationViewModel
     {

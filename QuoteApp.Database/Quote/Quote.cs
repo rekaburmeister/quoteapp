@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
 using QuoteApp.Database.Work;
@@ -40,7 +42,7 @@ namespace QuoteApp.Database.Quote
         {
             DateTime date = DateTime.ParseExact(quoteDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             Quote quote = new Quote { ContactId = contactId, WorkLocationId = locationId, QuoteDate = date, QuoteId = quoteId, Archived = false, Finished = false};
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 context.Quotes.Add(quote);
                 foreach (CourtWorkDetail quoteWorkDetail in works)
@@ -83,7 +85,7 @@ namespace QuoteApp.Database.Quote
 
         public static List<QuoteSummary> GetQuoteSummaries()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return
                     context.Quotes.ToList().Where(archived => !archived.Archived && archived.ScheduledFor == null).Select(
@@ -109,7 +111,7 @@ namespace QuoteApp.Database.Quote
 
         public static Quote GetQuote(string quoteId)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Quotes.Find(quoteId);
             }
@@ -117,7 +119,7 @@ namespace QuoteApp.Database.Quote
 
         public static bool DoesQuoteIdExist(string quoteId)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Quotes.Any(q => q.QuoteId.Equals(quoteId));
             }
@@ -125,7 +127,7 @@ namespace QuoteApp.Database.Quote
 
         public static List<QuotedWork> GetWorksForId(string quoteId)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.QuotedWorks.Where(q => q.Quote.QuoteId.Equals(quoteId)).ToList();
             }
@@ -139,7 +141,7 @@ namespace QuoteApp.Database.Quote
 
         public void MarkAsFinished()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 Finished = true;
                 context.Entry(this).State = EntityState.Modified;
@@ -149,7 +151,7 @@ namespace QuoteApp.Database.Quote
 
         public int GetNextNumberForId(string currentQuoteId)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 if (context.Quotes.Find(currentQuoteId) == null)
                 {

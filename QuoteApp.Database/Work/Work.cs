@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace QuoteApp.Database.Work
 {
@@ -23,7 +24,7 @@ namespace QuoteApp.Database.Work
 
         internal static List<Work> GetWorks()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Works.ToList();
             }
@@ -31,7 +32,7 @@ namespace QuoteApp.Database.Work
 
         public List<WorkViewModel> GetWorkViewModelsForWorks()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.Works.ToArray().Select(work=>work.GetWorkViewModel()).ToList();
             }

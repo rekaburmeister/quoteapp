@@ -32,7 +32,7 @@ namespace QuoteApp.Database.Work
 
         public static List<WorkLocation> GetClubsWithTerm(string term)
         {
-            using (ApplicationDbContext database = new ApplicationDbContext())
+            using (IApplicationService database = new DatabaseService())
             {
                 return database.WorkLocations.Where(club => club.WorkLocationName.StartsWith(term.ToLower())).ToList();
             }
@@ -40,7 +40,7 @@ namespace QuoteApp.Database.Work
 
         public static int CheckAndUpdateLocation(int clubId, string clubAddress, string clubName)
         {
-            using (ApplicationDbContext database = new ApplicationDbContext())
+            using (IApplicationService database = new DatabaseService())
             {
                 WorkLocation location = database.WorkLocations.Find(clubId);
                 string[] addressLines = clubAddress.Split(',');
@@ -85,7 +85,7 @@ namespace QuoteApp.Database.Work
 
         public static WorkLocation GetLocation(int workLocationId)
         {
-            using (ApplicationDbContext database = new ApplicationDbContext())
+            using (IApplicationService database = new DatabaseService())
             {
                 return database.WorkLocations.Find(workLocationId);
             }

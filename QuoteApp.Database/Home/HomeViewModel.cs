@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using QuoteApp.Helpers;
+using QuoteApp.Database.Invoice;
+using QuoteApp.Database.Quote;
+using QuoteApp.Database.Time;
+using QuoteApp.Database.Work;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Home
 {
     public class HomeViewModel
     {
@@ -21,12 +22,12 @@ namespace QuoteApp.Models
             InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
             Invoices = invoiceViewModel.GetUnPaidInvoices();
             Quarter quarter = new Quarter();
-            var invoicesForPeriod = Invoice.GetInvoicesForPeriod(quarter.Start, quarter.End);
+            var invoicesForPeriod = Invoice.Invoice.GetInvoicesForPeriod(quarter.Start, quarter.End);
             JobsCompleted = invoicesForPeriod.Count;
             MoneyMade = invoicesForPeriod.Sum(m=>m.Price);
             IncomeTax = MoneyMade*0.3;
             Vat = MoneyMade * 0.2;
-            Quotes = Quote.GetQuoteSummaries();
+            Quotes = Quote.Quote.GetQuoteSummaries();
             ScheduledWorks = ScheduledWork.GetScheduledWorks();
         }
     }

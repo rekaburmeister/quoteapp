@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace QuoteApp.Database.Work
 {
@@ -16,7 +17,7 @@ namespace QuoteApp.Database.Work
 
         internal static List<WorkArea> GetWorkAreas()
         {
-            using (ApplicationDbContext context = new ApplicationDbContext())
+            using (IApplicationService context = new DatabaseService())
             {
                 return context.WorkAreas.ToList();
             }
