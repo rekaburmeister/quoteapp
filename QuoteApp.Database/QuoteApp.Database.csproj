@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,8 +40,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Company\Company.cs" />
+    <Compile Include="Contact\Contact.cs" />
+    <Compile Include="Contact\ContactJson.cs" />
+    <Compile Include="Invoice\CreateInvoiceViewModel.cs" />
+    <Compile Include="Invoice\Invoice.cs" />
+    <Compile Include="Invoice\InvoiceDetail.cs" />
+    <Compile Include="Invoice\InvoiceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quote\Quote.cs" />
+    <Compile Include="Quote\QuotedWork.cs" />
+    <Compile Include="Quote\QuoteSummary.cs" />
+    <Compile Include="Work\AcceptedWork.cs" />
+    <Compile Include="Work\PartialWorkViewModel.cs" />
+    <Compile Include="Work\ScheduledWork.cs" />
+    <Compile Include="Work\ScheduleWorkViewModel.cs" />
+    <Compile Include="Work\Work.cs" />
+    <Compile Include="Work\WorkArea.cs" />
+    <Compile Include="Work\WorkFromView.cs" />
+    <Compile Include="Work\WorkItem.cs" />
+    <Compile Include="Work\WorkLocation.cs" />
+    <Compile Include="Work\WorkLocationJson.cs" />
+    <Compile Include="Work\WorkViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Location\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

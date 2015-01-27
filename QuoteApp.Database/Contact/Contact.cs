@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
+using QuoteApp.Database.Work;
 
-namespace QuoteApp.Models
+namespace QuoteApp.Database.Contact
 {
     public class Contact
     {
@@ -32,7 +30,7 @@ namespace QuoteApp.Models
         public string PhoneNumber { get; set; }
 
         public int? CompanyId { get; set; }
-        public virtual Company Company { get; set; }
+        public virtual Company.Company Company { get; set; }
 
         public virtual ICollection<WorkLocation> WorkLocations { get; set; }
 

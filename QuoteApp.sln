@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteApp.Database", "QuoteA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteApp.Database.Tests", "QuoteApp.Database.Tests\QuoteApp.Database.Tests.csproj", "{AC41BFF4-9040-4800-8939-0275BF5C908B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteApp.IServices", "QuoteApp.IServices\QuoteApp.IServices.csproj", "{9A0D89F9-2891-4390-9E62-E7E91256CB74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteApp.Services", "QuoteApp.IServices\QuoteApp.Services.csproj", "{9A0D89F9-2891-4390-9E62-E7E91256CB74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteApp.DatabaseService", "QuoteApp.DatabaseService\QuoteApp.DatabaseService.csproj", "{BF460142-4361-4357-9C1F-9BA89E6A43AA}"
 EndProject
