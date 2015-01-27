@@ -102,7 +102,8 @@ namespace QuoteApp.Models
                                 Sum = quote.QuotedWorks.Sum(work => work.QuotedWorkPrice * work.NumberOfCourts),
                                 Job =
                                     string.Join(", ", quote.QuotedWorks
-                                                        .GroupBy(w => w.WorkTitle).Select(o => string.Format("{0} ({1})", o.Key, o.Count())))
+                                                        .GroupBy(w => w.WorkTitle).Select(o => string.Format("{0} ({1})", o.Key, 
+                                                            quote.QuotedWorks.Where(q=>q.WorkTitle.Equals(o.Key)).Select(qw=>qw.NumberOfCourts).Count())))
                             })
                         .ToList();
             }
