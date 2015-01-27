@@ -163,6 +163,40 @@ namespace QuoteApp.Database.Quote
                 return Convert.ToInt16(number) + 1;
             }
         }
+
+        public List<Quote> GetQuotes()
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                return context.Quotes.ToList();
+            }
+        }
+
+        public Quote Find(string id)
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                return context.Quotes.Find(id);
+            }
+        }
+
+        public int SaveChanges()
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                context.Entry(this).State = EntityState.Modified;
+                return context.SaveChanges();
+            }
+        }
+
+        public void Remove()
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                context.Quotes.Remove(this);
+                context.SaveChanges();
+            }
+        }
     }
 
     public class QuoteViewModel

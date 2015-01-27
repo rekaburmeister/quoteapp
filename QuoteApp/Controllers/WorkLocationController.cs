@@ -7,18 +7,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using QuoteApp.Models;
+using QuoteApp.Database.Work;
 
 namespace QuoteApp.Controllers
 {
     public class WorkLocationController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: /WorkLocation/
         public ActionResult Index()
         {
-            return View(db.WorkLocations.ToList());
+            WorkLocation location = new WorkLocation();
+            return View(location.GetLocations());
         }
 
         // GET: /WorkLocation/Details/5
@@ -28,7 +27,9 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorkLocation worklocation = db.WorkLocations.Find(id);
+            
+            WorkLocation worklocation = new WorkLocation();
+            worklocation = worklocation.Find(Convert.ToInt16(id));
             if (worklocation == null)
             {
                 return HttpNotFound();
@@ -51,8 +52,7 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.WorkLocations.Add(worklocation);
-                db.SaveChanges();
+                worklocation.Add();
                 return RedirectToAction("Index");
             }
 

@@ -114,5 +114,39 @@ namespace QuoteApp.Database.Invoice
                 context.SaveChanges();
             }
         }
+
+        public List<Invoice> GetInvoices()
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                return context.Invoices.ToList();
+            }
+        }
+
+        public Invoice Find(string id)
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                return context.Invoices.Find(id);
+            }
+        }
+
+        public void SaveChanges()
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                context.Entry(this).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        public void Remove()
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                context.Invoices.Remove(this);
+                context.SaveChanges();
+            }
+        }
     }
 }

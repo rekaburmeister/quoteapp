@@ -90,5 +90,30 @@ namespace QuoteApp.Database.Work
                 return database.WorkLocations.Find(workLocationId);
             }
         }
+
+        public List<WorkLocation> GetLocations()
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                return database.WorkLocations.ToList();
+            }
+        }
+
+        public WorkLocation Find(int id)
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                return database.WorkLocations.Find(id);
+            }
+        }
+
+        public int Add()
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                database.WorkLocations.Add(this);
+                return database.SaveChanges();
+            }
+        }
     }
 }

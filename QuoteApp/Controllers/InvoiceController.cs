@@ -8,7 +8,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using QuoteApp.Models;
+using QuoteApp.Database.Invoice;
+using QuoteApp.Database.Quote;
 using Rotativa;
 using Rotativa.Options;
 
@@ -16,12 +17,11 @@ namespace QuoteApp.Controllers
 {
     public class InvoiceController : Controller
     {
-        private ApplicationDbContext m_Context = new ApplicationDbContext();
-
         // GET: /Invoice/
         public ActionResult Index()
         {
-            return View(m_Context.Invoices.ToList());
+            Invoice invoice = new Invoice();
+            return View(invoice.GetInvoices());
         }
 
         // GET: /Invoice/Details/5
@@ -31,7 +31,9 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = m_Context.Invoices.Find(id);
+            Invoice invoice = new Invoice();
+            invoice = invoice.Find(id);
+                
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -84,7 +86,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = m_Context.Invoices.Find(quoteRef);
+            Invoice invoice = new Invoice();
+            invoice = invoice.Find(quoteRef);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -101,8 +104,7 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                m_Context.Entry(invoice).State = EntityState.Modified;
-                m_Context.SaveChanges();
+                invoice.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(invoice);
@@ -115,7 +117,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = m_Context.Invoices.Find(id);
+            Invoice invoice = new Invoice();
+            invoice = invoice.Find(id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -165,19 +168,10 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Invoice invoice = m_Context.Invoices.Find(id);
-            m_Context.Invoices.Remove(invoice);
-            m_Context.SaveChanges();
+            Invoice invoice = new Invoice();
+            invoice.Find(id).Remove();
+            
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                m_Context.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

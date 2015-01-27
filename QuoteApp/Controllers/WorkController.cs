@@ -6,23 +6,24 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using QuoteApp.Models;
+using QuoteApp.Database.Work;
 
 namespace QuoteApp.Controllers
 {
     public class WorkController : Controller
     {
-        private ApplicationDbContext m_DbContext = new ApplicationDbContext();
-
         // GET: /Work/
         public ActionResult Index()
         {
-            return View(m_DbContext.WorkAreas.ToList());
+            WorkArea workArea = new WorkArea();
+            
+            return View(workArea.GetWorkAreas());
         }
 
         public PartialViewResult WorkDescriptions()
         {
-            return PartialView(m_DbContext.Works.ToList());
+            Work work = new Work();
+            return PartialView(work.GetWorks());
         }
 
 
@@ -36,9 +37,10 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                WorkArea workArea = new WorkArea();
                 Work workObject = new Work()
                 {
-                    WorkArea = m_DbContext.WorkAreas.Find(work.WorkAreaId),
+                    WorkArea = workArea.Find(work.WorkAreaId),
                     WorkDescription = work.WorkDescription,
                     WorkName = work.WorkName,
                     WorkPrice = work.WorkPrice
@@ -100,15 +102,6 @@ namespace QuoteApp.Controllers
             m_DbContext.WorkAreas.Remove(workarea);
             m_DbContext.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                m_DbContext.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

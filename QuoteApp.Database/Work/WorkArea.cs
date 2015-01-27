@@ -15,11 +15,19 @@ namespace QuoteApp.Database.Work
 
         public virtual ICollection<Work> Works { get; set; }
 
-        internal static List<WorkArea> GetWorkAreas()
+        public List<WorkArea> GetWorkAreas()
         {
             using (IApplicationService context = new DatabaseService())
             {
                 return context.WorkAreas.ToList();
+            }
+        }
+
+        public WorkArea Find(int workAreaId)
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                return context.WorkAreas.Find(workAreaId);
             }
         }
     }

@@ -99,5 +99,30 @@ namespace QuoteApp.Database.Contact
                 return database.Contacts.Find(contactId);
             }
         }
+
+        public List<Contact> GetContacts()
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                return database.Contacts.ToList();
+            }
+        }
+
+        public Contact Find(int id)
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                return database.Contacts.Find(id);
+            }
+        }
+
+        public int Add()
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                database.Contacts.Add(this);
+                return database.SaveChanges();
+            }
+        }
     }
 }

@@ -14,8 +14,11 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using QuoteApp.Database.Contact;
+using QuoteApp.Database.Pdf;
+using QuoteApp.Database.Quote;
+using QuoteApp.Database.Work;
 using QuoteApp.Helpers;
-using QuoteApp.Models;
 using Rotativa;
 using Rotativa.Options;
 
@@ -23,12 +26,11 @@ namespace QuoteApp.Controllers
 {
     public class QuoteController : Controller
     {
-        private readonly ApplicationDbContext m_DbContext = new ApplicationDbContext();
-
         // GET: /Quote/
         public ActionResult Index()
         {
-            return View(m_DbContext.Quotes.ToList());
+            Quote quote = new Quote();
+            return View(quote.GetQuotes());
         }
 
         // GET: /Quote/Details/5
@@ -38,7 +40,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = m_DbContext.Quotes.Find(id);
+            Quote quote = new Quote();
+            quote = quote.Find(id);
             if (quote == null)
             {
                 return HttpNotFound();
@@ -101,9 +104,11 @@ namespace QuoteApp.Controllers
         public ActionResult Create()
         {
             Work work = new Work();
+            WorkArea workArea = new WorkArea();
             QuoteViewModel model = new QuoteViewModel()
             {
-                WorkTypes = WorkArea.GetWorkAreas().Select(area => area.WorkAreaName).ToList(),
+
+                WorkTypes = workArea.GetWorkAreas().Select(area => area.WorkAreaName).ToList(),
 
                 Works = work.GetWorkViewModelsForWorks()
             };
@@ -150,13 +155,13 @@ namespace QuoteApp.Controllers
                 acceptedWork.Add(model.QuotedWorks, model.QuoteId);
 
                 // TODO: extract this
-                Quote quote = m_DbContext.Quotes.Find(model.QuoteId);
+                Quote quote = new Quote();
+                quote = quote.Find(model.QuoteId);
                 if (quote != null)
                 {
-                    quote.ScheduledFor = DateTime.ParseExact(model.WorkStarts, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    quote.ScheduledFor = DateTime.ParseExact(model.WorkStarts, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     quote.JobLength = model.NumberOfDays;
-                    m_DbContext.Entry(quote).State = EntityState.Modified;
-                    m_DbContext.SaveChanges();
+                    quote.SaveChanges();
                 }
                 return Json(new { Success = true, Message = "Work scheduled" }, JsonRequestBehavior.AllowGet);
             }
@@ -169,7 +174,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = m_DbContext.Quotes.Find(quoteId);
+            Quote quote = new Quote();
+            quote = quote.Find(quoteId);
             if (quote == null)
             {
                 return HttpNotFound();
@@ -181,10 +187,10 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ArchiveConfirmed(string quoteId)
         {
-            Quote quote = m_DbContext.Quotes.Find(quoteId);
+            Quote quote = new Quote();
+            quote = quote.Find(quoteId);
             quote.Archived = true;
-            m_DbContext.Entry(quote).State = EntityState.Modified;
-            m_DbContext.SaveChanges();
+            quote.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 
@@ -195,7 +201,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = m_DbContext.Quotes.Find(id);
+            Quote quote = new Quote();
+            quote = quote.Find(id);
             if (quote == null)
             {
                 return HttpNotFound();
@@ -212,8 +219,7 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                m_DbContext.Entry(quote).State = EntityState.Modified;
-                m_DbContext.SaveChanges();
+                quote.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(quote);
@@ -245,7 +251,8 @@ namespace QuoteApp.Controllers
 
             byte[] content = new byte[stream.Length];
             stream.Read(content, 0, Convert.ToInt32(stream.Length));
-            GeneratedPdf pdf = m_DbContext.GeneratedPdfs.Find(quoteRef);
+            GeneratedPdf pdf = new GeneratedPdf();
+            pdf = pdf.Find(quoteRef);
             if (pdf == null)
             {
                 pdf = new GeneratedPdf()
@@ -253,15 +260,13 @@ namespace QuoteApp.Controllers
                     Content = content,
                     Reference = quoteRef
                 };
-                m_DbContext.GeneratedPdfs.Add(pdf);
+                pdf.Add();
             }
             else
             {
                 pdf.Content = content;
-                m_DbContext.Entry(pdf).State = EntityState.Modified;
+                pdf.SaveChanges();
             }
-
-            m_DbContext.SaveChanges();
 
             return Json(new { Success = true });
 
@@ -269,7 +274,8 @@ namespace QuoteApp.Controllers
 
         public FileContentResult GetPdf(string reference)
         {
-            GeneratedPdf pdf = m_DbContext.GeneratedPdfs.Find(reference);
+            GeneratedPdf pdf = new GeneratedPdf();
+            pdf = pdf.Find(reference);
             MemoryStream stream = new MemoryStream(pdf.Content);
             string fileName = reference + ".pdf";
             return File(stream.ToArray(), MimeMapping.GetMimeMapping(fileName), fileName);
@@ -282,7 +288,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = m_DbContext.Quotes.Find(id);
+            Quote quote = new Quote();
+            quote = quote.Find(id);
             if (quote == null)
             {
                 return HttpNotFound();
@@ -295,9 +302,9 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Quote quote = m_DbContext.Quotes.Find(id);
-            m_DbContext.Quotes.Remove(quote);
-            m_DbContext.SaveChanges();
+            Quote quote = new Quote();
+            quote = quote.Find(id);
+            quote.Remove();
             return RedirectToAction("Index");
         }
 
@@ -308,16 +315,5 @@ namespace QuoteApp.Controllers
             return Json(new { id = nextAvaialbleNumber, Success = true }, JsonRequestBehavior.AllowGet);
 
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                m_DbContext.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        
     }
 }

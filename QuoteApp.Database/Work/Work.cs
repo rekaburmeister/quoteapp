@@ -22,7 +22,7 @@ namespace QuoteApp.Database.Work
         [Required]
         public virtual WorkArea WorkArea { get; set; }
 
-        internal static List<Work> GetWorks()
+        public List<Work> GetWorks()
         {
             using (IApplicationService context = new DatabaseService())
             {

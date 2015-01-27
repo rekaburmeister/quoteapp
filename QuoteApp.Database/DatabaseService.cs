@@ -2,10 +2,10 @@
 using System.Data.Entity.Infrastructure;
 using Microsoft.AspNet.Identity.EntityFramework;
 using QuoteApp.Database.Invoice;
+using QuoteApp.Database.Pdf;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
 using QuoteApp.DatabaseService;
-using QuoteApp.Models;
 
 namespace QuoteApp.Database
 {

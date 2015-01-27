@@ -81,7 +81,6 @@
     <Compile Include="Home\HomeViewModel.cs" />
     <Compile Include="IApplicationService.cs" />
     <Compile Include="Identity\AccountViewModels.cs" />
-    <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Invoice\CreateInvoiceViewModel.cs" />
     <Compile Include="Invoice\Invoice.cs" />
     <Compile Include="Invoice\InvoiceDetail.cs" />

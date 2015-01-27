@@ -30,7 +30,8 @@ namespace QuoteApp.Database.Work
         {
             QuotedWorks = quotedWorks;
             TotalPrice = quotedWorks.Sum(w => w.QuotedWorkPrice * w.NumberOfCourts);
-            WorkTypes = WorkArea.GetWorkAreas().Select(area => area.WorkAreaName).ToList();
+            WorkArea workArea = new WorkArea();
+            WorkTypes = workArea.GetWorkAreas().Select(area => area.WorkAreaName).ToList();
             Work work = new Work();
             Works = work.GetWorkViewModelsForWorks();
         }

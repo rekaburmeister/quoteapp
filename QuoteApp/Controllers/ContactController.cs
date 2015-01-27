@@ -7,18 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using QuoteApp.Models;
+using QuoteApp.Database.Contact;
 
 namespace QuoteApp.Controllers
 {
     public class ContactController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /Contact/
         public ActionResult Index()
         {
-            return View(db.Contacts.ToList());
+            Contact contact = new Contact();
+            return View(contact.GetContacts());
         }
 
         // GET: /Contact/Details/5
@@ -28,7 +28,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact contact = db.Contacts.Find(id);
+            Contact contact = new Contact();
+            contact = contact.Find(Convert.ToInt16(id));
             if (contact == null)
             {
                 return HttpNotFound();
@@ -51,8 +52,8 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                contact.Add();
                 db.Contacts.Add(contact);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 

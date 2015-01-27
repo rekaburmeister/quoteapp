@@ -2,9 +2,9 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using QuoteApp.Database.Invoice;
+using QuoteApp.Database.Pdf;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
-using QuoteApp.Models;
 
 namespace QuoteApp.Database
 {

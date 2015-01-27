@@ -8,7 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using QuoteApp.Models;
+using QuoteApp.Database.Identity;
+using QuoteApp.DatabaseService;
 
 namespace QuoteApp.Controllers
 {
@@ -16,7 +17,7 @@ namespace QuoteApp.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new Database.DatabaseService())))
         {
         }
 
