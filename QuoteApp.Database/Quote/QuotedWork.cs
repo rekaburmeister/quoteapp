@@ -1,4 +1,6 @@
-﻿namespace QuoteApp.Database.Quote
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace QuoteApp.Database.Quote
 {
     public class QuotedWork
     {

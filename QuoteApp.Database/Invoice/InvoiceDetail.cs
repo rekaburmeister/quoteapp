@@ -1,4 +1,6 @@
-﻿namespace QuoteApp.Database.Invoice
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace QuoteApp.Database.Invoice
 {
     public class InvoiceDetail
     {

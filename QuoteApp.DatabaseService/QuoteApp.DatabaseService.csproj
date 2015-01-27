@@ -73,12 +73,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ApplicationUser.cs" />
+    <Compile Include="DatabaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuoteApp.Database\QuoteApp.Database.csproj">
+      <Project>{aba39d4d-dfde-4985-9334-266c8dbc8042}</Project>
+      <Name>QuoteApp.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuoteApp.IServices\QuoteApp.Services.csproj">
+      <Project>{9a0d89f9-2891-4390-9e62-e7e91256cb74}</Project>
+      <Name>QuoteApp.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

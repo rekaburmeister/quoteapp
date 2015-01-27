@@ -1,4 +1,6 @@
-﻿namespace QuoteApp.Database.Work
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace QuoteApp.Database.Work
 {
     public class WorkItem
     {

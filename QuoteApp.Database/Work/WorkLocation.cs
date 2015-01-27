@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace QuoteApp.Database.Work
@@ -25,7 +26,7 @@ namespace QuoteApp.Database.Work
         [EmailAddress]
         public string Email { get; set; }
 
-        public virtual Company Company { get; set; }
+        public virtual Company.Company Company { get; set; }
 
         public virtual ICollection<Contact.Contact> Contacts { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using QuoteApp.Database.Quote;
 
 namespace QuoteApp.Database.Work
