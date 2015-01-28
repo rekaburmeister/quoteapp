@@ -105,7 +105,7 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="pdfcrowd">
-      <HintPath>C:\Users\reka.burmeister\Downloads\pdfcrowd.dll</HintPath>
+      <HintPath>.\pdfcrowd.dll</HintPath>
     </Reference>
     <Reference Include="Rotativa">
       <HintPath>..\packages\Rotativa.1.6.1\lib\net40\Rotativa.dll</HintPath>
