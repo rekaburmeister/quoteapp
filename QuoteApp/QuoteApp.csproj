@@ -113,6 +113,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -298,6 +300,11 @@
     <Content Include="Content\Images\Armourcoat.JPG" />
     <Content Include="Content\Images\EnglandSquash.jpg" />
     <Content Include="Content\Images\TonySquashHeader.png" />
+    <Content Include="Content\PDF\Armourcoat.JPG" />
+    <Content Include="Content\PDF\bootstrap.min.css" />
+    <Content Include="Content\PDF\EnglandSquash.jpg" />
+    <Content Include="Content\PDF\Site.css" />
+    <Content Include="Content\PDF\TonySquashHeader.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -434,6 +441,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Zip\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
