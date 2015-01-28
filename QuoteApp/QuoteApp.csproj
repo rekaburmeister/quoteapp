@@ -436,6 +436,7 @@
     <Content Include="Views\Quote\_WorkTypesModal.cshtml" />
     <Content Include="Views\Shared\_PdfHeader.cshtml" />
     <Content Include="Views\Shared\_PdfFooter.cshtml" />
+    <Content Include="Views\Quote\Cancel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

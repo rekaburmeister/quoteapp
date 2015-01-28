@@ -1,26 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using QuoteApp.Database.Contact;
 using QuoteApp.Database.Pdf;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
 using QuoteApp.Helpers;
-using Rotativa;
-using Rotativa.Options;
 
 namespace QuoteApp.Controllers
 {
@@ -315,6 +305,11 @@ namespace QuoteApp.Controllers
             int nextAvaialbleNumber = quoteModel.GetNextNumberForId(currentQuoteId);
             return Json(new { id = nextAvaialbleNumber, Success = true }, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult Cancel(string quoteid)
+        {
+            return View();
         }
     }
 }
