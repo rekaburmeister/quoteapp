@@ -51,5 +51,14 @@ namespace QuoteApp.Database.Work
             };
             
         }
+
+        public int Add()
+        {
+            using (IApplicationService context = new DatabaseService())
+            {
+                context.Works.Add(this);
+                return context.SaveChanges();
+            }
+        }
     }
 }

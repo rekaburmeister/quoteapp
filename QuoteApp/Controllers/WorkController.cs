@@ -45,8 +45,8 @@ namespace QuoteApp.Controllers
                     WorkName = work.WorkName,
                     WorkPrice = work.WorkPrice
                 };
-                m_DbContext.Works.Add(workObject);
-                m_DbContext.SaveChanges();
+                workObject.Add();
+                
                 return Json(new { Success = true});
             }
             return Json(new { errorMessage = "ModelState invalid" });
@@ -54,10 +54,11 @@ namespace QuoteApp.Controllers
 
         public ActionResult GetWorkAreasBySearchTerm(string term)
         {
-            List<WorkArea> workAreas =
-                m_DbContext.WorkAreas.Where(workArea => workArea.WorkAreaName.StartsWith(term.ToLower())).ToList();
+            WorkArea workArea = new WorkArea();
+            List<WorkArea> workAreas = workArea.GetWorkAreasBySearchTerm(term);
+                
             IEnumerable<SelectListItem> results =
-                workAreas.Select(workArea => new SelectListItem { Value = workArea.WorkAreaId.ToString(), Text = workArea.WorkAreaName });
+                workAreas.Select(area => new SelectListItem { Value = area.WorkAreaId.ToString(), Text = area.WorkAreaName });
             return Json(results.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
@@ -68,8 +69,9 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                m_DbContext.WorkAreas.Add(new WorkArea{WorkAreaName = workAreaName});
-                m_DbContext.SaveChanges();
+                WorkArea area = new WorkArea {WorkAreaName = workAreaName};
+                area.Add();
+
                 return RedirectToAction("Index");
             }
 
@@ -86,8 +88,8 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                m_DbContext.Entry(workarea).State = EntityState.Modified;
-                m_DbContext.SaveChanges();
+                workarea.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             return View(workarea);
@@ -98,9 +100,11 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            WorkArea workarea = m_DbContext.WorkAreas.Find(id);
-            m_DbContext.WorkAreas.Remove(workarea);
-            m_DbContext.SaveChanges();
+            
+            WorkArea workarea = new WorkArea();
+            workarea = workarea.Find(id);
+            workarea.Remove();
+            
             return RedirectToAction("Index");
         }
     }
