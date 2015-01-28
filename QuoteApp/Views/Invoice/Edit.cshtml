@@ -18,10 +18,10 @@
         @Html.HiddenFor(model => model.InvoiceId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceNumber, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.InvoiceId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.InvoiceNumber)
-                @Html.ValidationMessageFor(model => model.InvoiceNumber)
+                @Html.EditorFor(model => model.InvoiceId)
+                @Html.ValidationMessageFor(model => model.InvoiceId)
             </div>
         </div>
 
