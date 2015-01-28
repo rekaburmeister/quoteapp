@@ -150,7 +150,7 @@ namespace QuoteApp.Controllers
                 quote = quote.Find(model.QuoteId);
                 if (quote != null)
                 {
-                    quote.ScheduledFor = DateTime.ParseExact(model.WorkStarts, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    quote.ScheduledFor = DateTime.ParseExact(model.WorkStarts, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     quote.JobLength = model.NumberOfDays;
                     quote.SaveChanges();
                 }
