@@ -60,5 +60,22 @@ namespace QuoteApp.Database.Work
                 return context.SaveChanges();
             }
         }
+
+        public WorkFromView GetWorkViewModelForQuoteId(string quoteRef)
+        {
+            
+
+            using (IApplicationService context = new DatabaseService())
+            {
+                Quote.Quote quote = context.Quotes.Find(quoteRef);
+                return new WorkFromView()
+                {
+                    QuoteRef = quote.QuoteId,
+                    QuoteDate = quote.QuoteDate.ToString("dd-MM-yyyy"),
+                    ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
+                    CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
+                };
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ using QuoteApp.Database.Pdf;
 using QuoteApp.Database.Quote;
 using QuoteApp.Database.Work;
 using QuoteApp.Helpers;
+using System.IO.Compression;
 
 namespace QuoteApp.Controllers
 {
@@ -30,27 +31,18 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Quote quote = new Quote();
-            quote = quote.Find(id);
-            if (quote == null)
-            {
-                return HttpNotFound();
-            }
 
-            WorkFromView model = new WorkFromView()
-            {
-                QuoteRef = quote.QuoteId,
-                QuoteDate = quote.QuoteDate.ToString("dd-MM-yyyy"),
-                ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
-                CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
-            };
+            Work work = new Work();
+            WorkFromView viewModel = work.GetWorkViewModelForQuoteId(id);
+
+           
 
             //string header = ToHtml("_PdfHeader", new ViewDataDictionary{ {"QuoteRef", model.QuoteRef}, {"QuoteDate", model.QuoteDate}});
             //string footer = ToHtml("_PdfFooter", new ViewDataDictionary());
 
             //string cusomtSwitches = string.Format("--print-media-type --footer-center {0} --footer-spacing -10 --header-center {1} --header-spacing -10",footer, header);
 
-            return View(model);
+            return View(viewModel);
 
             //return new ViewAsPdf(model)
             //{
@@ -71,7 +63,7 @@ namespace QuoteApp.Controllers
             StringWriter output;
             using (output = new StringWriter())
             {
-                var viewContext = new ViewContext(ControllerContext, result.View, viewData, 
+                var viewContext = new ViewContext(ControllerContext, result.View, viewData,
                     ControllerContext.Controller.TempData, output);
                 result.View.Render(viewContext, output);
                 result.ViewEngine.ReleaseView(ControllerContext, result.View);
@@ -219,47 +211,63 @@ namespace QuoteApp.Controllers
         [HttpPost, ValidateInput(false)]
         public JsonResult GeneratePdf(string html, string header, string footer, string quoteRef)
         {
-            html = PdfHelper.FormatBasePdf(html, Server.MapPath("~"));
-            MemoryStream stream = new MemoryStream();
-            try
-            {
-                pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
-                client.enableBackgrounds();
-                client.enableHyperlinks();
-                client.enableImages();
-                client.setHeaderHtml(header);
-                client.setFooterHtml(footer);
-                client.setPageWidth("8.267in");
-                client.setPageHeight("11.692in");
-                client.setVerticalMargin("1.8in");
-                client.convertHtml(html, stream);
+            html = PdfHelper.FormatBasePdf(html);
+            header = PdfHelper.FormatBasePdf(header);
+            footer = PdfHelper.FormatBasePdf(footer);
 
-            }
-            catch (Exception exception)
-            {
-                return Json(new { errorMessage = exception.Message });
-            }
+            string zipFile = Server.MapPath("~/Content/Zip/" + quoteRef + ".zip");
+            string pdfPath = Server.MapPath("~/Content/PDF");
+            string htmlFile = Path.Combine(pdfPath, quoteRef + ".html");
 
-            byte[] content = new byte[stream.Length];
-            stream.Read(content, 0, Convert.ToInt32(stream.Length));
-            GeneratedPdf pdf = new GeneratedPdf();
-            pdf = pdf.Find(quoteRef);
-            if (pdf == null)
+            System.IO.File.WriteAllText(htmlFile, html);
+            ZipFile.CreateFromDirectory(pdfPath, zipFile);
+
+            System.IO.File.Delete(htmlFile);
+
+            using (MemoryStream stream = new MemoryStream())
             {
-                pdf = new GeneratedPdf()
+                try
                 {
-                    Content = content,
-                    Reference = quoteRef
-                };
-                pdf.Add();
-            }
-            else
-            {
-                pdf.Content = content;
-                pdf.SaveChanges();
+                    pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
+                    client.enableHyperlinks();
+                    client.enableImages();
+                    client.setHeaderHtml(header);
+                    client.setFooterHtml(footer);
+                    client.setPageWidth("8.267in");
+                    client.setPageHeight("11.692in");
+                    client.setVerticalMargin("1.8in");
+                    client.convertFile(zipFile, stream);
+
+                }
+                catch (Exception exception)
+                {
+                    return Json(new { errorMessage = exception.Message });
+                }
+
+                System.IO.File.Delete(zipFile);
+
+                byte[] content = new byte[stream.Length];
+                stream.Read(content, 0, Convert.ToInt32(stream.Length));
+                GeneratedPdf pdf = new GeneratedPdf();
+                pdf = pdf.Find(quoteRef);
+                if (pdf == null)
+                {
+                    pdf = new GeneratedPdf()
+                    {
+                        Content = content,
+                        Reference = quoteRef
+                    };
+                    pdf.Add();
+                }
+                else
+                {
+                    pdf.Content = content;
+                    pdf.SaveChanges();
+                }
+
+                return Json(new { Success = true });
             }
 
-            return Json(new { Success = true });
 
         }
 
