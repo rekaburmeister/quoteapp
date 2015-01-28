@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using QuoteApp.Database.Work;
 
@@ -122,6 +123,24 @@ namespace QuoteApp.Database.Contact
             {
                 database.Contacts.Add(this);
                 return database.SaveChanges();
+            }
+        }
+
+        public void SaveChanges()
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                database.Entry(this).State = EntityState.Modified;
+                database.SaveChanges();
+            }
+        }
+
+        public void Remove()
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                database.Contacts.Remove(this);
+                database.SaveChanges();
             }
         }
     }

@@ -53,7 +53,6 @@ namespace QuoteApp.Controllers
             if (ModelState.IsValid)
             {
                 contact.Add();
-                db.Contacts.Add(contact);
                 return RedirectToAction("Index");
             }
 
@@ -67,7 +66,9 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact contact = db.Contacts.Find(id);
+            
+            Contact contact = new Contact();
+            contact = contact.Find(Convert.ToInt16(id));
             if (contact == null)
             {
                 return HttpNotFound();
@@ -84,8 +85,8 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(contact).State = EntityState.Modified;
-                db.SaveChanges();
+                contact.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             return View(contact);
@@ -119,7 +120,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contact contact = db.Contacts.Find(id);
+            Contact contact = new Contact();
+            contact = contact.Find(Convert.ToInt16(id));
             if (contact == null)
             {
                 return HttpNotFound();
@@ -132,19 +134,11 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Contact contact = db.Contacts.Find(id);
-            db.Contacts.Remove(contact);
-            db.SaveChanges();
+            Contact contact = new Contact();
+            contact = contact.Find(Convert.ToInt16(id));
+            contact.Remove();
+            
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
