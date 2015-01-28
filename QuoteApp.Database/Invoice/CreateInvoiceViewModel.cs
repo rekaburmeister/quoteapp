@@ -52,7 +52,8 @@ namespace QuoteApp.Database.Invoice
         {
             QuoteId = quoteId;
             Quote.Quote quote = Quote.Quote.GetQuote(quoteId);
-            WorkLocation location = WorkLocation.GetLocation(quote.WorkLocationId);
+            WorkLocation worklocation = new WorkLocation();
+            WorkLocation location = worklocation.GetLocation(quote.WorkLocationId);
             Contact.Contact contact = Contact.Contact.GetContact(quote.ContactId);
             var acceptedWorks = AcceptedWork.GetWorksForQuote(quoteId);
             InvoiceId = quote.GetCustomerIdentifier() + "-" + nextInvoice;

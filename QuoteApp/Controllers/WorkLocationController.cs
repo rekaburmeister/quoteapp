@@ -66,7 +66,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorkLocation worklocation = db.WorkLocations.Find(id);
+            WorkLocation worklocation = new WorkLocation();
+            worklocation = worklocation.Find(Convert.ToInt16(id));
             if (worklocation == null)
             {
                 return HttpNotFound();
@@ -83,8 +84,7 @@ namespace QuoteApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(worklocation).State = EntityState.Modified;
-                db.SaveChanges();
+                worklocation.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(worklocation);
@@ -97,7 +97,8 @@ namespace QuoteApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorkLocation worklocation = db.WorkLocations.Find(id);
+            WorkLocation worklocation = new WorkLocation();
+            worklocation = worklocation.Find(Convert.ToInt16(id));
             if (worklocation == null)
             {
                 return HttpNotFound();
@@ -110,15 +111,16 @@ namespace QuoteApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            WorkLocation worklocation = db.WorkLocations.Find(id);
-            db.WorkLocations.Remove(worklocation);
-            db.SaveChanges();
+            WorkLocation worklocation = new WorkLocation();
+            worklocation = worklocation.Find(Convert.ToInt16(id));
+            worklocation.Remove();
             return RedirectToAction("Index");
         }
 
         public JsonResult GetClubsBySearchTerm(string term)
         {
-            IEnumerable<WorkLocationJson> clubs = WorkLocation.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = location.GetAddress(),
+            WorkLocation worklocation = new WorkLocation();
+            IEnumerable<WorkLocationJson> clubs = worklocation.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = location.GetAddress(),
                                                                                                                               id = location.WorkLocationId,
                                                                                                                               label = location.WorkLocationName,
                                                                                                                               text = location.WorkLocationName});
@@ -126,13 +128,5 @@ namespace QuoteApp.Controllers
             return Json(jsonstring, JsonRequestBehavior.AllowGet);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

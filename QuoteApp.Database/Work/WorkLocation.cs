@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 
 namespace QuoteApp.Database.Work
@@ -30,7 +31,7 @@ namespace QuoteApp.Database.Work
 
         public virtual ICollection<Contact.Contact> Contacts { get; set; }
 
-        public static List<WorkLocation> GetClubsWithTerm(string term)
+        public List<WorkLocation> GetClubsWithTerm(string term)
         {
             using (IApplicationService database = new DatabaseService())
             {
@@ -38,7 +39,7 @@ namespace QuoteApp.Database.Work
             }
         }
 
-        public static int CheckAndUpdateLocation(int clubId, string clubAddress, string clubName)
+        public int CheckAndUpdateLocation(int clubId, string clubAddress, string clubName)
         {
             using (IApplicationService database = new DatabaseService())
             {
@@ -83,7 +84,7 @@ namespace QuoteApp.Database.Work
                 new[] {Address1, Address2, Address3, Town, Country, PostCode}.Where(str => !string.IsNullOrEmpty(str)));
         }
 
-        public static WorkLocation GetLocation(int workLocationId)
+        public WorkLocation GetLocation(int workLocationId)
         {
             using (IApplicationService database = new DatabaseService())
             {
@@ -113,6 +114,25 @@ namespace QuoteApp.Database.Work
             {
                 database.WorkLocations.Add(this);
                 return database.SaveChanges();
+            }
+        }
+
+        public void SaveChanges()
+        {
+            using (IApplicationService database = new DatabaseService())
+            {
+                database.Entry(this).State = EntityState.Modified;
+                database.SaveChanges();
+            }
+        }
+
+        public void Remove()
+        {
+            
+            using (IApplicationService database = new DatabaseService())
+            {
+                database.WorkLocations.Remove(this);
+                database.SaveChanges();
             }
         }
     }

@@ -119,7 +119,8 @@ namespace QuoteApp.Controllers
         public JsonResult CreateQuote(string jsonString)
         {
             WorkFromView works = JsonConvert.DeserializeObject<WorkFromView>(jsonString);
-            int locationId = WorkLocation.CheckAndUpdateLocation(works.ContactDetails.ClubId, works.ContactDetails.ClubAddress, works.ContactDetails.ClubName);
+            WorkLocation worklocation = new WorkLocation();
+            int locationId = worklocation.CheckAndUpdateLocation(works.ContactDetails.ClubId, works.ContactDetails.ClubAddress, works.ContactDetails.ClubName);
             int contactId = Contact.CheckAndUpdateContact(works.ContactDetails.ContactId, works.ContactDetails.ContactName,
                 works.ContactDetails.ContactEmail, works.ContactDetails.ContactNumber, locationId);
             Quote.CreateQuote(works.QuoteRef, locationId, contactId, works.QuoteDate, works.CourtWorkDetails);
