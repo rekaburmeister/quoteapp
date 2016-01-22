@@ -226,16 +226,17 @@ namespace QuoteApp.Controllers
             MemoryStream stream = new MemoryStream();
             try
             {
-                pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
-                client.enableBackgrounds();
-                client.enableHyperlinks();
-                client.enableImages();
-                client.setHeaderHtml(header);
-                client.setFooterHtml(footer);
-                client.setPageWidth("8.267in");
-                client.setPageHeight("11.692in");
-                client.setVerticalMargin("1.8in");
-                client.convertHtml(html, stream);
+                Console.WriteLine("Boo");
+                //pdfcrowd.Client client = new pdfcrowd.Client("reka_burmeister", "d1023d55b5e3eeb4660c3e8f60188b12");
+                //client.enableBackgrounds();
+                //client.enableHyperlinks();
+                //client.enableImages();
+                //client.setHeaderHtml(header);
+                //client.setFooterHtml(footer);
+                //client.setPageWidth("8.267in");
+                //client.setPageHeight("11.692in");
+                //client.setVerticalMargin("1.8in");
+                //client.convertHtml(html, stream);
 
             }
             catch (Exception exception)
