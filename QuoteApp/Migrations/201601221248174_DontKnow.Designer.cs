@@ -6,14 +6,14 @@ namespace QuoteApp.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class InvoiceDetailNotReq : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class DontKnow : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InvoiceDetailNotReq));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DontKnow));
         
         string IMigrationMetadata.Id
         {
-            get { return "201501260757566_InvoiceDetailNotReq"; }
+            get { return "201601221248174_DontKnow"; }
         }
         
         string IMigrationMetadata.Source

@@ -282,9 +282,9 @@
     <Compile Include="Migrations\201501260704085_InvoiceDetailIdInt.Designer.cs">
       <DependentUpon>201501260704085_InvoiceDetailIdInt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201501260757566_InvoiceDetailNotReq.cs" />
-    <Compile Include="Migrations\201501260757566_InvoiceDetailNotReq.Designer.cs">
-      <DependentUpon>201501260757566_InvoiceDetailNotReq.cs</DependentUpon>
+    <Compile Include="Migrations\201601221248174_DontKnow.cs" />
+    <Compile Include="Migrations\201601221248174_DontKnow.Designer.cs">
+      <DependentUpon>201601221248174_DontKnow.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -540,8 +540,8 @@
     <EmbeddedResource Include="Migrations\201501260704085_InvoiceDetailIdInt.resx">
       <DependentUpon>201501260704085_InvoiceDetailIdInt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201501260757566_InvoiceDetailNotReq.resx">
-      <DependentUpon>201501260757566_InvoiceDetailNotReq.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601221248174_DontKnow.resx">
+      <DependentUpon>201601221248174_DontKnow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
