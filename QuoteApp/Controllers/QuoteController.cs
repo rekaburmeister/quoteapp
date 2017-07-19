@@ -8,10 +8,16 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v2;
+using Google.Apis.Drive.v2.Data;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using QuoteApp.Helpers;
@@ -29,6 +35,68 @@ namespace QuoteApp.Controllers
         public ActionResult Index()
         {
             return View(m_DbContext.Quotes.ToList());
+        }
+
+        public ActionResult GoogleTest()
+        {
+            UserCredential credential;
+            string[] scopes = { DriveService.Scope.Drive };
+            string ApplicationName = "BlueMoon";
+            string path = Server.MapPath("~");
+            using (var stream = new FileStream(Path.Combine(path, "client_secret.json"), FileMode.Open, FileAccess.Read))
+            {
+                string credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                credPath = Path.Combine(credPath, ".credentials/drive-dotnet-quickstart");
+
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + credPath);
+            }
+
+            // Create Drive API service.
+            var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
+
+
+            string scps = "0ByhV75HrU2uzSGZySHZtMWQ3Ykk";
+            var blueMoon = "0B20-wasml-ZZSzk5c1lTUndtYXc";
+
+
+            Google.Apis.Drive.v2.Data.File fileMetadata = new Google.Apis.Drive.v2.Data.File();
+            fileMetadata.Title = "test";
+            fileMetadata.MimeType = "application/vnd.google-apps.document";
+            fileMetadata.Parents = new List<ParentReference> { new ParentReference() {Id=blueMoon} };
+            var request = service.Files.Insert(fileMetadata);
+            request.Fields = "id";
+            var file = request.Execute();
+            // Define parameters of request.
+            FilesResource.ListRequest listRequest = service.Files.List();
+            listRequest.MaxResults = 50;
+
+            // List files.
+            IList<Google.Apis.Drive.v2.Data.File> files = listRequest.Execute()
+                .Items.Where(f=>f.MimeType == "application/vnd.google-apps.folder").ToList();
+            //Console.WriteLine("Files:");
+            //if (files != null && files.Count > 0)
+            //{
+            //    foreach (var file in files)
+            //    {
+            //        Console.WriteLine("{0} ({1})", file.Title, file.Id);
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine("No files found.");
+            //}
+            //Console.Read();
+            return View(files);
         }
 
         // GET: /Quote/Details/5
