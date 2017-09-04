@@ -48,7 +48,7 @@ namespace QuoteApp.Controllers
             {
                 QuoteRef = quote.QuoteId,
                 QuoteDate = quote.QuoteDate.ToString("dd-MM-yyyy"),
-                ContactDetails = new ContactDetails(quote.Contact, quote.WorkLocation),
+                ContactDetails = new ContactDetails(quote.Contact, quote.Location),
                 CourtWorkDetails = CourtWorkDetail.GetCourtWorkDetails(quote.QuotedWorks.ToList())
             };
 
@@ -114,7 +114,7 @@ namespace QuoteApp.Controllers
         public JsonResult CreateQuote(string jsonString)
         {
             WorkFromView works = JsonConvert.DeserializeObject<WorkFromView>(jsonString);
-            int locationId = WorkLocation.CheckAndUpdateLocation(works.ContactDetails.ClubId, works.ContactDetails.ClubAddress, works.ContactDetails.ClubName);
+            int locationId = Location.CheckAndUpdateLocation(works.ContactDetails.ClubId, works.ContactDetails.ClubAddress, works.ContactDetails.ClubName);
             int contactId = Contact.CheckAndUpdateContact(works.ContactDetails.ContactId, works.ContactDetails.ContactName,
                 works.ContactDetails.ContactEmail, works.ContactDetails.ContactNumber, locationId);
             Quote.CreateQuote(works.QuoteRef, locationId, contactId, works.QuoteDate, works.CourtWorkDetails);

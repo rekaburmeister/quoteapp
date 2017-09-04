@@ -15,20 +15,20 @@ namespace QuoteApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: /WorkLocation/
+        // GET: /Location/
         public ActionResult Index()
         {
             return View(db.WorkLocations.ToList());
         }
 
-        // GET: /WorkLocation/Details/5
+        // GET: /Location/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorkLocation worklocation = db.WorkLocations.Find(id);
+            Location worklocation = db.WorkLocations.Find(id);
             if (worklocation == null)
             {
                 return HttpNotFound();
@@ -36,18 +36,18 @@ namespace QuoteApp.Controllers
             return View(worklocation);
         }
 
-        // GET: /WorkLocation/Create
+        // GET: /Location/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /WorkLocation/Create
+        // POST: /Location/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="WorkLocationId,WorkLocationName,Address1,Address2,Address3,Town,Country,PostCode,PhoneNumber,Email")] WorkLocation worklocation)
+        public ActionResult Create([Bind(Include="WorkLocationId,WorkLocationName,Address1,Address2,Address3,Town,Country,PostCode,PhoneNumber,Email")] Location worklocation)
         {
             if (ModelState.IsValid)
             {
@@ -59,14 +59,14 @@ namespace QuoteApp.Controllers
             return View(worklocation);
         }
 
-        // GET: /WorkLocation/Edit/5
+        // GET: /Location/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorkLocation worklocation = db.WorkLocations.Find(id);
+            Location worklocation = db.WorkLocations.Find(id);
             if (worklocation == null)
             {
                 return HttpNotFound();
@@ -74,12 +74,12 @@ namespace QuoteApp.Controllers
             return View(worklocation);
         }
 
-        // POST: /WorkLocation/Edit/5
+        // POST: /Location/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="WorkLocationId,WorkLocationName,Address1,Address2,Address3,Town,Country,PostCode,PhoneNumber,Email")] WorkLocation worklocation)
+        public ActionResult Edit([Bind(Include="WorkLocationId,WorkLocationName,Address1,Address2,Address3,Town,Country,PostCode,PhoneNumber,Email")] Location worklocation)
         {
             if (ModelState.IsValid)
             {
@@ -90,14 +90,14 @@ namespace QuoteApp.Controllers
             return View(worklocation);
         }
 
-        // GET: /WorkLocation/Delete/5
+        // GET: /Location/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WorkLocation worklocation = db.WorkLocations.Find(id);
+            Location worklocation = db.WorkLocations.Find(id);
             if (worklocation == null)
             {
                 return HttpNotFound();
@@ -105,12 +105,12 @@ namespace QuoteApp.Controllers
             return View(worklocation);
         }
 
-        // POST: /WorkLocation/Delete/5
+        // POST: /Location/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            WorkLocation worklocation = db.WorkLocations.Find(id);
+            Location worklocation = db.WorkLocations.Find(id);
             db.WorkLocations.Remove(worklocation);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -118,7 +118,7 @@ namespace QuoteApp.Controllers
 
         public JsonResult GetClubsBySearchTerm(string term)
         {
-            IEnumerable<WorkLocationJson> clubs = WorkLocation.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = location.GetAddress(),
+            IEnumerable<WorkLocationJson> clubs = Location.GetClubsWithTerm(term).Select(location => new WorkLocationJson{Address = location.GetAddress(),
                                                                                                                               id = location.WorkLocationId,
                                                                                                                               label = location.WorkLocationName,
                                                                                                                               text = location.WorkLocationName});

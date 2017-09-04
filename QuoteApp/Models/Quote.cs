@@ -18,7 +18,7 @@ namespace QuoteApp.Models
 
         [Required]
         public int WorkLocationId { get; set; }
-        public virtual WorkLocation WorkLocation { get; set; }
+        public virtual Location Location { get; set; }
 
         [Required]
         public int ContactId { get; set; }
@@ -97,8 +97,8 @@ namespace QuoteApp.Models
                                 QuoteDate = quote.QuoteDate.ToString("dd-MM-yyyy"),
                                 QuoteId = quote.QuoteId,
                                 ContactName = quote.Contact.FirstName + " " + quote.Contact.LastName,
-                                LocationAddress = quote.WorkLocation.Town + ", " + quote.WorkLocation.PostCode,
-                                LocationName = quote.WorkLocation.WorkLocationName,
+                                LocationAddress = quote.Location.Town + ", " + quote.Location.PostCode,
+                                LocationName = quote.Location.WorkLocationName,
                                 Sum = quote.QuotedWorks.Sum(work => work.QuotedWorkPrice * work.NumberOfCourts),
                                 Job =
                                     string.Join(", ", quote.QuotedWorks

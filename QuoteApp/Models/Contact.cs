@@ -34,7 +34,7 @@ namespace QuoteApp.Models
         public int? CompanyId { get; set; }
         public virtual Company Company { get; set; }
 
-        public virtual ICollection<WorkLocation> WorkLocations { get; set; }
+        public virtual ICollection<Location> WorkLocations { get; set; }
 
         public static List<Contact> GetContactsWithTerm(string term)
         {
@@ -49,7 +49,7 @@ namespace QuoteApp.Models
             using (ApplicationDbContext database = new ApplicationDbContext())
             {
                 Contact contact = database.Contacts.Find(contactId);
-                WorkLocation location = database.WorkLocations.Find(clubId);
+                Location location = database.WorkLocations.Find(clubId);
                 string[] names = contactName.Split(' ');
                 if (contact == null)
                 {
@@ -64,7 +64,7 @@ namespace QuoteApp.Models
                     {
                         contact.MiddleName = string.Join(" ", names, 1, names.Length - 2);
                     }
-                    contact.WorkLocations = new Collection<WorkLocation> {location};
+                    contact.WorkLocations = new Collection<Location> {location};
                     database.Contacts.Add(contact);
                     database.SaveChanges();
                 }

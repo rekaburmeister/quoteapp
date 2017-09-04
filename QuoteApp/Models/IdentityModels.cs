@@ -22,7 +22,7 @@ namespace QuoteApp.Models
 
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<WorkLocation> WorkLocations { get; set; }
+        public DbSet<Location> WorkLocations { get; set; }
         public DbSet<Work> Works { get; set; }
         public DbSet<WorkArea> WorkAreas { get; set; }
         public DbSet<Quote> Quotes { get; set; }

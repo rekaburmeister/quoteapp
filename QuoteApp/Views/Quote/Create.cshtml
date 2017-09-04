@@ -83,7 +83,7 @@
         $('#customerClub').autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: '@Url.Action("GetClubsBySearchTerm", "WorkLocation")',
+                    url: '@Url.Action("GetClubsBySearchTerm", "Location")',
                     dataType: "json",
                     data: { term: request.term },
                     success: function (data) {

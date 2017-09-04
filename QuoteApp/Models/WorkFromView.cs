@@ -29,7 +29,7 @@ namespace QuoteApp.Models
             
         }
 
-        public ContactDetails(Contact contact, WorkLocation location)
+        public ContactDetails(Contact contact, Location location)
         {
             ClubName = location.WorkLocationName;
             ClubAddress = location.GetAddress();

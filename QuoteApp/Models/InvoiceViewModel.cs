@@ -52,8 +52,8 @@ namespace QuoteApp.Models
                 {
                     InvoiceId = invoice.InvoiceId;
                     Date = invoice.InvoiceDate.ToString("dd-MM-yyyy");
-                    InvoiceTo = invoice.WorkLocation.WorkLocationName;
-                    InvoiceToAddress = invoice.WorkLocation.GetAddress();
+                    InvoiceTo = invoice.Location.WorkLocationName;
+                    InvoiceToAddress = invoice.Location.GetAddress();
                     ContactName = invoice.Contact.GetName();
                     ContactNumber = invoice.Contact.MobileNumber ?? invoice.Contact.PhoneNumber;
                     ContactEmail = invoice.Contact.Email;
@@ -71,7 +71,7 @@ namespace QuoteApp.Models
                 {
                     InvoiceId = invoice.InvoiceId,
                     Date = invoice.InvoiceDate.ToString("dd-MM-yyyy"),
-                    InvoiceTo = invoice.WorkLocation.WorkLocationName,
+                    InvoiceTo = invoice.Location.WorkLocationName,
                     ContactName = invoice.Contact.GetName(),
                     ContactNumber = invoice.Contact.MobileNumber ?? invoice.Contact.PhoneNumber,
                     ContactEmail = invoice.Contact.Email,

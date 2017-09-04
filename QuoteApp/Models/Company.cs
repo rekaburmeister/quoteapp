@@ -30,6 +30,6 @@ namespace QuoteApp.Models
 
         public virtual ICollection<Contact> Contacts { get; set; }
 
-        public virtual ICollection<WorkLocation> ManagedLocations { get; set; }
+        public virtual ICollection<Location> ManagedLocations { get; set; }
     }
 }

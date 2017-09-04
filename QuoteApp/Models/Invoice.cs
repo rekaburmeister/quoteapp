@@ -12,11 +12,12 @@ namespace QuoteApp.Models
     {
         [Key]
         [Required]
+        
         public string InvoiceId { get; set; }
 
         [Required]
         public int WorkLocationId { get; set; }
-        public virtual WorkLocation WorkLocation { get; set; }
+        public virtual Location Location { get; set; }
 
         [Required]
         public int ContactId { get; set; }

@@ -36,8 +36,8 @@ namespace QuoteApp.Models
                                 Date = quote.ScheduledFor.ToString(),
                                 QuoteId = quote.QuoteId,
                                 Contact = quote.Contact.FirstName + " " + quote.Contact.LastName,
-                                Address = quote.WorkLocation.Town + ", " + quote.WorkLocation.PostCode,
-                                Club = quote.WorkLocation.WorkLocationName,
+                                Address = quote.Location.Town + ", " + quote.Location.PostCode,
+                                Club = quote.Location.WorkLocationName,
                                 Sum = workForQuotes.Where(work=>work.QuoteId.Equals(quote.QuoteId)).Sum(w=>w.Price),
                                 Job = string.Join(", ", workForQuotes
                                                         .Where(work=>work.QuoteId.Equals(quote.QuoteId))

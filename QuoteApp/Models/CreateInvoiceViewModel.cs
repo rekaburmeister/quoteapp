@@ -52,7 +52,7 @@ namespace QuoteApp.Models
         {
             QuoteId = quoteId;
             Quote quote = Quote.GetQuote(quoteId);
-            WorkLocation location = WorkLocation.GetLocation(quote.WorkLocationId);
+            Location location = Location.GetLocation(quote.WorkLocationId);
             Contact contact = Contact.GetContact(quote.ContactId);
             var acceptedWorks = AcceptedWork.GetWorksForQuote(quoteId);
             InvoiceId = quote.GetCustomerIdentifier() + "-" + nextInvoice;
